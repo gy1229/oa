@@ -6,20 +6,20 @@ type UserBase struct {
 }
 
 type RegisterUserRequest struct {
-	UserBase UserBase `json:"user_base"`
+	UserBase *UserBase `json:"user_base"`
 	UserName string `json:"user_name"  binding:"required"`
 }
 
 type RegisterUserResponse struct {
-	base BaseResponse `json:"base"`
+	base *BaseResponse `json:"base"`
 }
 
 type LoginUserRequest struct {
-	UserBase UserBase `json:"user_base"  binding:"required"`
+	UserBase *UserBase `json:"user_base"  binding:"required"`
 }
 
 type LoginUserResponse struct {
-	base BaseResponse `json:"base"`
+	base *BaseResponse `json:"base"`
 }
 
 type UpdateUserRequest struct {
@@ -28,7 +28,7 @@ type UpdateUserRequest struct {
 }
 
 type UpdateUserResponse struct {
-	base BaseResponse `json:"base"`
+	base *BaseResponse `json:"base"`
 }
 
 

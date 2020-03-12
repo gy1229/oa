@@ -3,6 +3,7 @@ package main
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/gy1229/oa/json_struct"
+	"github.com/gy1229/oa/util"
 	"net/http"
 )
 
@@ -18,9 +19,7 @@ func RegisterUser(c *gin.Context) {
 		return
 	}
 
-	c.JSON(200, gin.H{
-		"body": "success",
-	})
+	c.JSON(200, util.GenDefaultResp("success"))
 }
 
 func LoginUser(c *gin.Context) {
@@ -30,9 +29,7 @@ func LoginUser(c *gin.Context) {
 		return
 	}
 
-	c.JSON(200, gin.H{
-		"body": "success",
-	})
+	c.JSON(200, util.GenDefaultResp("success"))
 }
 
 func UpdateUserMessage(c *gin.Context) {
@@ -42,9 +39,7 @@ func UpdateUserMessage(c *gin.Context) {
 		return
 	}
 
-	c.JSON(200, gin.H{
-		"body": "success",
-	})
+	c.JSON(200, util.GenDefaultResp("success"))
 }
 
 func LoadUserMessage(c *gin.Context) {
@@ -54,7 +49,5 @@ func LoadUserMessage(c *gin.Context) {
 		return
 	}
 
-	c.JSON(200, gin.H{
-		"body": "success",
-	})
+	c.JSON(200, util.GenDefaultResp("success"))
 }
