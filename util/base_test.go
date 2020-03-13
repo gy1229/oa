@@ -1,6 +1,7 @@
 package util
 
 import (
+	"fmt"
 	"github.com/gy1229/oa/json_struct"
 	"log"
 	"testing"
@@ -21,4 +22,9 @@ func TestTranformStruct2GinH(t *testing.T) {
 		UserName: "asd",
 	}
 	TranformStruct2GinH(req)
+}
+
+func TestGenId(t *testing.T) {
+	InitID()
+	fmt.Println(GenId())
 }

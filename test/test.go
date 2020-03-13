@@ -1,8 +1,19 @@
 package test
 
-import "github.com/gy1229/oa/tool"
+import (
+	"github.com/gy1229/oa/database"
+	"github.com/gy1229/oa/tool"
+	"github.com/gy1229/oa/util"
+)
 
-func InitTestConfig(){
-	tool.InitViper()
-	tool.InitDatabse()
+func InitTestConfig1(){
+	tool.InitViper1()
+	util.InitID()
+	database.InitDB()
+}
+
+func InitTestConfig2() {
+	tool.InitViper2()
+	util.InitID()
+	database.InitDB()
 }

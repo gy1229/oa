@@ -1,4 +1,4 @@
-package tool
+package database
 
 import (
 	"fmt"
@@ -9,25 +9,10 @@ import (
 	"github.com/spf13/viper"
 )
 
-type Database struct {
-	Self *gorm.DB
-}
-
 // 单例
-var DB *Database
+var DB *gorm.DB
 
-func InitDatabse() {
-	DB.Init()
-}
-func (db *Database) Init() {
-	DB = &Database{
-		Self: GetDB(),
-	}
-}
 
-func (db *Database) Close() {
-	DB.Self.Close()
-}
 func openDB(username, password, addr, name string) *gorm.DB {
 	config := fmt.Sprintf(
 		"%s:%s@tcp(%s)/%s?charset=utf8mb4&parseTime=%t&loc=%s",
@@ -58,15 +43,17 @@ func setupDB(db *gorm.DB) {
 	db.DB().SetMaxIdleConns(0)
 }
 
-func InitDB() *gorm.DB {
-	return openDB(
+func InitDB() {
+	DB = openDB(
 		viper.GetString("db.username"),
 		viper.GetString("db.password"),
 		viper.GetString("db.addr"),
 		viper.GetString("db.name"),
 	)
+	// gorm框架里面的默认数据表后添加+s 取消s
+	DB.SingularTable(true)
 }
 
-func GetDB() *gorm.DB {
-	return InitDB()
+func CloseDB() {
+	DB.Close()
 }

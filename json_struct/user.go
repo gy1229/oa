@@ -11,7 +11,7 @@ type RegisterUserRequest struct {
 }
 
 type RegisterUserResponse struct {
-	base *BaseResponse `json:"base"`
+	Base *BaseResponse `json:"base"`
 }
 
 type LoginUserRequest struct {
@@ -19,16 +19,17 @@ type LoginUserRequest struct {
 }
 
 type LoginUserResponse struct {
-	base *BaseResponse `json:"base"`
+	Base *BaseResponse `json:"base"`
 }
 
 type UpdateUserRequest struct {
+	Account string `json:"account"`
 	UserName string `json:"user_name"`
 	Password string `json:"password"`
 }
 
 type UpdateUserResponse struct {
-	base *BaseResponse `json:"base"`
+	Base *BaseResponse `json:"base"`
 }
 
 
@@ -39,4 +40,5 @@ type LoadUserMessageRequest struct {
 type LoadUserMessageResponse struct {
 	Account string `json:"account" binding`
 	UserName string `json:"user_name"  binding:"required"`
+	Base *BaseResponse `json:"base"`
 }

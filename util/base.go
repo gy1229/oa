@@ -3,28 +3,23 @@ package util
 import (
 	"encoding/json"
 	"github.com/gin-gonic/gin"
-	"github.com/gy1229/oa/json_struct"
 )
 
 func GenDefaultResp(body string) gin.H{
-	b := json_struct.BaseResponse{Body:body}
-	c, _ := json.Marshal(b)
 	m := make(map[string]interface{}, 0)
-	json.Unmarshal(c, &m)
+	m["body"] = body
 	return m
 }
 
-func TranformStruct2GinH(s interface{}) (gin.H, error){
-	b, err := json.Marshal(s)
-	if err != nil {
-		//fmt.Fprintln(gin.DefaultWriter, "[TranformStruct2GinH][Marshal] err msg : ", err.Error())
-		return nil, err
-	}
+func GenDefaultFailResp(err string) gin.H {
 	m := make(map[string]interface{}, 0)
-	err = json.Unmarshal(b, &m)
-	if err != nil {
-		//fmt.Fprintln(gin.DefaultWriter, "[TranformStruct2GinH] err msg : ", err.Error())
-		return nil, err
-	}
-	return m, nil
+	m["error"] = err
+	return m
+}
+
+func TranformStruct2GinH(s interface{}) gin.H{
+	b, _ := json.Marshal(s)
+	m := make(map[string]interface{}, 0)
+	_ = json.Unmarshal(b, &m)
+	return m
 }

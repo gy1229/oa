@@ -3,6 +3,7 @@ package main
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/gy1229/oa/json_struct"
+	"github.com/gy1229/oa/service/user"
 	"github.com/gy1229/oa/util"
 	"net/http"
 )
@@ -18,8 +19,12 @@ func RegisterUser(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-
-	c.JSON(200, util.GenDefaultResp("success"))
+	resp, err := user.InsertUserMessage(&req)
+	if err != nil {
+		c.JSON(http.StatusOK, gin.H{"error": err.Error()})
+		return
+	}
+	c.JSON(http.StatusOK, util.TranformStruct2GinH(resp))
 }
 
 func LoginUser(c *gin.Context) {
@@ -28,8 +33,12 @@ func LoginUser(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-
-	c.JSON(200, util.GenDefaultResp("success"))
+	resp, err := user.LoginUser(&req)
+	if err != nil {
+		c.JSON(http.StatusOK, util.GenDefaultFailResp(err.Error()))
+		return
+	}
+	c.JSON(http.StatusOK, util.TranformStruct2GinH(resp))
 }
 
 func UpdateUserMessage(c *gin.Context) {
@@ -38,8 +47,12 @@ func UpdateUserMessage(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-
-	c.JSON(200, util.GenDefaultResp("success"))
+	resp, err := user.UpdateUserMessage(&req)
+	if err != nil {
+		c.JSON(http.StatusOK, util.GenDefaultFailResp(err.Error()))
+		return
+	}
+	c.JSON(http.StatusOK, util.TranformStruct2GinH(resp))
 }
 
 func LoadUserMessage(c *gin.Context) {
@@ -48,6 +61,10 @@ func LoadUserMessage(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-
-	c.JSON(200, util.GenDefaultResp("success"))
+	resp, err := user.LoadUserMessage(&req)
+	if err != nil {
+		c.JSON(http.StatusOK, util.GenDefaultFailResp(err.Error()))
+		return
+	}
+	c.JSON(http.StatusOK, util.TranformStruct2GinH(resp))
 }
