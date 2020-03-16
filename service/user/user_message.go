@@ -12,7 +12,7 @@ import (
 
 func LoadUserMessage(req *json_struct.LoadUserMessageRequest) (*json_struct.LoadUserMessageResponse, error) {
 	user := database.OaUser{}
-	if err := database.DB.Where("account = ?", req.Account).First(&user).Error; err != nil {
+	if err := database.DB.Where("id = ?", req.UserId).First(&user).Error; err != nil {
 		logrus.Error("LoadUserMessage err ", err.Error())
 		return nil, err
 	}
@@ -72,6 +72,7 @@ func LoginUser(req *json_struct.LoginUserRequest) (*json_struct.LoginUserRespons
 	}
 	if user.Password == req.UserBase.Password {
 		return &json_struct.LoginUserResponse{
+			UserId: user.Id,
 			Base: &json_struct.BaseResponse{Body:constant.SUCCESS},
 		}, nil
 	}

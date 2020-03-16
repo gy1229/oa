@@ -19,6 +19,7 @@ type LoginUserRequest struct {
 }
 
 type LoginUserResponse struct {
+	UserId *int64 `json:"user_id"`
 	Base *BaseResponse `json:"base"`
 }
 
@@ -34,7 +35,7 @@ type UpdateUserResponse struct {
 
 
 type LoadUserMessageRequest struct {
-	Account string `json:"account" binding`
+	UserId *int64 `json:"user_id" binding`
 }
 
 type LoadUserMessageResponse struct {
