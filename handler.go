@@ -15,10 +15,7 @@ func TestHanlder(c *gin.Context) {
 }
 func RegisterUser(c *gin.Context) {
 	var req json_struct.RegisterUserRequest
-	if err := c.ShouldBindJSON(&req); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-		return
-	}
+	util.GenHandlerRequest(c, &req)
 	resp, err := user.InsertUserMessage(&req)
 	if err != nil {
 		c.JSON(http.StatusOK, gin.H{"error": err.Error()})
@@ -29,10 +26,7 @@ func RegisterUser(c *gin.Context) {
 
 func LoginUser(c *gin.Context) {
 	var req json_struct.LoginUserRequest
-	if err := c.ShouldBindJSON(&req); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-		return
-	}
+	util.GenHandlerRequest(c, &req)
 	resp, err := user.LoginUser(&req)
 	if err != nil {
 		c.JSON(http.StatusOK, util.GenDefaultFailResp(err.Error()))
@@ -43,10 +37,7 @@ func LoginUser(c *gin.Context) {
 
 func UpdateUserMessage(c *gin.Context) {
 	var req json_struct.UpdateUserRequest
-	if err := c.ShouldBindJSON(&req); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-		return
-	}
+	util.GenHandlerRequest(c, &req)
 	resp, err := user.UpdateUserMessage(&req)
 	if err != nil {
 		c.JSON(http.StatusOK, util.GenDefaultFailResp(err.Error()))
@@ -57,11 +48,19 @@ func UpdateUserMessage(c *gin.Context) {
 
 func LoadUserMessage(c *gin.Context) {
 	var req json_struct.LoadUserMessageRequest
-	if err := c.ShouldBindJSON(&req); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+	util.GenHandlerRequest(c, &req)
+	resp, err := user.LoadUserMessage(&req)
+	if err != nil {
+		c.JSON(http.StatusOK, util.GenDefaultFailResp(err.Error()))
 		return
 	}
-	resp, err := user.LoadUserMessage(&req)
+	c.JSON(http.StatusOK, util.TranformStruct2GinH(resp))
+}
+
+func CertainAccount(c *gin.Context) {
+	var req json_struct.CertainAccountRequest
+	util.GenHandlerRequest(c, &req)
+	resp, err := user.CertainAccount(&req)
 	if err != nil {
 		c.JSON(http.StatusOK, util.GenDefaultFailResp(err.Error()))
 		return

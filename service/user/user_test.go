@@ -12,3 +12,9 @@ func TestLoadUserMessage(t *testing.T) {
 	resp, _ := LoadUserMessage(&json_struct.LoadUserMessageRequest{Account:"guyu"})
 	fmt.Println(resp)
 }
+
+func TestCertainAccount(t *testing.T) {
+	test.InitTestConfig2()
+	resp, _ := CertainAccount(&json_struct.CertainAccountRequest{Account:"guyu"})
+	fmt.Println(resp)
+}

@@ -4,23 +4,29 @@ import (
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/gy1229/oa/database"
-	"github.com/gy1229/oa/tool"
 	"github.com/gy1229/oa/util"
 	"net/http"
 	"strings"
 )
 
 func main() {
-	tool.InitViper()
+	util.InitViper()
 	database.InitDB()
 	util.InitID()
 	r := gin.Default()
 	r.Use(Cors())
+
+	// user
 	r.GET("/ping", TestHanlder)
 	r.POST("/register", RegisterUser)
 	r.POST("/login", LoginUser)
 	r.POST("/updateUserMessage", UpdateUserMessage)
 	r.POST("/loadUserMessage", LoadUserMessage)
+	r.POST("/certainAccount", CertainAccount)
+
+	// stage
+
+
 	r.Run(":19999") // listen and serve on 0.0.0.0:8080 (for windows "localhost:8080")
 }
 

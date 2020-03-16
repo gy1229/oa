@@ -42,3 +42,11 @@ type LoadUserMessageResponse struct {
 	UserName string `json:"user_name"  binding:"required"`
 	Base *BaseResponse `json:"base"`
 }
+
+type CertainAccountRequest struct {
+	Account string `json:"account"`
+}
+
+type CertainAccountResponse struct {
+	Base *BaseResponse `json:"base"`
+}

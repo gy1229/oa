@@ -79,3 +79,21 @@ func LoginUser(req *json_struct.LoginUserRequest) (*json_struct.LoginUserRespons
 		Base: &json_struct.BaseResponse{Body:constant.LoginFailPassword},
 	}, nil
 }
+
+func CertainAccount(req *json_struct.CertainAccountRequest) (*json_struct.CertainAccountResponse, error) {
+	user := database.OaUser{
+		Account:    req.Account,
+	}
+	if err := database.DB.Model(&user).Where("account = ?", user.Account).Find(&user).Error; err != nil {
+		if err == gorm.ErrRecordNotFound {
+			return &json_struct.CertainAccountResponse{
+				Base: &json_struct.BaseResponse{Body:constant.SUCCESS},
+			}, nil
+		}
+		logrus.Error("UpdateUserMessage err ", err.Error())
+		return nil, err
+	}
+	return &json_struct.CertainAccountResponse{
+		Base: &json_struct.BaseResponse{Body:constant.RegisterAccountExit},
+	}, nil
+}
