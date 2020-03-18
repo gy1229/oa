@@ -1,13 +1,13 @@
 package json_struct
 
 type UserBase struct {
-	Account string `json:"account"  binding:"required"`
+	Account  string `json:"account"  binding:"required"`
 	Password string `json:"password"  binding:"required"`
 }
 
 type RegisterUserRequest struct {
 	UserBase *UserBase `json:"user_base"`
-	UserName string `json:"user_name"  binding:"required"`
+	UserName string    `json:"user_name"  binding:"required"`
 }
 
 type RegisterUserResponse struct {
@@ -19,12 +19,12 @@ type LoginUserRequest struct {
 }
 
 type LoginUserResponse struct {
-	UserId *int64 `json:"user_id"`
-	Base *BaseResponse `json:"base"`
+	UserId *int64        `json:"user_id"`
+	Base   *BaseResponse `json:"base"`
 }
 
 type UpdateUserRequest struct {
-	Account string `json:"account"`
+	Account  string `json:"account"`
 	UserName string `json:"user_name"`
 	Password string `json:"password"`
 }
@@ -33,15 +33,14 @@ type UpdateUserResponse struct {
 	Base *BaseResponse `json:"base"`
 }
 
-
 type LoadUserMessageRequest struct {
-	UserId *int64 `json:"user_id" binding`
+	UserId string `json:"user_id" binding`
 }
 
 type LoadUserMessageResponse struct {
-	Account string `json:"account" binding`
-	UserName string `json:"user_name"  binding:"required"`
-	Base *BaseResponse `json:"base"`
+	Account  string        `json:"account" binding`
+	UserName string        `json:"user_name"  binding:"required"`
+	Base     *BaseResponse `json:"base"`
 }
 
 type CertainAccountRequest struct {

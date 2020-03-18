@@ -1,15 +1,20 @@
 package constant
 
 const (
+	// Base status
 	SUCCESS = "success"
-	FAIL = "fail"
+	FAIL    = "fail"
 
-	// 登陆错误
-	LoginFailAccount = "cant found account"
+	// Login
+	LoginFailAccount  = "cant found account"
 	LoginFailPassword = "password is err"
 
-	// 注册
+	// Register
 	RegisterAccountExit = "register account exit"
 
+	// Upload File Key
+	UploadFileKey = "upload"
+
+	// Time
 	TIMEOUTLIMIT = "time out limit"
 )

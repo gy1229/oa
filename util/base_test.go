@@ -16,8 +16,8 @@ func TestTranformStruct2GinH(t *testing.T) {
 	log.SetFlags(log.Ldate | log.Lmicroseconds | log.Llongfile)
 	req := json_struct.RegisterUserRequest{
 		UserBase: &json_struct.UserBase{
-			Account:"123",
-			Password:"1qwe",
+			Account:  "123",
+			Password: "1qwe",
 		},
 		UserName: "asd",
 	}

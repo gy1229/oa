@@ -12,7 +12,6 @@ import (
 // 单例
 var DB *gorm.DB
 
-
 func openDB(username, password, addr, name string) *gorm.DB {
 	config := fmt.Sprintf(
 		"%s:%s@tcp(%s)/%s?charset=utf8mb4&parseTime=%t&loc=%s",

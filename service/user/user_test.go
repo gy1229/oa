@@ -9,12 +9,12 @@ import (
 
 func TestLoadUserMessage(t *testing.T) {
 	test.InitTestConfig2()
-	resp, _ := LoadUserMessage(&json_struct.LoadUserMessageRequest{Account:"guyu"})
+	resp, _ := LoadUserMessage(&json_struct.LoadUserMessageRequest{Account: "guyu"})
 	fmt.Println(resp)
 }
 
 func TestCertainAccount(t *testing.T) {
 	test.InitTestConfig2()
-	resp, _ := CertainAccount(&json_struct.CertainAccountRequest{Account:"guyu"})
+	resp, _ := CertainAccount(&json_struct.CertainAccountRequest{Account: "guyu"})
 	fmt.Println(resp)
 }

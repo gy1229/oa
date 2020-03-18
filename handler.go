@@ -67,3 +67,7 @@ func CertainAccount(c *gin.Context) {
 	}
 	c.JSON(http.StatusOK, util.TranformStruct2GinH(resp))
 }
+
+func UploadFile(c *gin.Context) {
+	//header, err := c.FormFile(constant.UploadFileKey)
+}

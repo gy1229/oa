@@ -5,7 +5,7 @@ import (
 	"github.com/gy1229/oa/util"
 )
 
-func InitTestConfig1(){
+func InitTestConfig1() {
 	util.InitViper1()
 	util.InitID()
 	database.InitDB()
