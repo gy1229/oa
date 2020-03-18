@@ -19,7 +19,7 @@ type LoginUserRequest struct {
 }
 
 type LoginUserResponse struct {
-	UserId *int64        `json:"user_id"`
+	UserId string        `json:"user_id"`
 	Base   *BaseResponse `json:"base"`
 }
 
