@@ -65,7 +65,7 @@ func GetRepositoryList(req *json_struct.GetRepositoryListRequest) (*json_struct.
 			Name: v.Name,
 			CreateTime: v.CreateTime,
 			UpdateTime: v.UpdateTime,
-			Authority: strconv.Itoa(*v.Authority),
+			Authority: v.Authority,
 		})
 		repList[k].CreatorName, _ = data_user.GetUserNameById(v.CreatorId)
 	}
