@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/gy1229/oa/constant"
 	"github.com/gy1229/oa/database"
+	data_user "github.com/gy1229/oa/database/user"
 	"github.com/gy1229/oa/json_struct"
 	"github.com/gy1229/oa/util"
 	"github.com/jinzhu/gorm"
@@ -47,7 +48,7 @@ func GetRepositoryList(req *json_struct.GetRepositoryListRequest) (*json_struct.
 		return nil, err
 	}
 	stage := make([]*database.StageRepository, 0)
-	if err := database.DB.Where("creator_id = ?", userId).Find(&stage).Error; err != nil {
+	if err := database.DB.Where("creator_id = ? AND status = 0", userId).Find(&stage).Error; err != nil {
 		if err == gorm.ErrRecordNotFound {
 			return &json_struct.GetRepositoryListResponse{
 				RepositoryList: nil,
@@ -58,11 +59,14 @@ func GetRepositoryList(req *json_struct.GetRepositoryListRequest) (*json_struct.
 		return nil, err
 	}
 	repList := make([]*json_struct.Repository, 0)
-	for _, v := range stage {
+	for k, v := range stage {
 		repList = append(repList, &json_struct.Repository{
 			Id:   strconv.FormatInt(*v.Id,10),
 			Name: v.Name,
+			CreateTime: v.CreateTime,
+			UpdateTime: v.UpdateTime,
 		})
+		repList[k].CreatorName, _ = data_user.GetUserNameById(v.CreatorId)
 	}
 	return &json_struct.GetRepositoryListResponse{
 		RepositoryList: repList,

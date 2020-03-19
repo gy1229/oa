@@ -1,5 +1,7 @@
 package json_struct
 
+import "time"
+
 type UploadFileRequest struct {
 }
 
@@ -21,6 +23,9 @@ type CreateRepositoryResponse struct {
 type Repository struct {
 	Id string `json:"id"`
 	Name string `json:"name"`
+	CreatorName string `json:"creator_name"`
+	CreateTime time.Time `json:"create_time"`
+	UpdateTime time.Time `json:"update_time"`
 }
 
 type GetRepositoryListRequest struct {
@@ -36,6 +41,7 @@ type UpdateRepositoryRequest struct {
 	RepositoryId string `json:"repository_id"`
 	Name string `json:"name"`
 	Authority string `json:"authority"`
+	UserId string `json:"user_id"`
 }
 
 type UpdateRepositoryResponse struct {
@@ -44,6 +50,7 @@ type UpdateRepositoryResponse struct {
 
 type DelRepositoryRequest struct {
 	RepositoryId string `json:"repository_id"`
+	UserId string `json:"user_id"`
 }
 
 type DelRepositoryResponse struct {

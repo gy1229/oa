@@ -31,6 +31,8 @@ func main() {
 	r.POST("/updateRepository", UpdateRepository)
 	r.POST("/delRepository", DelRepository)
 
+	r.GET("/getRepositoryById/:userId/:repositoryId")
+
 	r.Run(":19999") // listen and serve on 0.0.0.0:8080 (for windows "localhost:8080")
 }
 
