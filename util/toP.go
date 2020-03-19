@@ -7,3 +7,7 @@ func Int64toP(i int64) *int64 {
 func Int32toP(i int32) *int32 {
 	return &i
 }
+
+func Int2P(i int) *int {
+	return &i
+}

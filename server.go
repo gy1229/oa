@@ -25,7 +25,11 @@ func main() {
 	r.POST("/certainAccount", CertainAccount)
 
 	// stage
-	r.POST("/uploadFile", UploadFile)
+	r.POST("/uploadFile", UploadFile) // todo
+	r.POST("/createRepository", CreateRepository)
+	r.POST("/getRepositoryList", GetRepositoryList)
+	r.POST("/updateRepository", UpdateRepository)
+	r.POST("/delRepository", DelRepository)
 
 	r.Run(":19999") // listen and serve on 0.0.0.0:8080 (for windows "localhost:8080")
 }

@@ -3,6 +3,7 @@ package main
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/gy1229/oa/json_struct"
+	"github.com/gy1229/oa/service/stage"
 	"github.com/gy1229/oa/service/user"
 	"github.com/gy1229/oa/util"
 	"net/http"
@@ -70,4 +71,53 @@ func CertainAccount(c *gin.Context) {
 
 func UploadFile(c *gin.Context) {
 	//header, err := c.FormFile(constant.UploadFileKey)
+}
+
+
+// CreateRepository 创建仓库
+func CreateRepository(c *gin.Context) {
+	var req json_struct.CreateRepositoryRequest
+	util.GenHandlerRequest(c, &req)
+	resp, err := stage.CreateRepository(&req)
+	if err != nil {
+		c.JSON(http.StatusOK, util.GenDefaultFailResp(err.Error()))
+		return
+	}
+	c.JSON(http.StatusOK, util.TranformStruct2GinH(resp))
+}
+
+// GetRepositoryList 获取用户私人仓库列表
+func GetRepositoryList(c *gin.Context) {
+	var req json_struct.GetRepositoryListRequest
+	util.GenHandlerRequest(c, &req)
+	resp, err := stage.GetRepositoryList(&req)
+	if err != nil {
+		c.JSON(http.StatusOK, util.GenDefaultFailResp(err.Error()))
+		return
+	}
+	c.JSON(http.StatusOK, util.TranformStruct2GinH(resp))
+}
+
+// UpdateRepository 更新仓库信息
+func UpdateRepository(c *gin.Context) {
+	var req json_struct.UpdateRepositoryRequest
+	util.GenHandlerRequest(c, &req)
+	resp, err := stage.UpdateRepository(&req)
+	if err != nil {
+		c.JSON(http.StatusOK, util.GenDefaultFailResp(err.Error()))
+		return
+	}
+	c.JSON(http.StatusOK, util.TranformStruct2GinH(resp))
+}
+
+// DelRepository 删除仓库
+func DelRepository(c *gin.Context) {
+	var req json_struct.DelRepositoryRequest
+	util.GenHandlerRequest(c, &req)
+	resp, err := stage.DelRepository(&req)
+	if err != nil {
+		c.JSON(http.StatusOK, util.GenDefaultFailResp(err.Error()))
+		return
+	}
+	c.JSON(http.StatusOK, util.TranformStruct2GinH(resp))
 }
