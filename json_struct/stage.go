@@ -26,7 +26,7 @@ type Repository struct {
 	CreatorName string `json:"creator_name"`
 	CreateTime time.Time `json:"create_time"`
 	UpdateTime time.Time `json:"update_time"`
-	Authority *int `json:"authority"`
+	Authority string `json:"authority"`
 }
 
 type GetRepositoryListRequest struct {
