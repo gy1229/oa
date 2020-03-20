@@ -29,7 +29,6 @@ type FileDetail struct {
 	FileName       string    `json:"file_name"`
 	StageRespId    int64     `json:"stage_resp_id"`
 	Type           int       `json:"type"`
-	FileInstanceId int64     `json:"file_instance_id"`
 	UpdateTime     time.Time `json:"update_time"`
 	CreateTime     time.Time `json:"create_time"`
 	Status         int       `json:"status"`
@@ -39,7 +38,7 @@ type FileText struct {
 	Id         int64     `json:"id"`
 	Name       string    `json:"name"`
 	Content    string    `json:"content"`
-	Status     string    `json:"status"`
+	Status     int    `json:"status"`
 	UpdateTime time.Time `json:"update_time"`
 	CreateTime time.Time `json:"create_time"`
 	FileId     int64     `json:"file_id"`

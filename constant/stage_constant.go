@@ -9,3 +9,8 @@ const (
 	TableFile = 1
 	TextFile = 2
 )
+
+const (
+	TableFileString = "1"
+	TextFileString = "2"
+)

@@ -2,7 +2,9 @@ package stage
 
 import (
 	"github.com/gy1229/oa/database"
+	"github.com/gy1229/oa/util"
 	"github.com/sirupsen/logrus"
+	"time"
 )
 // 数据库相关D开头
 func DGetFileListByRepId(repId int64) ([]*database.FileDetail, error) {
@@ -57,6 +59,96 @@ func DUpdateTextContent(fileId int64, content string, name string) error {
 	}
 	if err := database.DB.Model(&user).Where("id = ?", fileId).Updates(&user).Error; err != nil {
 		logrus.Error("[DUpdateTextContent] err ", err.Error())
+		return err
+	}
+	return nil
+}
+
+func DUpdateTableContent(cellId int64, content string) error {
+	cell := database.TableCell{
+		Content:     content,
+	}
+	if err := database.DB.Model(&cell).Where("id = ?", cellId).Updates(&cell).Error; err != nil {
+		logrus.Error("[DUpdateTableContent] err ", err.Error())
+		return err
+	}
+	return nil
+}
+
+func DCreateTextFile(name, content string, fileId int64) error {
+	fileText := database.FileText{
+		Id:         util.GenId(),
+		Name:       name,
+		Content:    content,
+		Status:     0,
+		UpdateTime: time.Now(),
+		CreateTime: time.Now(),
+		FileId:     fileId,
+	}
+	if err := database.DB.Create(fileText).Error; err != nil {
+		logrus.Error("InsertUserMessage err ", err.Error())
+		return err
+	}
+	return nil
+}
+
+func DCreateFileDeatil(name string, userId, stageRepId, id int64, ttype int) error {
+	fileDetail := database.FileDetail{
+		Id:             id,
+		CreatorId:      userId,
+		FileName:       name,
+		StageRespId:    stageRepId,
+		Type:           ttype,
+		UpdateTime:     time.Now(),
+		CreateTime:     time.Now(),
+		Status:         0,
+	}
+	if err := database.DB.Create(fileDetail).Error; err != nil {
+		logrus.Error("[DCreateFileDeatil] err ", err.Error())
+		return err
+	}
+	return nil
+}
+
+func DCreateTableFile(id, fileId, rowLen, lineLen int64, name string) error {
+	tableFile := database.FileTable{
+		Id:         id,
+		Name:       name,
+		FileId:     fileId,
+		Status:     "0",
+		RowLen:     rowLen,
+		LineLen:    lineLen,
+		UpdateTime: time.Now(),
+		CreateTime: time.Now(),
+	}
+	if err := database.DB.Create(tableFile).Error; err != nil {
+		logrus.Error("[DCreateTableFile] err ", err.Error())
+		return err
+	}
+	return nil
+}
+
+func DCreateTableCell(tableFileId, row, line int64, content string) error {
+	tableCell := database.TableCell{
+		Id:          util.GenId(),
+		FileTableId: tableFileId,
+		Content:     content,
+		Row:         row,
+		Line:        line,
+	}
+	if err := database.DB.Create(tableCell).Error; err != nil {
+		logrus.Error("[DCreateTableCell] err ", err.Error())
+		return err
+	}
+	return nil
+}
+
+func DDelTableDetailById(fileId int64) error {
+	fileDetail := database.FileDetail{
+		Status:     1,
+	}
+	if err := database.DB.Model(&fileDetail).Where("id = ?", fileId).Updates(&fileDetail).Error; err != nil {
+		logrus.Error("[DUpdateTableContent] err ", err.Error())
 		return err
 	}
 	return nil

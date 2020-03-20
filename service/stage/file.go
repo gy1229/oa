@@ -7,6 +7,7 @@ import (
 	"github.com/gy1229/oa/database/stage"
 	data_user "github.com/gy1229/oa/database/user"
 	"github.com/gy1229/oa/json_struct"
+	"github.com/gy1229/oa/util"
 	"github.com/sirupsen/logrus"
 	"strconv"
 )
@@ -126,14 +127,117 @@ func UpdateTextContent(req *json_struct.UpdateTextContentRequest) (*json_struct.
 	}, nil
 }
 
-func  UpdateTableContent(req *json_struct.UpdateTableContentRequest) (*json_struct.UpdateTableContentResponse, error) {
-	return nil, nil
+func UpdateTableContent(req *json_struct.UpdateTableContentRequest) (*json_struct.UpdateTableContentResponse, error) {
+	fileId, err := strconv.ParseInt(req.FileId, 10 ,64)
+	if err != nil {
+		logrus.Error("[UpdateTableContent] fileId ParseInt")
+		return nil, err
+	}
+	logrus.Info("[UpdateTextContent] fileId is ", fileId)
+	userId, err := strconv.ParseInt(req.UserId, 10 ,64)
+	if err != nil {
+		logrus.Error("[UpdateTableContent] userId ParseInt")
+		return nil, err
+	}
+	logrus.Info("[UpdateTextContent] userId is ", userId)
+	for _, v := range req.TableCells {
+		cellId, err := strconv.ParseInt(v.Id, 10, 64)
+		if err != nil {
+			logrus.Error("[UpdateTableContent] cellId ParseInt")
+			return nil, err
+		}
+		if err := stage.DUpdateTableContent(cellId, v.Content); err != nil {
+			logrus.Error("[UpdateTableContent] stage.DUpdateTableContent ", err.Error())
+			return nil, err
+		}
+	}
+	return &json_struct.UpdateTableContentResponse{
+		Base: &json_struct.BaseResponse{Body: constant.SUCCESS},
+	}, nil
 }
 
 func CreateNewFile(req *json_struct.CreateNewFileRequest) (*json_struct.CreateNewFileResponse, error) {
-	return nil, nil
+	repositoryId, err := strconv.ParseInt(req.RepositoryId, 10 ,64)
+	if err != nil {
+		logrus.Error("[CreateNewFile] repositoryId ParseInt")
+		return nil, err
+	}
+	userId, err := strconv.ParseInt(req.UserId, 10 ,64)
+	if err != nil {
+		logrus.Error("[CreateNewFile] userId ParseInt")
+		return nil, err
+	}
+	ttype, err := strconv.Atoi(req.Type)
+	if err != nil {
+		logrus.Error("[CreateNewFile] ttype ParseInt")
+		return nil, err
+	}
+	id := util.GenId()
+	err = stage.DCreateFileDeatil(req.Name, userId, repositoryId, id, ttype)
+	if err != nil {
+		logrus.Error("[CreateNewFile] err ", err.Error())
+		return nil, err
+	}
+	switch req.Type {
+	case constant.TextFileString:
+		err = stage.DCreateTextFile(req.Name, req.Content, id)
+		if err != nil {
+			return nil, err
+		}
+	case constant.TableFileString:
+		createTableFile(req.Name, req.TableContent, id)
+
+	}
+	return &json_struct.CreateNewFileResponse{
+		Base: &json_struct.BaseResponse{Body: constant.SUCCESS},
+	}, nil
+}
+
+func createTableFile(name string, tableContent *json_struct.TableContent, fileId int64) error {
+	id := util.GenId()
+	rowLen, err := strconv.ParseInt(tableContent.RowLen, 10 ,64)
+	if err != nil {
+		logrus.Error("[createTableFile] rowLen ParseInt ")
+		return err
+	}
+	lineLen, err := strconv.ParseInt(tableContent.LineLen, 10 ,64)
+	if err != nil {
+		logrus.Error("[createTableFile] lineLen ParseInt ")
+		return err
+	}
+	err = stage.DCreateTableFile(id, fileId, rowLen, lineLen, name)
+	if err != nil {
+		return err
+	}
+	for _, v := range tableContent.TableCells {
+		row, err := strconv.ParseInt(v.Row, 10 ,64)
+		if err != nil {
+			return err
+		}
+		line, err := strconv.ParseInt(v.Line, 10 ,64)
+		if err != nil {
+			return err
+		}
+		err = stage.DCreateTableCell(id, row, line, v.Content)
+		if err != nil {
+			logrus.Error("[createTableFile]  err ", err.Error())
+			return err
+		}
+	}
+	return nil
 }
 
 func DelFile(req *json_struct.DelFileRequest) (*json_struct.DelFileResponse, error) {
-	return nil, nil
+	fileId, err := strconv.ParseInt(req.FileId, 10 ,64)
+	if err != nil {
+		logrus.Error("[DelFile] fileId ParseInt")
+		return nil, err
+	}
+	err = stage.DDelTableDetailById(fileId)
+	if err != nil {
+		return nil, err
+	}
+	return &json_struct.DelFileResponse{
+		Base: &json_struct.BaseResponse{Body: constant.SUCCESS},
+	}, nil
 }

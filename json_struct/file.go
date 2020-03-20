@@ -75,7 +75,7 @@ type CreateNewFileRequest struct {
 	UserId string `json:"user_id"`
 	Name string `json:"name"`
 	Type string `json:"type"`
-	Content *string `json:"content",omitempty`
+	Content string `json:"content",omitempty`
 	TableContent *TableContent `json:"table_content", omitempty`
 }
 
