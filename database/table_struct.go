@@ -24,21 +24,20 @@ type StageRepository struct {
 }
 
 type FileDetail struct {
-	Id             int64     `json:"id"`
-	CreatorId      int64     `json:"creator_id"`
-	FileName       string    `json:"file_name"`
-	StageRespId    int64     `json:"stage_resp_id"`
-	Type           int       `json:"type"`
-	UpdateTime     time.Time `json:"update_time"`
-	CreateTime     time.Time `json:"create_time"`
-	Status         int       `json:"status"`
+	Id          int64     `json:"id"`
+	CreatorId   int64     `json:"creator_id"`
+	StageRespId int64     `json:"stage_resp_id"`
+	Type        int       `json:"type"`
+	UpdateTime  time.Time `json:"update_time"`
+	CreateTime  time.Time `json:"create_time"`
+	Status      int       `json:"status"`
 }
 
 type FileText struct {
 	Id         int64     `json:"id"`
 	Name       string    `json:"name"`
 	Content    string    `json:"content"`
-	Status     int    `json:"status"`
+	Status     int       `json:"status"`
 	UpdateTime time.Time `json:"update_time"`
 	CreateTime time.Time `json:"create_time"`
 	FileId     int64     `json:"file_id"`

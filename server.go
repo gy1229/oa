@@ -41,8 +41,6 @@ func main() {
 	r.POST("/createNewFile", CreateNewFile)
 	r.POST("/delFile", DelFile)
 
-
-
 	r.Run(":19999") // listen and serve on 0.0.0.0:8080 (for windows "localhost:8080")
 }
 

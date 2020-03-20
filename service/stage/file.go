@@ -17,7 +17,7 @@ func UploadFile(c *gin.Context) {
 }
 
 func GetFileList(req *json_struct.GetFileListRequest) (*json_struct.GetFileListResponse, error) {
-	respId, err := strconv.ParseInt(req.RepositoryId, 10 ,64)
+	respId, err := strconv.ParseInt(req.RepositoryId, 10, 64)
 	if err != nil {
 		return nil, err
 	}
@@ -28,16 +28,16 @@ func GetFileList(req *json_struct.GetFileListRequest) (*json_struct.GetFileListR
 	files := make([]*json_struct.File, 0)
 	for k, v := range dfiles {
 		files = append(files, &json_struct.File{
-			Id:          strconv.FormatInt(v.Id,10),
-			Name:        v.FileName,
-			CreateTime:  v.CreateTime,
-			UpdateTime:  v.UpdateTime,
+			Id:         strconv.FormatInt(v.Id, 10),
+			CreateTime: v.CreateTime,
+			UpdateTime: v.UpdateTime,
 		})
 		files[k].CreatorName, _ = data_user.GetUserNameById(v.CreatorId)
+		files[k].Name, _ = stage.DGetFileName(v.Id, v.Type)
 	}
 	return &json_struct.GetFileListResponse{
 		FileList: files,
-		Base: &json_struct.BaseResponse{Body: constant.SUCCESS},
+		Base:     &json_struct.BaseResponse{Body: constant.SUCCESS},
 	}, nil
 
 }
@@ -62,11 +62,11 @@ func GetFileContent(req *json_struct.GetFileContentRequest) (*json_struct.GetFil
 		if err != nil {
 			return nil, err
 		}
-		return &json_struct.GetFileContentResponse {
-			Name: fileText.Name,
-			Type: strconv.Itoa(constant.TextFile),
-			Content: fileText.Content,
-			Base: &json_struct.BaseResponse{Body: constant.SUCCESS},
+		return &json_struct.GetFileContentResponse{
+			Name:    fileText.Name,
+			Type:    strconv.Itoa(constant.TextFile),
+			Content: &fileText.Content,
+			Base:    &json_struct.BaseResponse{Body: constant.SUCCESS},
 		}, nil
 	case constant.TableFile:
 		resp, err := getTableFileContent(fileId)
@@ -89,31 +89,31 @@ func getTableFileContent(fileId int64) (*json_struct.GetFileContentResponse, err
 	tCells := make([]*json_struct.TableCell, 0)
 	for _, v := range tableCells {
 		tCells = append(tCells, &json_struct.TableCell{
-			Id: strconv.FormatInt(v.Id, 10),
+			Id:      strconv.FormatInt(v.Id, 10),
 			Content: v.Content,
 			Row:     strconv.FormatInt(v.Row, 10),
 			Line:    strconv.FormatInt(v.Line, 10),
 		})
 	}
 	content := &json_struct.TableContent{
-		RowLen: strconv.FormatInt(fileTable.RowLen, 10),
-		LineLen: strconv.FormatInt(fileTable.LineLen, 10),
-		TableCells:tCells,
+		RowLen:     strconv.FormatInt(fileTable.RowLen, 10),
+		LineLen:    strconv.FormatInt(fileTable.LineLen, 10),
+		TableCells: tCells,
 	}
 	return &json_struct.GetFileContentResponse{
-		Name: fileTable.Name,
-		Type: strconv.Itoa(constant.TextFile),
+		Name:         fileTable.Name,
+		Type:         strconv.Itoa(constant.TextFile),
 		TableContent: content,
-		Base: &json_struct.BaseResponse{Body: constant.SUCCESS},
+		Base:         &json_struct.BaseResponse{Body: constant.SUCCESS},
 	}, nil
 }
 
 func UpdateTextContent(req *json_struct.UpdateTextContentRequest) (*json_struct.UpdateTextContentResponse, error) {
-	fileId, err := strconv.ParseInt(req.FileId, 10 ,64)
+	fileId, err := strconv.ParseInt(req.FileId, 10, 64)
 	if err != nil {
 		return nil, err
 	}
-	userId, err := strconv.ParseInt(req.UserId, 10 ,64)
+	userId, err := strconv.ParseInt(req.UserId, 10, 64)
 	if err != nil {
 		return nil, err
 	}
@@ -128,13 +128,13 @@ func UpdateTextContent(req *json_struct.UpdateTextContentRequest) (*json_struct.
 }
 
 func UpdateTableContent(req *json_struct.UpdateTableContentRequest) (*json_struct.UpdateTableContentResponse, error) {
-	fileId, err := strconv.ParseInt(req.FileId, 10 ,64)
+	fileId, err := strconv.ParseInt(req.FileId, 10, 64)
 	if err != nil {
 		logrus.Error("[UpdateTableContent] fileId ParseInt")
 		return nil, err
 	}
 	logrus.Info("[UpdateTextContent] fileId is ", fileId)
-	userId, err := strconv.ParseInt(req.UserId, 10 ,64)
+	userId, err := strconv.ParseInt(req.UserId, 10, 64)
 	if err != nil {
 		logrus.Error("[UpdateTableContent] userId ParseInt")
 		return nil, err
@@ -157,12 +157,12 @@ func UpdateTableContent(req *json_struct.UpdateTableContentRequest) (*json_struc
 }
 
 func CreateNewFile(req *json_struct.CreateNewFileRequest) (*json_struct.CreateNewFileResponse, error) {
-	repositoryId, err := strconv.ParseInt(req.RepositoryId, 10 ,64)
+	repositoryId, err := strconv.ParseInt(req.RepositoryId, 10, 64)
 	if err != nil {
 		logrus.Error("[CreateNewFile] repositoryId ParseInt")
 		return nil, err
 	}
-	userId, err := strconv.ParseInt(req.UserId, 10 ,64)
+	userId, err := strconv.ParseInt(req.UserId, 10, 64)
 	if err != nil {
 		logrus.Error("[CreateNewFile] userId ParseInt")
 		return nil, err
@@ -195,12 +195,12 @@ func CreateNewFile(req *json_struct.CreateNewFileRequest) (*json_struct.CreateNe
 
 func createTableFile(name string, tableContent *json_struct.TableContent, fileId int64) error {
 	id := util.GenId()
-	rowLen, err := strconv.ParseInt(tableContent.RowLen, 10 ,64)
+	rowLen, err := strconv.ParseInt(tableContent.RowLen, 10, 64)
 	if err != nil {
 		logrus.Error("[createTableFile] rowLen ParseInt ")
 		return err
 	}
-	lineLen, err := strconv.ParseInt(tableContent.LineLen, 10 ,64)
+	lineLen, err := strconv.ParseInt(tableContent.LineLen, 10, 64)
 	if err != nil {
 		logrus.Error("[createTableFile] lineLen ParseInt ")
 		return err
@@ -210,11 +210,11 @@ func createTableFile(name string, tableContent *json_struct.TableContent, fileId
 		return err
 	}
 	for _, v := range tableContent.TableCells {
-		row, err := strconv.ParseInt(v.Row, 10 ,64)
+		row, err := strconv.ParseInt(v.Row, 10, 64)
 		if err != nil {
 			return err
 		}
-		line, err := strconv.ParseInt(v.Line, 10 ,64)
+		line, err := strconv.ParseInt(v.Line, 10, 64)
 		if err != nil {
 			return err
 		}
@@ -228,7 +228,7 @@ func createTableFile(name string, tableContent *json_struct.TableContent, fileId
 }
 
 func DelFile(req *json_struct.DelFileRequest) (*json_struct.DelFileResponse, error) {
-	fileId, err := strconv.ParseInt(req.FileId, 10 ,64)
+	fileId, err := strconv.ParseInt(req.FileId, 10, 64)
 	if err != nil {
 		logrus.Error("[DelFile] fileId ParseInt")
 		return nil, err

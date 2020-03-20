@@ -37,7 +37,7 @@ func CreateRepository(req *json_struct.CreateRepositoryRequest) (*json_struct.Cr
 		return nil, err
 	}
 	return &json_struct.CreateRepositoryResponse{
-		Id: fmt.Sprintf("%d", *id),
+		Id:   fmt.Sprintf("%d", *id),
 		Base: &json_struct.BaseResponse{Body: constant.SUCCESS},
 	}, nil
 }
@@ -52,7 +52,7 @@ func GetRepositoryList(req *json_struct.GetRepositoryListRequest) (*json_struct.
 		if err == gorm.ErrRecordNotFound {
 			return &json_struct.GetRepositoryListResponse{
 				RepositoryList: nil,
-				Base: &json_struct.BaseResponse{Body: constant.SUCCESS},
+				Base:           &json_struct.BaseResponse{Body: constant.SUCCESS},
 			}, nil
 		}
 		logrus.Error("GetRepositoryList err ", err.Error())
@@ -61,17 +61,17 @@ func GetRepositoryList(req *json_struct.GetRepositoryListRequest) (*json_struct.
 	repList := make([]*json_struct.Repository, 0)
 	for k, v := range stage {
 		repList = append(repList, &json_struct.Repository{
-			Id:   strconv.FormatInt(v.Id,10),
-			Name: v.Name,
+			Id:         strconv.FormatInt(v.Id, 10),
+			Name:       v.Name,
 			CreateTime: v.CreateTime,
 			UpdateTime: v.UpdateTime,
-			Authority: &v.Authority,
+			Authority:  &v.Authority,
 		})
 		repList[k].CreatorName, _ = data_user.GetUserNameById(v.CreatorId)
 	}
 	return &json_struct.GetRepositoryListResponse{
 		RepositoryList: repList,
-		Base: &json_struct.BaseResponse{Body: constant.SUCCESS},
+		Base:           &json_struct.BaseResponse{Body: constant.SUCCESS},
 	}, nil
 }
 
@@ -85,8 +85,8 @@ func UpdateRepository(req *json_struct.UpdateRepositoryRequest) (*json_struct.Up
 		return nil, err
 	}
 	rep := database.StageRepository{
-		Name:req.Name,
-		Authority:authority,
+		Name:      req.Name,
+		Authority: authority,
 	}
 	if err := database.DB.Model(&rep).Where("id = ?", repId).Updates(rep).Error; err != nil {
 		logrus.Error("UpdateRepository err ", err.Error())

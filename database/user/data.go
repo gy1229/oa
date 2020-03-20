@@ -15,5 +15,3 @@ func GetUserNameById(id int64) (string, error) {
 	}
 	return user.UserName, nil
 }
-
-

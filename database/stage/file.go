@@ -1,15 +1,17 @@
 package stage
 
 import (
+	"github.com/gy1229/oa/constant"
 	"github.com/gy1229/oa/database"
 	"github.com/gy1229/oa/util"
 	"github.com/sirupsen/logrus"
 	"time"
 )
+
 // 数据库相关D开头
 func DGetFileListByRepId(repId int64) ([]*database.FileDetail, error) {
 	files := make([]*database.FileDetail, 0)
-	if err := database.DB.Where("stage_resp_id = ?", repId).Find(&files).Error; err != nil {
+	if err := database.DB.Where("stage_resp_id = ? AND status=0", repId).Find(&files).Error; err != nil {
 		logrus.Error("DGetFileListByRepId err ", err.Error())
 		return nil, err
 	}
@@ -45,7 +47,7 @@ func DGetTableFileByFileId(fileId int64) (*database.FileTable, error) {
 
 func DGetTableCellsByFileId(fileId int64) ([]*database.TableCell, error) {
 	var tableCells []*database.TableCell
-	if err := database.DB.Where("file_id = ?", fileId).Find(&tableCells).Error; err != nil {
+	if err := database.DB.Where("file_table_id = ?", fileId).Find(&tableCells).Error; err != nil {
 		logrus.Error("DGetTextFileContent err ", err.Error())
 		return nil, err
 	}
@@ -53,11 +55,11 @@ func DGetTableCellsByFileId(fileId int64) ([]*database.TableCell, error) {
 }
 
 func DUpdateTextContent(fileId int64, content string, name string) error {
-	user := database.FileText{
-		Content:content,
-		Name:name,
+	fileText := database.FileText{
+		Content: content,
+		Name:    name,
 	}
-	if err := database.DB.Model(&user).Where("id = ?", fileId).Updates(&user).Error; err != nil {
+	if err := database.DB.Model(&fileText).Where("file_id = ?", fileId).Updates(&fileText).Error; err != nil {
 		logrus.Error("[DUpdateTextContent] err ", err.Error())
 		return err
 	}
@@ -66,7 +68,7 @@ func DUpdateTextContent(fileId int64, content string, name string) error {
 
 func DUpdateTableContent(cellId int64, content string) error {
 	cell := database.TableCell{
-		Content:     content,
+		Content: content,
 	}
 	if err := database.DB.Model(&cell).Where("id = ?", cellId).Updates(&cell).Error; err != nil {
 		logrus.Error("[DUpdateTableContent] err ", err.Error())
@@ -94,14 +96,13 @@ func DCreateTextFile(name, content string, fileId int64) error {
 
 func DCreateFileDeatil(name string, userId, stageRepId, id int64, ttype int) error {
 	fileDetail := database.FileDetail{
-		Id:             id,
-		CreatorId:      userId,
-		FileName:       name,
-		StageRespId:    stageRepId,
-		Type:           ttype,
-		UpdateTime:     time.Now(),
-		CreateTime:     time.Now(),
-		Status:         0,
+		Id:          id,
+		CreatorId:   userId,
+		StageRespId: stageRepId,
+		Type:        ttype,
+		UpdateTime:  time.Now(),
+		CreateTime:  time.Now(),
+		Status:      0,
 	}
 	if err := database.DB.Create(fileDetail).Error; err != nil {
 		logrus.Error("[DCreateFileDeatil] err ", err.Error())
@@ -130,11 +131,11 @@ func DCreateTableFile(id, fileId, rowLen, lineLen int64, name string) error {
 
 func DCreateTableCell(tableFileId, row, line int64, content string) error {
 	tableCell := database.TableCell{
-		Id:          util.GenId(),
-		FileTableId: tableFileId,
-		Content:     content,
-		Row:         row,
-		Line:        line,
+		Id:      util.GenId(),
+		FileTableId:  tableFileId,
+		Content: content,
+		Row:     row,
+		Line:    line,
 	}
 	if err := database.DB.Create(tableCell).Error; err != nil {
 		logrus.Error("[DCreateTableCell] err ", err.Error())
@@ -145,11 +146,31 @@ func DCreateTableCell(tableFileId, row, line int64, content string) error {
 
 func DDelTableDetailById(fileId int64) error {
 	fileDetail := database.FileDetail{
-		Status:     1,
+		Status: 1,
 	}
 	if err := database.DB.Model(&fileDetail).Where("id = ?", fileId).Updates(&fileDetail).Error; err != nil {
 		logrus.Error("[DUpdateTableContent] err ", err.Error())
 		return err
 	}
 	return nil
+}
+
+func DGetFileName(file_id int64, ttype int) (string, error) {
+	switch ttype {
+	case constant.TableFile:
+		fileTable := &database.FileTable{}
+		if err := database.DB.Where("file_id = ?", file_id).Find(&fileTable).Error; err != nil {
+			logrus.Error("DGetFileListByRepId err ", err.Error())
+			return "", err
+		}
+		return fileTable.Name, nil
+	default:
+		fileText := &database.FileText{}
+		if err := database.DB.Where("file_id = ?", file_id).Find(&fileText).Error; err != nil {
+			logrus.Error("DGetFileListByRepId err ", err.Error())
+			return "", err
+		}
+		return fileText.Name, nil
+	}
+
 }
