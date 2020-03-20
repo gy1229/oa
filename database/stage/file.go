@@ -1,0 +1,63 @@
+package stage
+
+import (
+	"github.com/gy1229/oa/database"
+	"github.com/sirupsen/logrus"
+)
+// 数据库相关D开头
+func DGetFileListByRepId(repId int64) ([]*database.FileDetail, error) {
+	files := make([]*database.FileDetail, 0)
+	if err := database.DB.Where("stage_resp_id = ?", repId).Find(&files).Error; err != nil {
+		logrus.Error("DGetFileListByRepId err ", err.Error())
+		return nil, err
+	}
+	return files, nil
+}
+
+func DGetFileDetalByFileId(fileId int64) (*database.FileDetail, error) {
+	file := &database.FileDetail{}
+	if err := database.DB.Where("id = ?", fileId).Find(&file).Error; err != nil {
+		logrus.Error("DGetFileDetalByFileId err ", err.Error())
+		return nil, err
+	}
+	return file, nil
+}
+
+func DGetTextFileByFileId(fileId int64) (*database.FileText, error) {
+	fileText := &database.FileText{}
+	if err := database.DB.Where("file_id = ?", fileId).Find(&fileText).Error; err != nil {
+		logrus.Error("DGetTextFileByFileId err ", err.Error())
+		return nil, err
+	}
+	return fileText, nil
+}
+
+func DGetTableFileByFileId(fileId int64) (*database.FileTable, error) {
+	fileTable := &database.FileTable{}
+	if err := database.DB.Where("file_id = ?", fileId).Find(&fileTable).Error; err != nil {
+		logrus.Error("DGetTableFileByFileId err ", err.Error())
+		return nil, err
+	}
+	return fileTable, nil
+}
+
+func DGetTableCellsByFileId(fileId int64) ([]*database.TableCell, error) {
+	var tableCells []*database.TableCell
+	if err := database.DB.Where("file_id = ?", fileId).Find(&tableCells).Error; err != nil {
+		logrus.Error("DGetTextFileContent err ", err.Error())
+		return nil, err
+	}
+	return tableCells, nil
+}
+
+func DUpdateTextContent(fileId int64, content string, name string) error {
+	user := database.FileText{
+		Content:content,
+		Name:name,
+	}
+	if err := database.DB.Model(&user).Where("id = ?", fileId).Updates(&user).Error; err != nil {
+		logrus.Error("[DUpdateTextContent] err ", err.Error())
+		return err
+	}
+	return nil
+}

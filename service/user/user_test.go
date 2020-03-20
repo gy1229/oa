@@ -9,7 +9,7 @@ import (
 
 func TestLoadUserMessage(t *testing.T) {
 	test.InitTestConfig2()
-	resp, _ := LoadUserMessage(&json_struct.LoadUserMessageRequest{Account: "guyu"})
+	resp, _ := LoadUserMessage(&json_struct.LoadUserMessageRequest{UserId: "123"})
 	fmt.Println(resp)
 }
 

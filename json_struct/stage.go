@@ -57,3 +57,8 @@ type DelRepositoryRequest struct {
 type DelRepositoryResponse struct {
 	Base *BaseResponse `json:"base"`
 }
+
+type GetRepositoryByIdResponse struct {
+
+}
+

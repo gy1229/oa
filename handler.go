@@ -121,3 +121,75 @@ func DelRepository(c *gin.Context) {
 	}
 	c.JSON(http.StatusOK, util.TranformStruct2GinH(resp))
 }
+
+func GetRepositoryById(c *gin.Context) {
+	//id := c.Query("userId")
+	//repositoryId := c.Query("repositoryId")
+
+}
+
+func GetFileList(c *gin.Context) {
+	var req json_struct.GetFileListRequest
+	util.GenHandlerRequest(c, &req)
+	resp, err := stage.GetFileList(&req)
+	if err != nil {
+		c.JSON(http.StatusOK, util.GenDefaultFailResp(err.Error()))
+		return
+	}
+	c.JSON(http.StatusOK, util.TranformStruct2GinH(resp))
+}
+
+func GetFileContent(c *gin.Context) {
+	var req json_struct.GetFileContentRequest
+	util.GenHandlerRequest(c, &req)
+	resp, err := stage.GetFileContent(&req)
+	if err != nil {
+		c.JSON(http.StatusOK, util.GenDefaultFailResp(err.Error()))
+		return
+	}
+	c.JSON(http.StatusOK, util.TranformStruct2GinH(resp))
+}
+
+func UpdateTextContent(c *gin.Context) {
+	var req json_struct.UpdateTextContentRequest
+	util.GenHandlerRequest(c, &req)
+	resp, err := stage.UpdateTextContent(&req)
+	if err != nil {
+		c.JSON(http.StatusOK, util.GenDefaultFailResp(err.Error()))
+		return
+	}
+	c.JSON(http.StatusOK, util.TranformStruct2GinH(resp))
+}
+
+func UpdateTableContent(c *gin.Context) {
+	var req json_struct.UpdateTableContentRequest
+	util.GenHandlerRequest(c, &req)
+	resp, err := stage.UpdateTableContent(&req)
+	if err != nil {
+		c.JSON(http.StatusOK, util.GenDefaultFailResp(err.Error()))
+		return
+	}
+	c.JSON(http.StatusOK, util.TranformStruct2GinH(resp))
+}
+
+func CreateNewFile(c *gin.Context) {
+	var req json_struct.CreateNewFileRequest
+	util.GenHandlerRequest(c, &req)
+	resp, err := stage.CreateNewFile(&req)
+	if err != nil {
+		c.JSON(http.StatusOK, util.GenDefaultFailResp(err.Error()))
+		return
+	}
+	c.JSON(http.StatusOK, util.TranformStruct2GinH(resp))
+}
+
+func DelFile(c *gin.Context) {
+	var req json_struct.DelFileRequest
+	util.GenHandlerRequest(c, &req)
+	resp, err := stage.DelFile(&req)
+	if err != nil {
+		c.JSON(http.StatusOK, util.GenDefaultFailResp(err.Error()))
+		return
+	}
+	c.JSON(http.StatusOK, util.TranformStruct2GinH(resp))
+}

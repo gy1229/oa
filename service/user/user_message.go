@@ -45,14 +45,14 @@ func UpdateUserMessage(req *json_struct.UpdateUserRequest) (*json_struct.UpdateU
 
 func InsertUserMessage(req *json_struct.RegisterUserRequest) (*json_struct.RegisterUserResponse, error) {
 	user := database.OaUser{
-		Id:         util.Int64toP(util.GenId()),
+		Id:         util.GenId(),
 		Account:    req.UserBase.Account,
 		UserName:   req.UserName,
 		Password:   req.UserBase.Password,
 		UpdateTime: time.Now(),
 		CreateTime: time.Now(),
-		ThirdId:    util.Int64toP(-1),
-		ImageId:    util.Int64toP(-1),
+		ThirdId:    -1,
+		ImageId:    -1,
 	}
 	if err := database.DB.Create(user).Error; err != nil {
 		logrus.Error("InsertUserMessage err ", err.Error())
@@ -78,7 +78,7 @@ func LoginUser(req *json_struct.LoginUserRequest) (*json_struct.LoginUserRespons
 	}
 	if user.Password == req.UserBase.Password {
 		return &json_struct.LoginUserResponse{
-			UserId: strconv.FormatInt(*user.Id,10),
+			UserId: strconv.FormatInt(user.Id,10),
 			Base:   &json_struct.BaseResponse{Body: constant.SUCCESS},
 		}, nil
 	}

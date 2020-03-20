@@ -24,13 +24,13 @@ func CreateRepository(req *json_struct.CreateRepositoryRequest) (*json_struct.Cr
 	}
 	id := util.Int64toP(util.GenId())
 	repository := database.StageRepository{
-		Id:         id,
+		Id:         *id,
 		Name:       req.Name,
-		CreatorId:  &userId,
-		Authority:  &authority,
+		CreatorId:  userId,
+		Authority:  authority,
 		UpdateTime: time.Now(),
 		CreateTime: time.Now(),
-		Status:     util.Int2P(0),
+		Status:     0,
 	}
 	if err := database.DB.Create(repository).Error; err != nil {
 		logrus.Error("CreateRepository err ", err.Error())
@@ -61,11 +61,11 @@ func GetRepositoryList(req *json_struct.GetRepositoryListRequest) (*json_struct.
 	repList := make([]*json_struct.Repository, 0)
 	for k, v := range stage {
 		repList = append(repList, &json_struct.Repository{
-			Id:   strconv.FormatInt(*v.Id,10),
+			Id:   strconv.FormatInt(v.Id,10),
 			Name: v.Name,
 			CreateTime: v.CreateTime,
 			UpdateTime: v.UpdateTime,
-			Authority: v.Authority,
+			Authority: &v.Authority,
 		})
 		repList[k].CreatorName, _ = data_user.GetUserNameById(v.CreatorId)
 	}
@@ -86,7 +86,7 @@ func UpdateRepository(req *json_struct.UpdateRepositoryRequest) (*json_struct.Up
 	}
 	rep := database.StageRepository{
 		Name:req.Name,
-		Authority:&authority,
+		Authority:authority,
 	}
 	if err := database.DB.Model(&rep).Where("id = ?", repId).Updates(rep).Error; err != nil {
 		logrus.Error("UpdateRepository err ", err.Error())
@@ -103,7 +103,7 @@ func DelRepository(req *json_struct.DelRepositoryRequest) (*json_struct.DelRepos
 		return nil, err
 	}
 	rep := database.StageRepository{
-		Status: util.Int2P(1),
+		Status: 1,
 	}
 	if err := database.DB.Model(&rep).Where("id = ?", repId).Updates(rep).Error; err != nil {
 		logrus.Error("UpdateRepository err ", err.Error())
@@ -113,3 +113,5 @@ func DelRepository(req *json_struct.DelRepositoryRequest) (*json_struct.DelRepos
 		Base: &json_struct.BaseResponse{Body: constant.SUCCESS},
 	}, nil
 }
+
+//func GetRepositoryById(req *json_struct.GetRepositoryListResponse)

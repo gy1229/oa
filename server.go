@@ -31,7 +31,17 @@ func main() {
 	r.POST("/updateRepository", UpdateRepository)
 	r.POST("/delRepository", DelRepository)
 
-	r.GET("/getRepositoryById/:userId/:repositoryId")
+	r.GET("/getRepositoryById/:userId/:repositoryId", GetRepositoryById)
+
+	// file
+	r.POST("/getFileList", GetFileList)
+	r.POST("/getFileContent", GetFileContent)
+	r.POST("/updateTextContent", UpdateTextContent)
+	r.POST("/updateTableContent", UpdateTableContent)
+	r.POST("/createNewFile", CreateNewFile)
+	r.POST("/delFile", DelFile)
+
+
 
 	r.Run(":19999") // listen and serve on 0.0.0.0:8080 (for windows "localhost:8080")
 }
