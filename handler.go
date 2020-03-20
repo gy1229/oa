@@ -121,9 +121,16 @@ func DelRepository(c *gin.Context) {
 	c.JSON(http.StatusOK, util.TranformStruct2GinH(resp))
 }
 
-func GetRepositoryById(c *gin.Context) {
-	//id := c.Query("userId")
-	//repositoryId := c.Query("repositoryId")
+func GGetFileList(c *gin.Context) {
+	var req json_struct.GetFileListRequest
+	req.UserId = c.Query("userId")
+	req.RepositoryId = c.Query("repositoryId")
+	resp, err := stage.GetFileList(&req)
+	if err != nil {
+		c.JSON(http.StatusOK, util.GenDefaultFailResp(err.Error()))
+		return
+	}
+	c.JSON(http.StatusOK, util.TranformStruct2GinH(resp))
 
 }
 
@@ -131,6 +138,18 @@ func GetFileList(c *gin.Context) {
 	var req json_struct.GetFileListRequest
 	util.GenHandlerRequest(c, &req)
 	resp, err := stage.GetFileList(&req)
+	if err != nil {
+		c.JSON(http.StatusOK, util.GenDefaultFailResp(err.Error()))
+		return
+	}
+	c.JSON(http.StatusOK, util.TranformStruct2GinH(resp))
+}
+
+func GGetFileContent(c *gin.Context) {
+	var req json_struct.GetFileContentRequest
+	req.FileId = c.Query("fileId")
+	req.UserId = c.Query("userId")
+	resp, err := stage.GetFileContent(&req)
 	if err != nil {
 		c.JSON(http.StatusOK, util.GenDefaultFailResp(err.Error()))
 		return

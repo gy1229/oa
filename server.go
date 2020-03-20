@@ -31,7 +31,7 @@ func main() {
 	r.POST("/updateRepository", UpdateRepository)
 	r.POST("/delRepository", DelRepository)
 
-	r.GET("/getRepositoryById/:userId/:repositoryId", GetRepositoryById)
+	r.GET("/getFileList/:userId/:repositoryId", GGetFileList)
 
 	// file
 	r.POST("/getFileList", GetFileList)
@@ -40,6 +40,8 @@ func main() {
 	r.POST("/updateTableContent", UpdateTableContent)
 	r.POST("/createNewFile", CreateNewFile)
 	r.POST("/delFile", DelFile)
+
+	r.GET("/getFileDetail/:userId/:fileId", GGetFileContent)
 
 	r.Run(":19999") // listen and serve on 0.0.0.0:8080 (for windows "localhost:8080")
 }
