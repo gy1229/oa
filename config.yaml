@@ -3,3 +3,13 @@ db:
   addr: 49.235.180.218
   username: root
   password: 123456
+
+redis:
+  Host: 49.235.180.218:6379
+  Password: guyu1998
+  MaxIdle: 30
+  MaxActive: 30
+  IdleTimeout: 200
+
+server:
+  Port: :19999

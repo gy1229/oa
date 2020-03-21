@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/gy1229/oa/database"
+	"github.com/gy1229/oa/gredis"
 	"github.com/gy1229/oa/util"
 	"net/http"
 	"strings"
@@ -13,6 +14,7 @@ func main() {
 	util.InitViper()
 	database.InitDB()
 	util.InitID()
+	gredis.Setup()
 	r := gin.Default()
 	r.Use(Cors())
 
