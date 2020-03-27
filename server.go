@@ -5,6 +5,8 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/gy1229/oa/database"
 	"github.com/gy1229/oa/gredis"
+	"github.com/gy1229/oa/kafka"
+	"github.com/gy1229/oa/service/file_server"
 	"github.com/gy1229/oa/util"
 	"net/http"
 	"strings"
@@ -15,6 +17,9 @@ func main() {
 	database.InitDB()
 	util.InitID()
 	gredis.Setup()
+	kafka.ConsumerInit()
+	kafka.ProductInit()
+	file_server.FileServerInit()
 	r := gin.Default()
 	r.Use(Cors())
 
@@ -25,6 +30,8 @@ func main() {
 	r.POST("/updateUserMessage", UpdateUserMessage)
 	r.POST("/loadUserMessage", LoadUserMessage)
 	r.POST("/certainAccount", CertainAccount)
+	r.POST("/uploadAvatar", UploadAvatar)
+	r.POST("/getAvatar", GetAvatoar)
 
 	// stage
 	r.POST("/uploadFile", UploadFile) // todo

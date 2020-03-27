@@ -19,12 +19,13 @@ func LoadUserMessage(req *json_struct.LoadUserMessageRequest) (*json_struct.Load
 		return nil, err
 	}
 	if err := database.DB.Where("id = ?", userId).First(&user).Error; err != nil {
-		logrus.Error("LoadUserMessage err ", err.Error())
+		logrus.Error("[LoadUserMessage] err msg", err.Error())
 		return nil, err
 	}
 	return &json_struct.LoadUserMessageResponse{
 		Account:  user.Account,
 		UserName: user.UserName,
+		ImageId: strconv.FormatInt(user.ImageId, 10),
 		Base:     &json_struct.BaseResponse{Body: constant.SUCCESS},
 	}, nil
 }
@@ -35,7 +36,7 @@ func UpdateUserMessage(req *json_struct.UpdateUserRequest) (*json_struct.UpdateU
 		UserName: req.UserName,
 	}
 	if err := database.DB.Model(&user).Where("account = ?", req.Account).Updates(user).Error; err != nil {
-		logrus.Error("UpdateUserMessage err ", err.Error())
+		logrus.Error("[UpdateUserMessage] err msg", err.Error())
 		return nil, err
 	}
 	return &json_struct.UpdateUserResponse{
@@ -44,6 +45,10 @@ func UpdateUserMessage(req *json_struct.UpdateUserRequest) (*json_struct.UpdateU
 }
 
 func InsertUserMessage(req *json_struct.RegisterUserRequest) (*json_struct.RegisterUserResponse, error) {
+	imageId, err := strconv.ParseInt(req.ImageId, 10, 64)
+	if err != nil {
+		return nil, err
+	}
 	user := database.OaUser{
 		Id:         util.GenId(),
 		Account:    req.UserBase.Account,
@@ -52,10 +57,10 @@ func InsertUserMessage(req *json_struct.RegisterUserRequest) (*json_struct.Regis
 		UpdateTime: time.Now(),
 		CreateTime: time.Now(),
 		ThirdId:    -1,
-		ImageId:    -1,
+		ImageId:    imageId,
 	}
 	if err := database.DB.Create(user).Error; err != nil {
-		logrus.Error("InsertUserMessage err ", err.Error())
+		logrus.Error("[InsertUserMessage] err msg", err.Error())
 		return nil, err
 	}
 	return &json_struct.RegisterUserResponse{
@@ -73,7 +78,7 @@ func LoginUser(req *json_struct.LoginUserRequest) (*json_struct.LoginUserRespons
 				Base: &json_struct.BaseResponse{Body: constant.LoginFailAccount},
 			}, nil
 		}
-		logrus.Error("UpdateUserMessage err ", err.Error())
+		logrus.Error("[LoginUser] err msg", err.Error())
 		return nil, err
 	}
 	if user.Password == req.UserBase.Password {
@@ -97,7 +102,7 @@ func CertainAccount(req *json_struct.CertainAccountRequest) (*json_struct.Certai
 				Base: &json_struct.BaseResponse{Body: constant.SUCCESS},
 			}, nil
 		}
-		logrus.Error("UpdateUserMessage err ", err.Error())
+		logrus.Error("[CertainAccount] err msg", err.Error())
 		return nil, err
 	}
 	return &json_struct.CertainAccountResponse{

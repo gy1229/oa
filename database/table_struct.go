@@ -61,3 +61,11 @@ type TableCell struct {
 	Row         int64  `json:"row"`
 	Line        int64  `json:"line"`
 }
+
+type ImageFile struct {
+	Id         int64     `json:"id"`
+	ImageFile  string    `json:"image_file"`
+	CreateTime time.Time `json:"create_time"`
+	UpdateTime time.Time `json:"update_time"`
+	ImageSize  int64     `json:"image_size"`
+}

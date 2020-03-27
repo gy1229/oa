@@ -13,3 +13,12 @@ redis:
 
 server:
   Port: :19999
+
+FileServer:
+  Addr: 49.235.180.218:50001
+
+kafka:
+  ConsumerAddr: 49.235.180.218:9092
+  ProductAddr: 49.235.180.218:9092
+  TriggerTopic: trigger_message
+  ActionTpoic: action_message

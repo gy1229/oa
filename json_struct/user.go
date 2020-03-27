@@ -8,6 +8,7 @@ type UserBase struct {
 type RegisterUserRequest struct {
 	UserBase *UserBase `json:"user_base"`
 	UserName string    `json:"user_name"  binding:"required"`
+	ImageId string `json:"image_id"`
 }
 
 type RegisterUserResponse struct {
@@ -40,6 +41,7 @@ type LoadUserMessageRequest struct {
 type LoadUserMessageResponse struct {
 	Account  string        `json:"account" binding`
 	UserName string        `json:"user_name"  binding:"required"`
+	ImageId string `json:"image_id"`
 	Base     *BaseResponse `json:"base"`
 }
 
@@ -49,4 +51,23 @@ type CertainAccountRequest struct {
 
 type CertainAccountResponse struct {
 	Base *BaseResponse `json:"base"`
+}
+
+type UploadAvatarRequest struct {
+	FileContent []byte `json:"file_content"`
+	Name        string `json:"name"`
+	FileType string `json:"file_type"`
+}
+type UploadAvatarResponse struct {
+	ImageId string         `json:"image_id"`
+	Base    *BaseResponse `json:"base"`
+}
+
+type GetAvatarRequest struct {
+	ImageId string `json:"image_id"`
+}
+
+type GetAvatarResponse struct {
+	ImageFile []byte `json:"image_file"`
+	Base    *BaseResponse `json:"base"`
 }

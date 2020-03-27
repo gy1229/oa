@@ -1,11 +1,14 @@
 package main
 
 import (
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/gy1229/oa/json_struct"
+	"github.com/gy1229/oa/service/file_server"
 	"github.com/gy1229/oa/service/stage"
 	"github.com/gy1229/oa/service/user"
 	"github.com/gy1229/oa/util"
+	"io/ioutil"
 	"net/http"
 )
 
@@ -70,7 +73,47 @@ func CertainAccount(c *gin.Context) {
 }
 
 func UploadFile(c *gin.Context) {
+	fmt.Println(c)
 	//header, err := c.FormFile(constant.UploadFileKey)
+}
+
+func UploadAvatar(c *gin.Context) {
+	formFile, _ := c.FormFile("file")
+	var req json_struct.UploadAvatarRequest
+	file, _ := formFile.Open()
+	req.Name = formFile.Filename
+	fileByte, _ := ioutil.ReadAll(file)
+	req.FileContent = fileByte
+	//filename := file.Filename
+	resp, err := file_server.UploadAvatar(c, &req)
+	if err != nil {
+		c.JSON(http.StatusOK, util.GenDefaultFailResp(err.Error()))
+		return
+	}
+	c.JSON(http.StatusOK, util.TranformStruct2GinH(resp))
+
+}
+
+func GetAvatoar(c *gin.Context) {
+	var req json_struct.GetAvatarRequest
+	util.GenHandlerRequest(c, &req)
+	resp, err := file_server.GetAvatoar(c, &req)
+	if err != nil {
+		c.JSON(http.StatusOK, util.GenDefaultFailResp(err.Error()))
+		return
+	}
+	c.Writer.Write(resp.ImageFile)
+	//resp, err := user.GetAvator(&req)
+	//if err != nil {
+	//	c.JSON(http.StatusOK, util.GenDefaultFailResp(err.Error()))
+	//	return
+	//}
+	//size, _ := c.Writer.WriteString(resp.ImageFile)
+	//if err != nil {
+	//	return
+	//}
+	//logrus.Info("[GetAvatoar] WriteString size is ", size)
+	//c.JSON(http.StatusOK, util.TranformStruct2GinH(resp))
 }
 
 // CreateRepository 创建仓库
