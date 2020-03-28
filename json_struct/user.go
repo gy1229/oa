@@ -21,6 +21,7 @@ type LoginUserRequest struct {
 
 type LoginUserResponse struct {
 	UserId string        `json:"user_id"`
+	ImageId string `json:"image_id"`
 	Base   *BaseResponse `json:"base"`
 }
 

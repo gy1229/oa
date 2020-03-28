@@ -84,6 +84,7 @@ func LoginUser(req *json_struct.LoginUserRequest) (*json_struct.LoginUserRespons
 	if user.Password == req.UserBase.Password {
 		return &json_struct.LoginUserResponse{
 			UserId: strconv.FormatInt(user.Id, 10),
+			ImageId: strconv.FormatInt(user.ImageId, 10),
 			Base:   &json_struct.BaseResponse{Body: constant.SUCCESS},
 		}, nil
 	}
