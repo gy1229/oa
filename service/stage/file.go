@@ -185,7 +185,10 @@ func CreateNewFile(req *json_struct.CreateNewFileRequest) (*json_struct.CreateNe
 			return nil, err
 		}
 	case constant.TableFileString:
-		CreateTableFile(req.Name, req.TableContent, id)
+		err = CreateTableFile(req.Name, req.TableContent, id)
+		if err != nil {
+			return nil, err
+		}
 
 	}
 	return &json_struct.CreateNewFileResponse{

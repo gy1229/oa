@@ -29,19 +29,24 @@ func UploadFile2Stage(fileHeader *multipart.FileHeader, userIdS, repIdS string) 
 	if err != nil {
 		return nil
 	}
+	fileId := util.GenId()
+	err = stage.DCreateFileDeatil(fileHeader.Filename, userId, repId, fileId, constant.TableFile)
+	if err != nil {
+		return err
+	}
 	fNameLast := path.Ext(fileHeader.Filename)
 	switch fNameLast {
 	case ".txt":
-		Read2StageTextFile(fileHeader, userId, repId)
+		Read2StageTextFile(fileHeader, fileId)
 	case ".xlsx":
-		Read2StageTableFile(fileHeader, userId, repId)
+		Read2StageTableFile(fileHeader, fileId)
 	default:
 		return errors.New("cant find file type")
 	}
 	return nil
 }
 
-func Read2StageTextFile(fileHeader *multipart.FileHeader, userId, repId int64) error {
+func Read2StageTextFile(fileHeader *multipart.FileHeader, fileId int64) error {
 	file, _ := fileHeader.Open()
 	bufSize := viper.GetInt("server.bufSize")
 	buf := make([]byte, bufSize) //一次读取多少个字节
@@ -57,14 +62,10 @@ func Read2StageTextFile(fileHeader *multipart.FileHeader, userId, repId int64) e
 			return err
 		}
 	}
-	return write2TextFile(textByte, userId, repId)
+	return stage.DCreateTextFile(fileHeader.Filename, string(textByte), fileId)
 }
 
-func write2TextFile(content []byte, userId, repId int64) error {
-	return nil
-}
-
-func Read2StageTableFile(fHeader *multipart.FileHeader, userId, repId int64) error {
+func Read2StageTableFile(fHeader *multipart.FileHeader, fileId int64) error {
 	f, _ := fHeader.Open()
 	file, err := excelize.OpenReader(f)
 	if err != nil {
@@ -91,11 +92,6 @@ func Read2StageTableFile(fHeader *multipart.FileHeader, userId, repId int64) err
 		RowLen:     strconv.Itoa(rlen),
 		LineLen:    strconv.Itoa(llen),
 		TableCells: tableCells,
-	}
-	fileId := util.GenId()
-	err = stage.DCreateFileDeatil(fHeader.Filename, userId, repId, fileId, constant.TableFile)
-	if err != nil {
-		return err
 	}
 	err = CreateTableFile(fHeader.Filename, tableContent, fileId)
 	if err != nil {
