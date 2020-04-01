@@ -14,6 +14,7 @@ import (
 
 func main() {
 	util.InitViper()
+	util.InitFileType()
 	database.InitDB()
 	util.InitID()
 	gredis.Setup()

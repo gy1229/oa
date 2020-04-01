@@ -2,8 +2,6 @@ package json_struct
 
 import "time"
 
-type UploadFileRequest struct {
-}
 
 type UploadFileResponse struct {
 	Base *BaseResponse `json:"base"`

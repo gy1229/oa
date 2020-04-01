@@ -185,7 +185,7 @@ func CreateNewFile(req *json_struct.CreateNewFileRequest) (*json_struct.CreateNe
 			return nil, err
 		}
 	case constant.TableFileString:
-		createTableFile(req.Name, req.TableContent, id)
+		CreateTableFile(req.Name, req.TableContent, id)
 
 	}
 	return &json_struct.CreateNewFileResponse{
@@ -193,16 +193,16 @@ func CreateNewFile(req *json_struct.CreateNewFileRequest) (*json_struct.CreateNe
 	}, nil
 }
 
-func createTableFile(name string, tableContent *json_struct.TableContent, fileId int64) error {
+func CreateTableFile(name string, tableContent *json_struct.TableContent, fileId int64) error {
 	id := util.GenId()
 	rowLen, err := strconv.ParseInt(tableContent.RowLen, 10, 64)
 	if err != nil {
-		logrus.Error("[createTableFile] rowLen ParseInt ")
+		logrus.Error("[CreateTableFile] rowLen ParseInt ")
 		return err
 	}
 	lineLen, err := strconv.ParseInt(tableContent.LineLen, 10, 64)
 	if err != nil {
-		logrus.Error("[createTableFile] lineLen ParseInt ")
+		logrus.Error("[CreateTableFile] lineLen ParseInt ")
 		return err
 	}
 	err = stage.DCreateTableFile(id, fileId, rowLen, lineLen, name)
@@ -220,7 +220,7 @@ func createTableFile(name string, tableContent *json_struct.TableContent, fileId
 		}
 		err = stage.DCreateTableCell(id, row, line, v.Content)
 		if err != nil {
-			logrus.Error("[createTableFile]  err ", err.Error())
+			logrus.Error("[CreateTableFile]  err ", err.Error())
 			return err
 		}
 	}

@@ -3,6 +3,7 @@ module github.com/gy1229/oa
 go 1.13
 
 require (
+	github.com/360EntSecGroup-Skylar/excelize v1.4.1
 	github.com/Shopify/sarama v1.26.1
 	github.com/gin-gonic/gin v1.5.0
 	github.com/gitstliu/go-id-worker v0.0.0-20190725025543-5a5fe074e612
@@ -11,5 +12,6 @@ require (
 	github.com/jinzhu/gorm v1.9.12
 	github.com/sirupsen/logrus v1.4.2
 	github.com/spf13/viper v1.6.2
+	github.com/tealeg/xlsx v1.0.5 // indirect
 	google.golang.org/grpc v1.29.0-dev.0.20200326222940-e965f2a60b15
 )

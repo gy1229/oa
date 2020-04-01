@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/gy1229/oa/json_struct"
 	"github.com/gy1229/oa/service/file_server"
@@ -73,7 +72,15 @@ func CertainAccount(c *gin.Context) {
 }
 
 func UploadFile(c *gin.Context) {
-	fmt.Println(c)
+	formFile, _ := c.FormFile("file")
+	userId := c.PostForm("user_id")
+	repId := c.PostForm("repository_id")
+	err := stage.UploadFile2Stage(formFile, userId, repId)
+	if err != nil {
+		c.JSON(http.StatusOK, util.GenDefaultFailResp(err.Error()))
+		return
+	}
+	c.JSON(http.StatusOK, util.TranformStruct2GinH(util.GenDefaultResp("success")))
 	//header, err := c.FormFile(constant.UploadFileKey)
 }
 

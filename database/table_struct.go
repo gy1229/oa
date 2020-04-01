@@ -69,3 +69,39 @@ type ImageFile struct {
 	UpdateTime time.Time `json:"update_time"`
 	ImageSize  int64     `json:"image_size"`
 }
+
+type ActionDefination struct {
+	Id int64 `json:"id"`
+	FlowDefinationId int64 `json:"flow_defination_id"`
+	Postion int `json:"postion"`
+	CreateTime time.Time `json:"create_time"`
+	UpdateTime time.Time `json:"update_time"`
+}
+
+type FlowDefination struct {
+	Id int64 `json:"id"`
+	Name string `json:"name"`
+	CreatorId int64 `json:"creator_id"`
+	Status int `json:"status"`
+	CreateTime time.Time `json:"create_time"`
+	UpdateTime time.Time `json:"update_time"`
+}
+
+type FlowInstance struct {
+	Id int64 `json:"id"`
+	FlowDefinationId int64 `json:"flow_defination_id"`
+	CreateTime time.Time `json:"create_time"`
+	RunStatus int `json:"run_status"`
+}
+
+type FormData struct {
+	Id int64 `json:"id"`
+	ActionDefinationId int64 `json:"action_defination_id"`
+	Key string `json:"key"`
+	Value string `json:"value"`
+}
+
+type Test struct {
+	Id int `json:"id"`
+	Name string `json:"name"`
+}

@@ -2,8 +2,10 @@ package user
 
 import (
 	"fmt"
+	"github.com/gy1229/oa/database"
 	"github.com/gy1229/oa/json_struct"
 	"github.com/gy1229/oa/test"
+	"github.com/sirupsen/logrus"
 	"testing"
 )
 
@@ -29,11 +31,13 @@ func TestInsertUserMessage(t *testing.T) {
 		UserName:"Helloa",
 	})
 }
-func TestUploadAvator(t *testing.T) {
+func TestHello(t *testing.T) {
 	test.InitTestConfig2()
-	UploadAvator(&json_struct.UploadAvatarRequest{
-		FileContent: "hello, img",
-		FileSize:    123,
-		Name:        "hello",
-	})
+	a := database.FileTable{
+		Id:   123,
+		Name: "啊哈哈",
+	}
+	if err := database.DB.Create(a).Error; err != nil {
+		logrus.Error("[InsertUserMessage] err msg", err.Error())
+	}
 }

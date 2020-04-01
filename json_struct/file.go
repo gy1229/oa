@@ -91,3 +91,9 @@ type DelFileRequest struct {
 type DelFileResponse struct {
 	Base *BaseResponse `json:"base"`
 }
+
+
+type UploadFileRequest struct {
+	RepositoryId string        `json:"repository_id"`
+	File string `json:"file"`
+}
