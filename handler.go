@@ -4,8 +4,8 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/gy1229/oa/json_struct"
 	"github.com/gy1229/oa/service/file_server"
-	"github.com/gy1229/oa/service/stage"
-	"github.com/gy1229/oa/service/user"
+	"github.com/gy1229/oa/service/stage_server"
+	"github.com/gy1229/oa/service/user_server"
 	"github.com/gy1229/oa/util"
 	"io/ioutil"
 	"net/http"
@@ -19,7 +19,7 @@ func TestHanlder(c *gin.Context) {
 func RegisterUser(c *gin.Context) {
 	var req json_struct.RegisterUserRequest
 	util.GenHandlerRequest(c, &req)
-	resp, err := user.InsertUserMessage(&req)
+	resp, err := user_server.InsertUserMessage(&req)
 	if err != nil {
 		c.JSON(http.StatusOK, gin.H{"error": err.Error()})
 		return
@@ -30,7 +30,7 @@ func RegisterUser(c *gin.Context) {
 func LoginUser(c *gin.Context) {
 	var req json_struct.LoginUserRequest
 	util.GenHandlerRequest(c, &req)
-	resp, err := user.LoginUser(&req)
+	resp, err := user_server.LoginUser(&req)
 	if err != nil {
 		c.JSON(http.StatusOK, util.GenDefaultFailResp(err.Error()))
 		return
@@ -41,7 +41,7 @@ func LoginUser(c *gin.Context) {
 func UpdateUserMessage(c *gin.Context) {
 	var req json_struct.UpdateUserRequest
 	util.GenHandlerRequest(c, &req)
-	resp, err := user.UpdateUserMessage(&req)
+	resp, err := user_server.UpdateUserMessage(&req)
 	if err != nil {
 		c.JSON(http.StatusOK, util.GenDefaultFailResp(err.Error()))
 		return
@@ -52,7 +52,7 @@ func UpdateUserMessage(c *gin.Context) {
 func LoadUserMessage(c *gin.Context) {
 	var req json_struct.LoadUserMessageRequest
 	util.GenHandlerRequest(c, &req)
-	resp, err := user.LoadUserMessage(&req)
+	resp, err := user_server.LoadUserMessage(&req)
 	if err != nil {
 		c.JSON(http.StatusOK, util.GenDefaultFailResp(err.Error()))
 		return
@@ -63,7 +63,7 @@ func LoadUserMessage(c *gin.Context) {
 func CertainAccount(c *gin.Context) {
 	var req json_struct.CertainAccountRequest
 	util.GenHandlerRequest(c, &req)
-	resp, err := user.CertainAccount(&req)
+	resp, err := user_server.CertainAccount(&req)
 	if err != nil {
 		c.JSON(http.StatusOK, util.GenDefaultFailResp(err.Error()))
 		return
@@ -75,7 +75,7 @@ func UploadFile(c *gin.Context) {
 	formFile, _ := c.FormFile("file")
 	userId := c.PostForm("user_id")
 	repId := c.PostForm("repository_id")
-	err := stage.UploadFile2Stage(formFile, userId, repId)
+	err := stage_server.UploadFile2Stage(formFile, userId, repId)
 	if err != nil {
 		c.JSON(http.StatusOK, util.GenDefaultFailResp(err.Error()))
 		return
@@ -127,7 +127,7 @@ func GetAvatoar(c *gin.Context) {
 func CreateRepository(c *gin.Context) {
 	var req json_struct.CreateRepositoryRequest
 	util.GenHandlerRequest(c, &req)
-	resp, err := stage.CreateRepository(&req)
+	resp, err := stage_server.CreateRepository(&req)
 	if err != nil {
 		c.JSON(http.StatusOK, util.GenDefaultFailResp(err.Error()))
 		return
@@ -139,7 +139,7 @@ func CreateRepository(c *gin.Context) {
 func GetRepositoryList(c *gin.Context) {
 	var req json_struct.GetRepositoryListRequest
 	util.GenHandlerRequest(c, &req)
-	resp, err := stage.GetRepositoryList(&req)
+	resp, err := stage_server.GetRepositoryList(&req)
 	if err != nil {
 		c.JSON(http.StatusOK, util.GenDefaultFailResp(err.Error()))
 		return
@@ -151,7 +151,7 @@ func GetRepositoryList(c *gin.Context) {
 func UpdateRepository(c *gin.Context) {
 	var req json_struct.UpdateRepositoryRequest
 	util.GenHandlerRequest(c, &req)
-	resp, err := stage.UpdateRepository(&req)
+	resp, err := stage_server.UpdateRepository(&req)
 	if err != nil {
 		c.JSON(http.StatusOK, util.GenDefaultFailResp(err.Error()))
 		return
@@ -163,7 +163,7 @@ func UpdateRepository(c *gin.Context) {
 func DelRepository(c *gin.Context) {
 	var req json_struct.DelRepositoryRequest
 	util.GenHandlerRequest(c, &req)
-	resp, err := stage.DelRepository(&req)
+	resp, err := stage_server.DelRepository(&req)
 	if err != nil {
 		c.JSON(http.StatusOK, util.GenDefaultFailResp(err.Error()))
 		return
@@ -175,7 +175,7 @@ func GGetFileList(c *gin.Context) {
 	var req json_struct.GetFileListRequest
 	req.UserId = c.Query("userId")
 	req.RepositoryId = c.Query("repositoryId")
-	resp, err := stage.GetFileList(&req)
+	resp, err := stage_server.GetFileList(&req)
 	if err != nil {
 		c.JSON(http.StatusOK, util.GenDefaultFailResp(err.Error()))
 		return
@@ -187,7 +187,7 @@ func GGetFileList(c *gin.Context) {
 func GetFileList(c *gin.Context) {
 	var req json_struct.GetFileListRequest
 	util.GenHandlerRequest(c, &req)
-	resp, err := stage.GetFileList(&req)
+	resp, err := stage_server.GetFileList(&req)
 	if err != nil {
 		c.JSON(http.StatusOK, util.GenDefaultFailResp(err.Error()))
 		return
@@ -199,7 +199,7 @@ func GGetFileContent(c *gin.Context) {
 	var req json_struct.GetFileContentRequest
 	req.FileId = c.Query("fileId")
 	req.UserId = c.Query("userId")
-	resp, err := stage.GetFileContent(&req)
+	resp, err := stage_server.GetFileContent(&req)
 	if err != nil {
 		c.JSON(http.StatusOK, util.GenDefaultFailResp(err.Error()))
 		return
@@ -210,7 +210,7 @@ func GGetFileContent(c *gin.Context) {
 func GetFileContent(c *gin.Context) {
 	var req json_struct.GetFileContentRequest
 	util.GenHandlerRequest(c, &req)
-	resp, err := stage.GetFileContent(&req)
+	resp, err := stage_server.GetFileContent(&req)
 	if err != nil {
 		c.JSON(http.StatusOK, util.GenDefaultFailResp(err.Error()))
 		return
@@ -221,7 +221,7 @@ func GetFileContent(c *gin.Context) {
 func UpdateTextContent(c *gin.Context) {
 	var req json_struct.UpdateTextContentRequest
 	util.GenHandlerRequest(c, &req)
-	resp, err := stage.UpdateTextContent(&req)
+	resp, err := stage_server.UpdateTextContent(&req)
 	if err != nil {
 		c.JSON(http.StatusOK, util.GenDefaultFailResp(err.Error()))
 		return
@@ -232,7 +232,7 @@ func UpdateTextContent(c *gin.Context) {
 func UpdateTableContent(c *gin.Context) {
 	var req json_struct.UpdateTableContentRequest
 	util.GenHandlerRequest(c, &req)
-	resp, err := stage.UpdateTableContent(&req)
+	resp, err := stage_server.UpdateTableContent(&req)
 	if err != nil {
 		c.JSON(http.StatusOK, util.GenDefaultFailResp(err.Error()))
 		return
@@ -243,7 +243,7 @@ func UpdateTableContent(c *gin.Context) {
 func CreateNewFile(c *gin.Context) {
 	var req json_struct.CreateNewFileRequest
 	util.GenHandlerRequest(c, &req)
-	resp, err := stage.CreateNewFile(&req)
+	resp, err := stage_server.CreateNewFile(&req)
 	if err != nil {
 		c.JSON(http.StatusOK, util.GenDefaultFailResp(err.Error()))
 		return
@@ -254,7 +254,7 @@ func CreateNewFile(c *gin.Context) {
 func DelFile(c *gin.Context) {
 	var req json_struct.DelFileRequest
 	util.GenHandlerRequest(c, &req)
-	resp, err := stage.DelFile(&req)
+	resp, err := stage_server.DelFile(&req)
 	if err != nil {
 		c.JSON(http.StatusOK, util.GenDefaultFailResp(err.Error()))
 		return

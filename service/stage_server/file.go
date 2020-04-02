@@ -1,4 +1,4 @@
-package stage
+package stage_server
 
 import (
 	"errors"

@@ -1,4 +1,4 @@
-package user
+package user_server
 
 import (
 	"github.com/gy1229/oa/constant"
