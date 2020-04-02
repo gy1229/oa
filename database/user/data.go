@@ -1,4 +1,4 @@
-package data_user
+package database_user
 
 import (
 	"github.com/gy1229/oa/database"

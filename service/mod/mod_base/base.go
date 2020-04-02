@@ -1,4 +1,4 @@
-package base
+package mod_base
 
 type BehaviorInstance struct {
 	Key string `json:"key"`

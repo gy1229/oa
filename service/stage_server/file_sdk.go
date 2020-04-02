@@ -48,7 +48,7 @@ func UploadFile2Stage(fileHeader *multipart.FileHeader, userIdS, repIdS string) 
 
 func Read2StageTextFile(fileHeader *multipart.FileHeader, fileId int64) error {
 	file, _ := fileHeader.Open()
-	bufSize := viper.GetInt("server.bufSize")
+	bufSize := viper.GetInt("server.BufSize")
 	buf := make([]byte, bufSize) //一次读取多少个字节
 	bfRd := bufio.NewReader(file)
 	textByte := make([]byte, 1)
