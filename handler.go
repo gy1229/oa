@@ -261,3 +261,27 @@ func DelFile(c *gin.Context) {
 	}
 	c.JSON(http.StatusOK, util.TranformStruct2GinH(resp))
 }
+
+func GetActionList(c *gin.Context) {
+
+}
+
+func GetActionDefination(c *gin.Context) {
+
+}
+
+func GetFlowDefinationDetail(c *gin.Context) {
+
+}
+
+func CreateFlowDefination(c *gin.Context) {
+
+}
+
+func UpdateFlowDefination(c *gin.Context) {
+
+}
+
+func GetFlowDefinationList(c *gin.Context) {
+
+}

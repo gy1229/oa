@@ -53,6 +53,15 @@ func main() {
 
 	r.GET("/getFileDetail/:userId/:fileId", GGetFileContent)
 
+
+	// automation
+	r.POST("/getActionList", GetActionList)
+	r.POST("/getActionDefination", GetActionDefination)
+	r.POST("/getFlowDefinationDetail", GetFlowDefinationDetail)
+	r.POST("/createFlowDefination", CreateFlowDefination)
+	r.POST("/updateFlowDefination", UpdateFlowDefination)
+	r.POST("/getFlowDefinationList", GetFlowDefinationList)
+
 	r.Run(":19999") // listen and serve on 0.0.0.0:8080 (for windows "localhost:8080")
 }
 
