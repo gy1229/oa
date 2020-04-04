@@ -60,6 +60,7 @@ type TableCell struct {
 	Content     string `json:"content"`
 	Row         int64  `json:"row"`
 	Line        int64  `json:"line"`
+	Status      int `json:"status"`
 }
 
 type ImageFile struct {

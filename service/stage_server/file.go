@@ -4,6 +4,7 @@ import (
 	"errors"
 	"github.com/gin-gonic/gin"
 	"github.com/gy1229/oa/constant"
+	"github.com/gy1229/oa/database"
 	"github.com/gy1229/oa/database/stage"
 	data_user "github.com/gy1229/oa/database/user"
 	"github.com/gy1229/oa/json_struct"
@@ -140,15 +141,45 @@ func UpdateTableContent(req *json_struct.UpdateTableContentRequest) (*json_struc
 		return nil, err
 	}
 	logrus.Info("[UpdateTextContent] userId is ", userId)
+
+	rowLen, err := strconv.ParseInt(req.RowLen, 10, 64)
+	if err != nil {
+		logrus.Error("[UpdateTableContent] rowLen ParseInt")
+		return nil, err
+	}
+	lineLen, err := strconv.ParseInt(req.LineLen, 10, 64)
+	if err != nil {
+		logrus.Error("[UpdateTableContent] rowLen ParseInt")
+		return nil, err
+	}
+
+	fileTable := &database.FileTable{
+		FileId:fileId,
+		RowLen:rowLen,
+		LineLen:lineLen,
+		Name:req.Name,
+	}
+	if err = stage.DUpdateTableFileByFileId(fileTable); err != nil {
+			return nil, err
+	}
 	for _, v := range req.TableCells {
 		cellId, err := strconv.ParseInt(v.Id, 10, 64)
 		if err != nil {
 			logrus.Error("[UpdateTableContent] cellId ParseInt")
 			return nil, err
 		}
-		if err := stage.DUpdateTableContent(cellId, v.Content); err != nil {
-			logrus.Error("[UpdateTableContent] stage.DUpdateTableContent ", err.Error())
-			return nil, err
+		if cellId == -1{
+			row, _ := strconv.ParseInt(v.Row, 10, 64)
+			line, _ := strconv.ParseInt(v.Line, 10, 64)
+			if err := stage.DCreateTableCell(fileId, row, line, req.Name); err != nil {
+				logrus.Error("[DCreateTableFile] stage.DCreateTableFile ", err.Error())
+				return nil, err
+			}
+		} else {
+			if err := stage.DUpdateTableContent(cellId, v.Content); err != nil {
+				logrus.Error("[UpdateTableContent] stage.DUpdateTableContent ", err.Error())
+				return nil, err
+			}
 		}
 	}
 	return &json_struct.UpdateTableContentResponse{

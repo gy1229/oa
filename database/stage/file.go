@@ -47,7 +47,7 @@ func DGetTableFileByFileId(fileId int64) (*database.FileTable, error) {
 
 func DGetTableCellsByFileId(fileId int64) ([]*database.TableCell, error) {
 	var tableCells []*database.TableCell
-	if err := database.DB.Where("file_table_id = ?", fileId).Find(&tableCells).Error; err != nil {
+	if err := database.DB.Where("file_table_id = ? AND status = 0", fileId).Find(&tableCells).Error; err != nil {
 		logrus.Error("DGetTextFileContent err ", err.Error())
 		return nil, err
 	}
@@ -173,4 +173,23 @@ func DGetFileName(file_id int64, ttype int) (string, error) {
 		return fileText.Name, nil
 	}
 
+}
+
+func DUpdateTableFileByFileId(table *database.FileTable) error{
+	if err := database.DB.Model(&table).Where("file_id = ?", table.FileId).Updates(table).Error; err != nil {
+		logrus.Error("[UpdateFlowDefination] err msg ", err.Error())
+		return err
+	}
+	return nil
+}
+
+func DDeleteTableCellById(cellId int64) error {
+	cell := database.TableCell{
+		Status: 1,
+	}
+	if err := database.DB.Model(&cell).Where("id = ?", cellId).Updates(&cell).Error; err != nil {
+		logrus.Error("[DDeleteTableCellById] err ", err.Error())
+		return err
+	}
+	return nil
 }

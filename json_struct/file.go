@@ -32,6 +32,7 @@ type TableCell struct {
 	Content string `json:"content"`
 	Row     string `json:"row"`
 	Line    string `json:"line"`
+	Status  string `json:"status"`
 }
 
 type TableContent struct {
@@ -63,6 +64,8 @@ type UpdateTableContentRequest struct {
 	FileId     string       `json:"file_id"`
 	UserId     string       `json:"user_id"`
 	Name       string       `json:"name"`
+	RowLen     string `json:"row_len"`
+	LineLen string `json:"line_len"`
 	TableCells []*TableCell `json:"table_cells"`
 }
 
