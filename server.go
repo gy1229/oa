@@ -61,6 +61,7 @@ func main() {
 	r.POST("/createFlowDefination", CreateFlowDefination)
 	r.POST("/updateFlowDefination", UpdateFlowDefination)
 	r.POST("/getFlowDefinationList", GetFlowDefinationList)
+	r.POST("/deleteFlowDeination", DeleteFlowDeination)
 
 	r.Run(":19999") // listen and serve on 0.0.0.0:8080 (for windows "localhost:8080")
 }

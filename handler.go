@@ -3,6 +3,7 @@ package main
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/gy1229/oa/json_struct"
+	"github.com/gy1229/oa/service/automation/flow_action"
 	"github.com/gy1229/oa/service/file_server"
 	"github.com/gy1229/oa/service/stage_server"
 	"github.com/gy1229/oa/service/user_server"
@@ -263,25 +264,72 @@ func DelFile(c *gin.Context) {
 }
 
 func GetActionList(c *gin.Context) {
-
+	var req json_struct.GetActionListRequest
+	util.GenHandlerRequest(c, &req)
+	resp, err := flow_action.GetActionList(&req)
+	if err != nil {
+		c.JSON(http.StatusOK, util.GenDefaultFailResp(err.Error()))
+		return
+	}
+	c.JSON(http.StatusOK, util.TranformStruct2GinH(resp))
 }
 
 func GetActionDefination(c *gin.Context) {
-
+	var req json_struct.GetActionDefinationRequest
+	resp, err := flow_action.GetActionDefination(&req)
+	if err != nil {
+		c.JSON(http.StatusOK, util.GenDefaultFailResp(err.Error()))
+		return
+	}
+	c.JSON(http.StatusOK, util.TranformStruct2GinH(resp))
 }
 
 func GetFlowDefinationDetail(c *gin.Context) {
-
+	var req json_struct.GetFlowDefinationDetailRequest
+	resp, err := flow_action.GetFlowDefinationDetail(&req)
+	if err != nil {
+		c.JSON(http.StatusOK, util.GenDefaultFailResp(err.Error()))
+		return
+	}
+	c.JSON(http.StatusOK, util.TranformStruct2GinH(resp))
 }
 
 func CreateFlowDefination(c *gin.Context) {
-
+	var req json_struct.CreateFlowDefinationRequest
+	resp, err := flow_action.CreateFlowDefination(&req)
+	if err != nil {
+		c.JSON(http.StatusOK, util.GenDefaultFailResp(err.Error()))
+		return
+	}
+	c.JSON(http.StatusOK, util.TranformStruct2GinH(resp))
 }
 
 func UpdateFlowDefination(c *gin.Context) {
-
+	var req json_struct.UpdateFlowDefinationRequest
+	resp, err := flow_action.UpdateFlowDefination(&req)
+	if err != nil {
+		c.JSON(http.StatusOK, util.GenDefaultFailResp(err.Error()))
+		return
+	}
+	c.JSON(http.StatusOK, util.TranformStruct2GinH(resp))
 }
 
 func GetFlowDefinationList(c *gin.Context) {
+	var req json_struct.GetFlowDefinationListRequest
+	resp, err := flow_action.GetFlowDefinationList(&req)
+	if err != nil {
+		c.JSON(http.StatusOK, util.GenDefaultFailResp(err.Error()))
+		return
+	}
+	c.JSON(http.StatusOK, util.TranformStruct2GinH(resp))
+}
 
+func DeleteFlowDeination(c *gin.Context) {
+	var req json_struct.DeleteFlowDeinationRequest
+	resp, err := flow_action.DeleteFlowDeination(&req)
+	if err != nil {
+		c.JSON(http.StatusOK, util.GenDefaultFailResp(err.Error()))
+		return
+	}
+	c.JSON(http.StatusOK, util.TranformStruct2GinH(resp))
 }

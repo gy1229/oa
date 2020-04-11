@@ -1,19 +1,19 @@
 package mod_base
 
-type BehaviorInstance struct {
+type FormData struct {
 	Key string `json:"key"`
 	Value string `json:"value"`
 	Postion string `json:"postion"`
 	Options []string `json:"options"`
 }
 
-type Action interface {
-	GetActionName() string
-	GetFrontStruct() []*BehaviorInstance
-	ExecAction() error
+var TriggerGroup map[int64]Trigger
+var ActionGroup map[int64]Action
+
+func ActionInit() {
+
 }
 
+func TriggerInit() {
 
-type TriggerAction interface {
-	PreInitAction()
 }

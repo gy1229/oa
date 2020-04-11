@@ -6,10 +6,11 @@ type ActionDetail struct {
 	ActionIcon string `json:"action_icon"`
 	ActionPosition string `json:"action_position"`
 	ActionType string `json:"action_type"`
-	BehaviorInstanceList []*BehaviorDetail `json:"behavior_instance_list"`
+	BehaviorInstanceList []*FormData `json:"behavior_instance_list"`
 }
 
-type BehaviorDetail struct {
+type FormData struct {
+	Id string `json:"id"`
 	Key string `json:"key"`
 	Value string `json:"value"`
 	Position string `json:"position"`
@@ -21,9 +22,15 @@ type GetActionListRequest struct {
 	ActionType string `json:"action_type"`
 }
 
+type Action struct {
+	ActionId string
+	ActionName string
+	ActionIcon string
+}
+
 type GetActionListResponse struct {
-	ActionList []*ActionDetail `json:"action_list"`
-	Base BaseResponse `json:"base"`
+	ActionList []*Action `json:"action_list"`
+	Base *BaseResponse `json:"base"`
 }
 
 type GetActionDefinationRequest struct {
@@ -32,8 +39,8 @@ type GetActionDefinationRequest struct {
 }
 
 type GetActionDefinationResponse struct {
-	BehaviorDefinationList []*BehaviorDetail `json:"behavior_defination_list"`
-	Base BaseResponse `json:"base"`
+	BehaviorDefinationList []*FormData `json:"behavior_defination_list"`
+	Base *BaseResponse `json:"base"`
 }
 
 type GetFlowDefinationDetailRequest struct {
@@ -43,7 +50,7 @@ type GetFlowDefinationDetailRequest struct {
 
 type GetFlowDefinationDetailResponse struct {
 	ActionList []*ActionDetail `json:"action_list"`
-	Base BaseResponse `json:"base"`
+	Base *BaseResponse `json:"base"`
 }
 
 type CreateFlowDefinationRequest struct {
@@ -54,24 +61,38 @@ type CreateFlowDefinationRequest struct {
 
 type CreateFlowDefinationResponse struct {
 	FlowDefinationId string `json:"flow_defination_id"`
-	Base BaseResponse `json:"base"`
+	Base *BaseResponse `json:"base"`
 }
 
 type UpdateFlowDefinationRequest struct {
-	UserId int64 `json:"user_id"`
+	UserId string `json:"user_id"`
 	FlowDefinationId string `json:"flow_defination_id"`
 	ActionList []*ActionDetail `json:"action_list"`
 }
 
 type UpdateFlowDefinationResponse struct {
-	Base BaseResponse `json:"base"`
+	Base *BaseResponse `json:"base"`
 }
 
 type GetFlowDefinationListRequest struct {
 	UserId string `json:"user_id"`
 }
 
+type FlowDefination struct {
+	FlowDefinationId string `json:"flow_defination_id"`
+	FlowDefinationName string `json:"flow_defination_name"`
+}
+
 type GetFlowDefinationListResponse struct {
-	ActionList []*ActionDetail `json:"action_list"`
-	Base BaseResponse `json:"base"`
+	FlowDefinationList []*FlowDefination `json:"flow_defination_list"`
+	Base *BaseResponse `json:"base"`
+}
+
+type DeleteFlowDeinationRequest struct {
+	UserId string `json:"user_id"`
+	FlowDefinationId string `json:"flow_defination_id"`
+}
+
+type DeleteFlowDeinationResponse struct {
+	Base *BaseResponse `json:"base"`
 }

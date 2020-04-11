@@ -5,7 +5,6 @@ import (
 	"github.com/gy1229/oa/database"
 	"github.com/gy1229/oa/json_struct"
 	"github.com/gy1229/oa/test"
-	"github.com/sirupsen/logrus"
 	"testing"
 )
 
@@ -33,11 +32,15 @@ func TestInsertUserMessage(t *testing.T) {
 }
 func TestHello(t *testing.T) {
 	test.InitTestConfig2()
-	a := database.FileTable{
-		Id:   123,
-		Name: "啊哈哈",
+	f :=&database.FileDetail{
 	}
-	if err := database.DB.Create(a).Error; err != nil {
-		logrus.Error("[InsertUserMessage] err msg", err.Error())
+	dsd(f)
+	fmt.Println(f)
+}
+
+func dsd(detail *database.FileDetail) {
+	if err := database.DB.Model(detail).Where("creator_id = 1").First(&detail); err != nil {
+
 	}
+	database.DB.Delete(detail)
 }

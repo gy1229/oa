@@ -74,7 +74,18 @@ type ImageFile struct {
 type ActionDefination struct {
 	Id int64 `json:"id"`
 	FlowDefinationId int64 `json:"flow_defination_id"`
-	Postion int `json:"postion"`
+	Position int `json:"postion"`
+	ActionType string `json:"action_type"`
+	CreateTime time.Time `json:"create_time"`
+	UpdateTime time.Time `json:"update_time"`
+	Status int `json:"status"`
+}
+
+type Action struct {
+	Id int64 `json:"id"`
+	Name string `json:"name"`
+	ImageId int64 `json:"image_id"`
+	ActionType string `json:"action_type"` // 1 是Trigger 2 是Action
 	CreateTime time.Time `json:"create_time"`
 	UpdateTime time.Time `json:"update_time"`
 }
@@ -100,6 +111,8 @@ type FormData struct {
 	ActionDefinationId int64 `json:"action_defination_id"`
 	Key string `json:"key"`
 	Value string `json:"value"`
+	Position int `json:"position"`
+	Status int `json:"status"`
 }
 
 type Test struct {
