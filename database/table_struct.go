@@ -85,6 +85,7 @@ type Action struct {
 	Id int64 `json:"id"`
 	Name string `json:"name"`
 	ImageId int64 `json:"image_id"`
+	Status int `json:"status"`
 	ActionType string `json:"action_type"` // 1 是Trigger 2 是Action
 	CreateTime time.Time `json:"create_time"`
 	UpdateTime time.Time `json:"update_time"`

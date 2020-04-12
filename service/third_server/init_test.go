@@ -23,6 +23,7 @@ func InitAction(actionId int64) {
 		Id: actionId,
 		CreateTime: time.Now(),
 		UpdateTime: time.Now(),
+		Status: 0,
 	}
 	if actionId % 2 == 0 {
 		action := mod_base.ActionGroup[actionId]

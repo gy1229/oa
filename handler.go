@@ -276,6 +276,7 @@ func GetActionList(c *gin.Context) {
 
 func GetActionDefination(c *gin.Context) {
 	var req json_struct.GetActionDefinationRequest
+	util.GenHandlerRequest(c, &req)
 	resp, err := flow_action.GetActionDefination(&req)
 	if err != nil {
 		c.JSON(http.StatusOK, util.GenDefaultFailResp(err.Error()))
@@ -286,6 +287,7 @@ func GetActionDefination(c *gin.Context) {
 
 func GetFlowDefinationDetail(c *gin.Context) {
 	var req json_struct.GetFlowDefinationDetailRequest
+	util.GenHandlerRequest(c, &req)
 	resp, err := flow_action.GetFlowDefinationDetail(&req)
 	if err != nil {
 		c.JSON(http.StatusOK, util.GenDefaultFailResp(err.Error()))
@@ -296,6 +298,7 @@ func GetFlowDefinationDetail(c *gin.Context) {
 
 func CreateFlowDefination(c *gin.Context) {
 	var req json_struct.CreateFlowDefinationRequest
+	util.GenHandlerRequest(c, &req)
 	resp, err := flow_action.CreateFlowDefination(&req)
 	if err != nil {
 		c.JSON(http.StatusOK, util.GenDefaultFailResp(err.Error()))
@@ -306,6 +309,7 @@ func CreateFlowDefination(c *gin.Context) {
 
 func UpdateFlowDefination(c *gin.Context) {
 	var req json_struct.UpdateFlowDefinationRequest
+	util.GenHandlerRequest(c, &req)
 	resp, err := flow_action.UpdateFlowDefination(&req)
 	if err != nil {
 		c.JSON(http.StatusOK, util.GenDefaultFailResp(err.Error()))
@@ -316,6 +320,7 @@ func UpdateFlowDefination(c *gin.Context) {
 
 func GetFlowDefinationList(c *gin.Context) {
 	var req json_struct.GetFlowDefinationListRequest
+	util.GenHandlerRequest(c, &req)
 	resp, err := flow_action.GetFlowDefinationList(&req)
 	if err != nil {
 		c.JSON(http.StatusOK, util.GenDefaultFailResp(err.Error()))
@@ -326,6 +331,7 @@ func GetFlowDefinationList(c *gin.Context) {
 
 func DeleteFlowDeination(c *gin.Context) {
 	var req json_struct.DeleteFlowDeinationRequest
+	util.GenHandlerRequest(c, &req)
 	resp, err := flow_action.DeleteFlowDeination(&req)
 	if err != nil {
 		c.JSON(http.StatusOK, util.GenDefaultFailResp(err.Error()))
