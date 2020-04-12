@@ -9,6 +9,7 @@ import (
 	"github.com/gy1229/oa/util"
 	"github.com/sirupsen/logrus"
 	"strconv"
+	"time"
 )
 
 func GetActionList(req *json_struct.GetActionListRequest) (*json_struct.GetActionListResponse, error) {
@@ -52,11 +53,11 @@ func GetActionDefination(req *json_struct.GetActionDefinationRequest) (*json_str
 	logrus.Info("[GetActionDefination] actionId : ", actionId)
 	formData := make([]*mod_base.FormData, 0)
 	switch actionId%2 {
-	case 0:
+	case 1:
 		trigger := mod_base.TriggerGroup[actionId]
 		formData = trigger.GetFrontStruct()
 	default:
-		action := mod_base.TriggerGroup[actionId]
+		action := mod_base.ActionGroup[actionId]
 		formData = action.GetFrontStruct()
 	}
 	rFormData := make([]*json_struct.FormData, 0 )
@@ -128,6 +129,11 @@ func UpdateFlowDefination(req *json_struct.UpdateFlowDefinationRequest) (*json_s
 		return nil, err
 	}
 	logrus.Info("[UpdateFlowDefination] userid : ", flowdefId)
+	err = automation.UpdateFlowDefinationNameById(flowdefId, req.FlowDefinationName)
+	if err != nil {
+		logrus.Error("[UpdateFlowDefination] UpdateFlowDefinationNameById err", err.Error())
+		return nil, err
+	}
 	actionDetial, err := GetActionDetailsByFlowDefid(flowdefId)
 	if err != nil {
 		logrus.Error("[UpdateFlowDefination] GetActionDetailsByFlowDefid err", err.Error())
@@ -224,6 +230,7 @@ func GetActionDetailsByFlowDefid(flowdefId int64) ([]*json_struct.ActionDetail, 
 				Id: strconv.FormatInt(f.Id, 10),
 				Key:      f.Key,
 				Value:    f.Value,
+				Title:   f.Title,
 				Position: strconv.Itoa(f.Position),
 			})
 		}
@@ -268,6 +275,8 @@ func CreateActionDetail(ActionList []*json_struct.ActionDetail, flowDefId int64)
 			FlowDefinationId: flowDefId,
 			Position:         position,
 			ActionType:       action.ActionType,
+			CreateTime: time.Now(),
+			UpdateTime: time.Now(),
 		}
 		if err := automation.CreateActionDefination(&ad); err != nil {
 			logrus.Error("[CreateFlowDefination] CreateActionDefination err", err.Error())
@@ -285,6 +294,7 @@ func CreateActionDetail(ActionList []*json_struct.ActionDetail, flowDefId int64)
 				Key:                bh.Key,
 				Value:              bh.Value,
 				Position:           bPosition,
+				Title: 				bh.Title,
 			}
 			if err := automation.CreateFormData(&fd); err != nil {
 				logrus.Error("[CreateFlowDefination] CreateFormData err", err.Error())

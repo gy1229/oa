@@ -72,7 +72,7 @@ type ImageFile struct {
 }
 
 type ActionDefination struct {
-	Id int64 `json:"id"`
+	Id         int64     `json:"id"`
 	FlowDefinationId int64 `json:"flow_defination_id"`
 	Position int `json:"postion"`
 	ActionType string `json:"action_type"`
@@ -109,6 +109,7 @@ type FlowInstance struct {
 
 type FormData struct {
 	Id int64 `json:"id"`
+	Title string `json:"title"`
 	ActionDefinationId int64 `json:"action_defination_id"`
 	Key string `json:"key"`
 	Value string `json:"value"`

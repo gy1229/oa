@@ -3,6 +3,7 @@ package automation
 import (
 	"github.com/gy1229/oa/database"
 	"github.com/sirupsen/logrus"
+	"time"
 )
 
 func CreateFlowDefination(fd *database.FlowDefination) error {
@@ -42,6 +43,9 @@ func CreateFlowDefinationByArgs(id, creatorId int64, name string) error {
 		Id:         id,
 		Name:       name,
 		CreatorId:  creatorId,
+		Status: 0,
+		CreateTime: time.Now(),
+		UpdateTime: time.Now(),
 	}
 	if err := database.DB.Create(fd).Error; err != nil {
 		logrus.Error("[CreateFlowDefinationByArgs] err msg", err.Error())
@@ -85,7 +89,7 @@ func UpdateFlowDefinationNameById(id int64, name string) error {
 
 func FindFlowDefinationByUserId(userId int64) ([]*database.FlowDefination, error) {
 	fds := make([]*database.FlowDefination, 0)
-	if err := database.DB.Where("creator_id = ? AND status = 0", userId).Find(fds).Error; err != nil {
+	if err := database.DB.Where("creator_id = ? AND status = 0", userId).Find(&fds).Error; err != nil {
 		logrus.Error("[FindFlowDefinationByUserId] err ", err.Error())
 		return nil, err
 	}

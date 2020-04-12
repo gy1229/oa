@@ -19,33 +19,33 @@ func(b *DemoAction) GetFrontStruct() []*mod_base.FormData {
 			Title:"单选",
 			Key: constant.ItemSingle,
 			Value: "",
-			Postion:"0",
+			Position:"0",
 			Options: []string{"A", "B", "C"},
 		},
 		{
 				Title:"多选",
 				Key:constant.ItemCheckbox,
 				Value:"",
-				Postion:"1",
+			Position:"1",
 				Options:[]string{"A", "B", "C"},
 		},
 		{
 					Title:"文本",
 					Key:constant.ItemText,
 					Value:"",
-					Postion:"2",
+			Position:"2",
 		},
 		{
 						Title:"时间选择器",
 				Key:constant.ItemDateTime,
 				Value:"",
-				Postion:"3",
+			Position:"3",
 		},
 		{
 							Title:"多行文本",
 			Key:constant.ItemMutiText,
 			Value:"",
-			Postion:"4",
+			Position:"4",
 		},
 	}
 }

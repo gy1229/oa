@@ -1,7 +1,7 @@
 package json_struct
 
 type ActionDetail struct {
-	ActionId string `json:"id"`
+	ActionId string `json:"action_id"`
 	ActionName string `json:"action_name"`
 	ActionIcon string `json:"action_icon"`
 	ActionPosition string `json:"action_position"`
@@ -11,6 +11,7 @@ type ActionDetail struct {
 
 type FormData struct {
 	Id string `json:"id"`
+	Title string `json:"title"`
 	Key string `json:"key"`
 	Value string `json:"value"`
 	Position string `json:"position"`
@@ -67,6 +68,7 @@ type CreateFlowDefinationResponse struct {
 type UpdateFlowDefinationRequest struct {
 	UserId string `json:"user_id"`
 	FlowDefinationId string `json:"flow_defination_id"`
+	FlowDefinationName string `json:"flow_defination_name"`
 	ActionList []*ActionDetail `json:"action_list"`
 }
 

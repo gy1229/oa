@@ -1,6 +1,7 @@
 package third_server
 
 import (
+	"fmt"
 	"github.com/gy1229/oa/database"
 	"github.com/gy1229/oa/database/automation"
 	"github.com/gy1229/oa/service/mod/mod_base"
@@ -40,4 +41,11 @@ func InitAction(actionId int64) {
 	if err != nil {
 		logrus.Error("err ", err.Error())
 	}
+}
+
+func TestFindActionDefinationByFDefId(t *testing.T) {
+	test.InitTestConfig2()
+	fd := make([]*database.FormData, 0)
+	database.DB.Where("id = 1224360277412052992").Find(&fd)
+	fmt.Println(fd)
 }

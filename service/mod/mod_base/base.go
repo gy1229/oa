@@ -4,7 +4,7 @@ type FormData struct {
 	Title string `json:"title"`
 	Key string `json:"key"`
 	Value string `json:"value"`
-	Postion string `json:"postion"`
+	Position string `json:"position"`
 	Options []string `json:"options"`
 }
 

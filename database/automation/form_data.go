@@ -39,7 +39,7 @@ func FindFormData(fi *database.FormData) error {
 
 func FindFormDataByADefId(aDefId int64) ([]*database.FormData, error) {
 	fData := make([]*database.FormData, 0)
-	if err := database.DB.Where("action_defination_id = ? AND status = 0", fData).Find(fData).Error; err != nil {
+	if err := database.DB.Model(&database.FormData{}).Where("action_defination_id = ? AND status = 0", aDefId).Find(&fData).Error; err != nil {
 		logrus.Error("[FindActionDefinationByFDefId] err ", err.Error())
 		return nil, err
 	}
