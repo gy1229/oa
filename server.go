@@ -7,6 +7,7 @@ import (
 	"github.com/gy1229/oa/gredis"
 	"github.com/gy1229/oa/kafka"
 	"github.com/gy1229/oa/service/file_server"
+	"github.com/gy1229/oa/service/mod/mod_base"
 	"github.com/gy1229/oa/util"
 	"net/http"
 	"strings"
@@ -21,6 +22,8 @@ func main() {
 	kafka.ConsumerInit()
 	kafka.ProductInit()
 	file_server.FileServerInit()
+	mod_base.ActionInit()
+	mod_base.TriggerInit()
 	r := gin.Default()
 	r.Use(Cors())
 
