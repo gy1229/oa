@@ -39,7 +39,7 @@ func FindActionDefination(ad *database.ActionDefination) error {
 
 func FindActionDefinationByFDefId(fdefId int64) ([]*database.ActionDefination, error) {
 	aDef := make([]*database.ActionDefination, 0)
-	if err := database.DB.Where("flow_defination_id = ?", fdefId).Find(&aDef).Error; err != nil {
+	if err := database.DB.Where("flow_defination_id = ? && status = 0", fdefId).Find(&aDef).Error; err != nil {
 		logrus.Error("[FindActionDefinationByFDefId] err ", err.Error())
 		return nil, err
 	}
