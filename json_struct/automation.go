@@ -27,6 +27,7 @@ type Action struct {
 	ActionId string
 	ActionName string
 	ActionIcon string
+	Item string
 }
 
 type GetActionListResponse struct {

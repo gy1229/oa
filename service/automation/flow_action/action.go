@@ -25,11 +25,12 @@ func GetActionList(req *json_struct.GetActionListRequest) (*json_struct.GetActio
 		return nil, err
 	}
 	actionArr := make([]*json_struct.Action, 0)
-	for _, v := range action {
+	for k, v := range action {
 		actionArr = append(actionArr, &json_struct.Action{
 			ActionId:   strconv.FormatInt(v.Id, 10),
 			ActionIcon: strconv.FormatInt(v.ImageId, 10),
 			ActionName: v.Name,
+			Item: strconv.Itoa(k),
 		})
 	}
 	return &json_struct.GetActionListResponse{
