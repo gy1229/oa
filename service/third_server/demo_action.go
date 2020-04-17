@@ -1,8 +1,8 @@
 package third_server
 
 import (
-	"github.com/gy1229/oa/constant"
-	"github.com/gy1229/oa/service/mod/mod_base"
+"github.com/gy1229/oa/constant"
+"github.com/gy1229/oa/service/mod/mod_base"
 )
 
 type DemoAction struct {

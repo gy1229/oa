@@ -15,7 +15,7 @@ func TestInitAction(t *testing.T) {
 	test.InitTestConfig2()
 	ActionInit()
 	TriggerInit()
-	aId := int64(2)
+	aId := int64(1)
 	InitAction(aId)
 }
 
@@ -32,10 +32,10 @@ func InitAction(actionId int64) {
 		da.ActionType = action.GetActionType()
 		da.ImageId = action.GetActionImageId()
 	}else {
-		action := mod_base.ActionGroup[actionId]
-		da.Name = action.GetActionName()
-		da.ActionType = action.GetActionType()
-		da.ImageId = action.GetActionImageId()
+		action := mod_base.TriggerGroup[actionId]
+		da.Name = action.GetTriggerName()
+		da.ActionType = action.GetTriggerType()
+		da.ImageId = action.GetTriggerImageId()
 	}
 	err := automation.CreateAction(da)
 	if err != nil {
