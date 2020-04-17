@@ -1,11 +1,13 @@
 package flow_action
 
 import (
+	"fmt"
 	"github.com/gy1229/oa/constant"
 	"github.com/gy1229/oa/database"
 	"github.com/gy1229/oa/database/automation"
 	"github.com/gy1229/oa/json_struct"
 	"github.com/gy1229/oa/service/mod/mod_base"
+	"github.com/gy1229/oa/service/third_server"
 	"github.com/gy1229/oa/util"
 	"github.com/sirupsen/logrus"
 	"strconv"
@@ -237,8 +239,8 @@ func GetActionDetailsByFlowDefid(flowdefId int64) ([]*json_struct.ActionDetail, 
 		}
 		actionDetail = append(actionDetail, &json_struct.ActionDetail{
 			ActionId:             strconv.FormatInt(v.Id, 10),
-			ActionName:           "test",
-			ActionIcon:           "icon",
+			ActionName:           third_server.GetActionName(v.Id),
+			ActionIcon:           fmt.Sprintf("%d", third_server.GetActionIcon(v.Id)),
 			ActionPosition:       strconv.Itoa(v.Position),
 			ActionType:           v.ActionType,
 			BehaviorInstanceList: jf,
