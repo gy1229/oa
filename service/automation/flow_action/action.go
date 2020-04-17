@@ -239,8 +239,8 @@ func GetActionDetailsByFlowDefid(flowdefId int64) ([]*json_struct.ActionDetail, 
 		}
 		actionDetail = append(actionDetail, &json_struct.ActionDetail{
 			ActionId:             strconv.FormatInt(v.Id, 10),
-			ActionName:           third_server.GetActionName(v.Id),
-			ActionIcon:           fmt.Sprintf("%d", third_server.GetActionIcon(v.Id)),
+			ActionName:           third_server.GetActionName(v.ActionId),
+			ActionIcon:           fmt.Sprintf("%d", third_server.GetActionIcon(v.ActionId)),
 			ActionPosition:       strconv.Itoa(v.Position),
 			ActionType:           v.ActionType,
 			BehaviorInstanceList: jf,
