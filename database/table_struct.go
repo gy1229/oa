@@ -73,6 +73,7 @@ type ImageFile struct {
 
 type ActionDefination struct {
 	Id         int64     `json:"id"`
+	ActionId   int64 `json:"action_id"`
 	FlowDefinationId int64 `json:"flow_defination_id"`
 	Position int `json:"postion"`
 	ActionType string `json:"action_type"`

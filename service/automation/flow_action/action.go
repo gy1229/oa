@@ -267,14 +267,20 @@ func DeleteByActionDetail(actionDetail []*json_struct.ActionDetail) error {
 
 func CreateActionDetail(ActionList []*json_struct.ActionDetail, flowDefId int64) error {
 	for _, action := range ActionList {
-		actionId := util.GenId()
+		Id := util.GenId()
 		position, err := strconv.Atoi(action.ActionPosition)
 		if err != nil {
 			logrus.Error("[CreateFlowDefination] Parse ActionPosition err", err.Error())
 			return err
 		}
+		actionId, err := strconv.ParseInt(action.ActionId, 10, 64)
+		if err != nil {
+			logrus.Error("[CreateActionDetail] Parse ActionId err", err.Error())
+			return  err
+		}
 		ad := database.ActionDefination{
-			Id:               actionId,
+			ActionId:      actionId,
+			Id:               Id,
 			FlowDefinationId: flowDefId,
 			Position:         position,
 			ActionType:       action.ActionType,
@@ -293,7 +299,7 @@ func CreateActionDetail(ActionList []*json_struct.ActionDetail, flowDefId int64)
 			}
 			fd := database.FormData{
 				Id:                 util.GenId(),
-				ActionDefinationId: actionId,
+				ActionDefinationId: Id,
 				Key:                bh.Key,
 				Value:              bh.Value,
 				Position:           bPosition,
