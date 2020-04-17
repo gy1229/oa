@@ -1,6 +1,9 @@
 package third_server
 
-import "github.com/gy1229/oa/service/mod/mod_base"
+import (
+	"github.com/gy1229/oa/service/mod/mod_base"
+	"github.com/sirupsen/logrus"
+)
 
 func ActionInit() {
 	mod_base.ActionGroup[2]= &DemoAction{}
@@ -12,6 +15,7 @@ func TriggerInit() {
 }
 
 func GetActionName(actionId int64) string {
+	logrus.Info("[GetActionName] actionId : ", actionId)
 	if actionId % 2 == 0 {
 		return mod_base.ActionGroup[actionId].GetActionName()
 	}else {
