@@ -7,7 +7,6 @@ import (
 	"time"
 
 	"github.com/gomodule/redigo/redis"
-
 )
 
 var RedisClient *redis.Pool
@@ -109,5 +108,32 @@ func LikeDeletes(key string) error {
 		}
 	}
 
+	return nil
+}
+
+func LRange(key string) ([]string, error) {
+	conn := RedisClient.Get()
+	defer conn.Close()
+	rStr := make([]string, 0)
+	reply, err := redis.Values(conn.Do("lrange", "key", 0, 10))
+	if err != nil {
+		return nil, err
+	}
+	for _, v := range reply {
+		rStr = append(rStr, string(v.([]byte)))
+	}
+	return rStr, err
+}
+
+func LPush(key string, data interface{}) error {
+	conn := RedisClient.Get()
+	defer conn.Close()
+
+	value, err := json.Marshal(data)
+	if err != nil {
+		return err
+	}
+
+	_, err = conn.Do("lpush", key, value)
 	return nil
 }

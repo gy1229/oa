@@ -21,7 +21,7 @@ func GetActionList(req *json_struct.GetActionListRequest) (*json_struct.GetActio
 		return nil, err
 	}
 	logrus.Info("[GetActionList] userid : ", userId)
-	action, err := automation.FindAllAction()
+	action, err := automation.FindAllAction(req.ActionType)
 	if err != nil {
 		logrus.Error("[GetActionList] FindAllAction err", err.Error())
 		return nil, err
@@ -311,5 +311,6 @@ func CreateActionDetail(ActionList []*json_struct.ActionDetail, flowDefId int64)
 			}
 		}
 	}
+	go SetOfficeFlow(flowDefId, ActionList)
 	return nil
 }

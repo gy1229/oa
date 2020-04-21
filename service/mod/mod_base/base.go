@@ -5,7 +5,7 @@ type FormData struct {
 	Key string `json:"key"`
 	Value string `json:"value"`
 	Position string `json:"position"`
-	Options []string `json:"options"`
+	Options interface{} `json:"options"`
 }
 
 var TriggerGroup = make(map[int64]Trigger, 0)

@@ -7,11 +7,11 @@ import (
 
 func ActionInit() {
 	mod_base.ActionGroup[2]= &DemoAction{}
-	mod_base.ActionGroup[4]= &DemoAction2{}
 }
 
 func TriggerInit() {
 	mod_base.TriggerGroup[1] = &DemoTrigger{}
+	mod_base.TriggerGroup[3] = &TxtFileTrigger{}
 }
 
 func GetActionName(actionId int64) string {

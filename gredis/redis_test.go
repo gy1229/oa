@@ -2,6 +2,7 @@ package gredis
 
 import (
 	"fmt"
+	"github.com/gomodule/redigo/redis"
 	"github.com/gy1229/oa/util"
 	"github.com/spf13/viper"
 	"testing"
@@ -47,4 +48,23 @@ func TestDelete(t *testing.T) {
 		fmt.Println(err.Error())
 	}
 	fmt.Printf("%v", st)
+}
+
+func TestLPush(t *testing.T) {
+	util.InitViper1()
+	Setup()
+	pass := viper.GetString("redis.PassWord")
+	fmt.Printf("%s", pass)
+	conn := RedisClient.Get()
+	defer conn.Close()
+	//m := struct {
+	//	Key string
+	//	Value string
+	//}{"ds","qw"}
+	//value, _ := json.Marshal(m)
+	reply, _ := redis.Values(conn.Do("lrange", "key", 0, 10))
+	for _, v := range reply {
+		fmt.Printf("value: \n%v\n", string(v.([]byte)))
+	}
+	fmt.Printf("%v", reply)
 }

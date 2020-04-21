@@ -9,6 +9,7 @@ type Trigger interface {
 	GetTriggerId() int64
 	GetTriggerImageId() int64
 	GetTriggerType() string
+	SetRedisTrigger(int64, []*FormData) error
 }
 
 type BaseTrigger struct {}
@@ -40,3 +41,6 @@ func(b *BaseTrigger) GetTriggerImageId() int64 {
 	return 13
 }
 
+func(b *BaseTrigger) SetRedisTrigger(int64, []*FormData) error {
+	return nil
+}

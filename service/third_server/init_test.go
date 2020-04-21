@@ -15,7 +15,7 @@ func TestInitAction(t *testing.T) {
 	test.InitTestConfig2()
 	ActionInit()
 	TriggerInit()
-	aId := int64(1)
+	aId := int64(3)
 	InitAction(aId)
 }
 
