@@ -40,7 +40,7 @@ func FindAction(eduEx *database.Action) error {
 
 func FindAllAction(actionType string) ([]*database.Action, error) {
 	action := make([]*database.Action, 0)
-	if err := database.DB.Model(&action).Where("status = 0").Find(&action).Error; err != nil {
+	if err := database.DB.Model(&action).Where("status = 0 AND action_type = ?", actionType).Find(&action).Error; err != nil {
 		if err == gorm.ErrRecordNotFound {
 			return action, nil
 		}
