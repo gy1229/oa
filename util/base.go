@@ -23,3 +23,7 @@ func TranformStruct2GinH(s interface{}) gin.H {
 	_ = json.Unmarshal(b, &m)
 	return m
 }
+
+func TranVarToContent(content string, param map[string]interface{}) {
+
+}

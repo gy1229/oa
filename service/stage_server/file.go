@@ -8,6 +8,8 @@ import (
 	"github.com/gy1229/oa/database/stage"
 	data_user "github.com/gy1229/oa/database/user"
 	"github.com/gy1229/oa/json_struct"
+	"github.com/gy1229/oa/service/mod/mod_base"
+	"github.com/gy1229/oa/service/third_server"
 	"github.com/gy1229/oa/util"
 	"github.com/sirupsen/logrus"
 	"strconv"
@@ -118,6 +120,10 @@ func UpdateTextContent(req *json_struct.UpdateTextContentRequest) (*json_struct.
 	if err != nil {
 		return nil, err
 	}
+	param := make(map[string]interface{})
+	param[third_server.NewTxtContent] = req.Content
+	param[mod_base.FileId] = fileId
+	third_server.TxtTriggerExec(userId, param)
 	logrus.Info("[UpdateTextContent] userId is ", userId)
 	err = stage.DUpdateTextContent(fileId, req.Content, req.Name)
 	if err != nil {

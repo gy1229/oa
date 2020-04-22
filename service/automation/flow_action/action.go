@@ -58,10 +58,10 @@ func GetActionDefination(req *json_struct.GetActionDefinationRequest) (*json_str
 	switch actionId%2 {
 	case 1:
 		trigger := mod_base.TriggerGroup[actionId]
-		formData = trigger.GetFrontStruct()
+		formData = trigger.GetFrontStruct(userId)
 	default:
 		action := mod_base.ActionGroup[actionId]
-		formData = action.GetFrontStruct()
+		formData = action.GetFrontStruct(userId)
 	}
 	rFormData := make([]*json_struct.FormData, 0 )
 	util.TranHttpStruct2Database(formData, &rFormData)

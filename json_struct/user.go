@@ -29,6 +29,8 @@ type UpdateUserRequest struct {
 	Account  string `json:"account"`
 	UserName string `json:"user_name"`
 	Password string `json:"password"`
+	EmailAddr string `json:"email_addr"`
+	EmailPass string `json:"email_pass"`
 }
 
 type UpdateUserResponse struct {

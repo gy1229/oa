@@ -3,6 +3,7 @@ package user_server
 import (
 	"github.com/gy1229/oa/constant"
 	"github.com/gy1229/oa/database"
+	database_user "github.com/gy1229/oa/database/user"
 	"github.com/gy1229/oa/json_struct"
 	"github.com/gy1229/oa/util"
 	"github.com/jinzhu/gorm"
@@ -31,13 +32,19 @@ func LoadUserMessage(req *json_struct.LoadUserMessageRequest) (*json_struct.Load
 }
 
 func UpdateUserMessage(req *json_struct.UpdateUserRequest) (*json_struct.UpdateUserResponse, error) {
-	user := database.OaUser{
-		Password: req.Password,
-		UserName: req.UserName,
-	}
-	if err := database.DB.Model(&user).Where("account = ?", req.Account).Updates(user).Error; err != nil {
-		logrus.Error("[UpdateUserMessage] err msg", err.Error())
+	err := database_user.UpdateUserMessage(req.Account, req.UserName, req.Password)
+	if err != nil {
 		return nil, err
+	}
+	userId, err := database_user.FindUserIdByAccount(req.Account)
+	if err != nil {
+		return nil, err
+	}
+	if req.EmailAddr != "" {
+		err := database_user.UpdateUserThirdMessage(userId, req.EmailAddr, req.EmailPass)
+		if err != nil {
+			return nil, err
+		}
 	}
 	return &json_struct.UpdateUserResponse{
 		Base: &json_struct.BaseResponse{Body: constant.SUCCESS},

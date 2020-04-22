@@ -48,11 +48,29 @@ func FindActionDefinationByFDefId(fdefId int64) ([]*database.ActionDefination, e
 
 func DeleteActionDefinationById(id int64) error {
 	a := database.ActionDefination{
-		Status:             1,
+		Status: 1,
 	}
 	if err := database.DB.Model(&a).Where("id = ?", id).Updates(a).Error; err != nil {
 		logrus.Error("[UpdateFlowInstance] err ", err.Error())
 		return err
 	}
 	return nil
+}
+
+func FindActionDefinationByFDefId2(fdefId int64) (*database.ActionDefination, error) {
+	aDef := make([]*database.ActionDefination, 0)
+	if err := database.DB.Where("flow_defination_id = ? && status = 0 && action_type = 2", fdefId).Find(&aDef).Error; err != nil {
+		logrus.Error("[FindActionDefinationByFDefId] err ", err.Error())
+		return nil, err
+	}
+	return aDef[0], nil
+}
+
+func FindActionDefinationByFDefId1(fdefId int64) (*database.ActionDefination, error) {
+	aDef := make([]*database.ActionDefination, 0)
+	if err := database.DB.Where("flow_defination_id = ? && status = 0 && action_type = 1", fdefId).Find(&aDef).Error; err != nil {
+		logrus.Error("[FindActionDefinationByFDefId] err ", err.Error())
+		return nil, err
+	}
+	return aDef[0], nil
 }

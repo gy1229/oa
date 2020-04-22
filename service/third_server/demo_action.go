@@ -13,7 +13,7 @@ func (b *DemoAction) GetActionName() string {
 	return "DemoAction"
 }
 
-func (b *DemoAction) GetFrontStruct() []*mod_base.FormData {
+func (b *DemoAction) GetFrontStruct(int64) []*mod_base.FormData {
 	return []*mod_base.FormData{
 		{
 			Title:    "单选",

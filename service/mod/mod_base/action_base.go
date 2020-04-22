@@ -2,7 +2,8 @@ package mod_base
 
 type Action interface {
 	GetActionName() string
-	GetFrontStruct() []*FormData
+	GetFrontStruct(int64) []*FormData
+	PreExecAction(int64, map[string]interface{})
 	ExecAction() error
 	GetActionId() int64
 	GetActionImageId() int64
@@ -19,7 +20,7 @@ func(b *BaseAction) GetActionName() string {
 	return ""
 }
 
-func(b *BaseAction) GetFrontStruct() []*FormData {
+func(b *BaseAction) GetFrontStruct(int64) []*FormData {
 	return nil
 }
 
@@ -35,3 +36,6 @@ func(b *BaseAction) GetActionImageId() int64 {
 	return 123
 }
 
+func(b *BaseAction) PreExecAction(int64, map[string]interface{}) {
+	return
+}

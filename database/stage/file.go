@@ -103,6 +103,7 @@ func DCreateFileDeatil(name string, userId, stageRepId, id int64, ttype int) err
 		UpdateTime:  time.Now(),
 		CreateTime:  time.Now(),
 		Status:      0,
+		Name: name,
 	}
 	if err := database.DB.Create(fileDetail).Error; err != nil {
 		logrus.Error("[DCreateFileDeatil] err ", err.Error())
@@ -192,4 +193,13 @@ func DDeleteTableCellById(cellId int64) error {
 		return err
 	}
 	return nil
+}
+
+func DGetFileListByUserId(userId int64) ([]*database.FileDetail, error){
+	fds := make([]*database.FileDetail, 0)
+	if err := database.DB.Model(&fds).Where("creator_id = ? AND status = 0", userId).Find(&fds).Error; err != nil {
+		logrus.Error("[DGetFileListByUserId] err ", err.Error())
+		return nil, err
+	}
+	return fds, nil
 }

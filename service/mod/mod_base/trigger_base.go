@@ -4,7 +4,7 @@ package mod_base
 type Trigger interface {
 	GetTriggerName() string
 	PreInitAction()
-	GetFrontStruct() []*FormData
+	GetFrontStruct(int64) []*FormData
 	StartTrigger() error
 	GetTriggerId() int64
 	GetTriggerImageId() int64
@@ -26,7 +26,7 @@ func(b *BaseTrigger) PreInitAction()  {
 	return
 }
 
-func(b *BaseTrigger) GetFrontStruct() []*FormData {
+func(b *BaseTrigger) GetFrontStruct(int64) []*FormData {
 	return nil
 }
 

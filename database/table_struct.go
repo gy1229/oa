@@ -13,6 +13,15 @@ type OaUser struct {
 	ImageId    int64     `json:"image_id"`
 }
 
+type Third struct {
+	Id int64
+	Account string `json:"account"`
+	Password   string    `json:"password"`
+	UserId int64
+	UpdateTime time.Time `json:"update_time"`
+	CreateTime time.Time `json:"create_time"`
+	App string `json:"app"`
+}
 type StageRepository struct {
 	Id         int64     `json:"id"`
 	Name       string    `json:"name"`
@@ -31,6 +40,7 @@ type FileDetail struct {
 	UpdateTime  time.Time `json:"update_time"`
 	CreateTime  time.Time `json:"create_time"`
 	Status      int       `json:"status"`
+	Name string `json:"name"`
 }
 
 type FileText struct {

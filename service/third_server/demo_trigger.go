@@ -17,7 +17,7 @@ func(b *DemoTrigger) PreInitAction()  {
 	return
 }
 
-func(b *DemoTrigger) GetFrontStruct() []*mod_base.FormData {
+func(b *DemoTrigger) GetFrontStruct(int642 int64) []*mod_base.FormData {
 	return []*mod_base.FormData{
 		{
 			Title:"单选",

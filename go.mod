@@ -12,6 +12,7 @@ require (
 	github.com/jinzhu/gorm v1.9.12
 	github.com/sirupsen/logrus v1.4.2
 	github.com/spf13/viper v1.6.2
-	github.com/tealeg/xlsx v1.0.5 // indirect
 	google.golang.org/grpc v1.29.0-dev.0.20200326222940-e965f2a60b15
+	gopkg.in/alexcesaro/quotedprintable.v3 v3.0.0-20150716171945-2caba252f4dc // indirect
+	gopkg.in/gomail.v2 v2.0.0-20160411212932-81ebce5c23df
 )
