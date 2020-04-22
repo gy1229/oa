@@ -8,6 +8,7 @@ import (
 func ActionInit() {
 	mod_base.ActionGroup[2] = &DemoAction{}
 	mod_base.ActionGroup[4] = &MailAction{}
+	mod_base.ActionGroup[6] = &TxtAction{}
 }
 
 func TriggerInit() {
