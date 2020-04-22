@@ -2,7 +2,9 @@ package util
 
 import (
 	"encoding/json"
+	"fmt"
 	"github.com/gin-gonic/gin"
+	"strings"
 )
 
 func GenDefaultResp(body string) gin.H {
@@ -24,6 +26,11 @@ func TranformStruct2GinH(s interface{}) gin.H {
 	return m
 }
 
-func TranVarToContent(content string, param map[string]interface{}) {
-
+func TranVarToContent(content string, param map[string]interface{}) string {
+	for k, v := range param {
+		if str, ok := v.(string); ok {
+			content = strings.Replace(content, fmt.Sprintf("{{%s}}", k), str, -1 )
+		}
+	}
+	return content
 }

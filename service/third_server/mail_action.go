@@ -6,6 +6,7 @@ import (
 	"github.com/gy1229/oa/database/automation"
 	data_user "github.com/gy1229/oa/database/user"
 	"github.com/gy1229/oa/service/mod/mod_base"
+	"github.com/gy1229/oa/util"
 	"github.com/sirupsen/logrus"
 	"gopkg.in/gomail.v2"
 	"strconv"
@@ -83,6 +84,7 @@ func (b *MailAction) GetFrontStruct(userId int64) []*mod_base.FormData {
 func (b *MailAction) ExecAction() error {
 	userId, ok := b.Param[mod_base.UserId].(int64)
 	if ok {
+		logrus.Error("[MailAction] cant get user_id")
 		return errors.New("cant get user_id")
 	}
 	third, err := data_user.FindThirdAccountByUserId(userId)
@@ -91,14 +93,18 @@ func (b *MailAction) ExecAction() error {
 	}
 	recevier, ok := b.Param[EmailRecevier].(string)
 	if ok {
+		logrus.Error("[MailAction] cant get sender")
 		return errors.New("cant get sender")
 	}
 	body, ok := b.Param[EmailContent].(string)
 	if ok {
+		logrus.Error("[MailAction] cant get EmailContent")
 		return errors.New("cant get EmailContent")
 	}
+	body = util.TranVarToContent(body, b.Param)
 	subject, ok := b.Param[EmailSubject].(string)
 	if ok {
+		logrus.Error("[MailAction] cant get EmailSubject")
 		return errors.New("cant get EmailSubject")
 	}
 	receviers := strings.Split(recevier, ";")
