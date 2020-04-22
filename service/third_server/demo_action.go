@@ -20,14 +20,32 @@ func (b *DemoAction) GetFrontStruct(int64) []*mod_base.FormData {
 			Key:      constant.ItemSingle,
 			Value:    "",
 			Position: "0",
-			Options:  []string{"A", "B", "C"},
+			Options: []Option{{
+				Id:    "1",
+				Value: "First",
+			}, {
+				Id:    "2",
+				Value: "Second",
+			}, {
+				Id:    "3",
+				Value: "Third",
+			}},
 		},
 		{
 			Title:    "多选",
 			Key:      constant.ItemCheckbox,
 			Value:    "",
 			Position: "1",
-			Options:  []string{"A", "B", "C"},
+			Options: []Option{{
+				Id:    "1",
+				Value: "First",
+			}, {
+				Id:    "2",
+				Value: "Second",
+			}, {
+				Id:    "3",
+				Value: "Third",
+			}},
 		},
 		{
 			Title:    "文本",

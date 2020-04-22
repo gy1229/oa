@@ -38,14 +38,14 @@ type TxtFileTrigger struct {
 }
 
 type Option struct {
-	Id    string
-	Value string
+	Id    string `json:"id"`
+	Value string `json:"value"`
 }
 
 type TxtRedisStruct struct {
-	FileId           int64
-	Change           int
-	FlowDefinationId int64
+	FileId           int64 `json:"file_id"`
+	Change           int `json:"change"`
+	FlowDefinationId int64 `json:"flow_defination_id"`
 }
 
 func (b *TxtFileTrigger) GetTriggerName() string {

@@ -24,10 +24,10 @@ type GetActionListRequest struct {
 }
 
 type Action struct {
-	ActionId   string
-	ActionName string
-	ActionIcon string
-	Item       string
+	ActionId   string `json:"action_id"`
+	ActionName string `json:"action_name"`
+	ActionIcon string `json:"action_icon"`
+	Item       string `json:"item"`
 }
 
 type GetActionListResponse struct {
