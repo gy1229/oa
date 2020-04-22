@@ -103,7 +103,7 @@ func DCreateFileDeatil(name string, userId, stageRepId, id int64, ttype int) err
 		UpdateTime:  time.Now(),
 		CreateTime:  time.Now(),
 		Status:      0,
-		Name: name,
+		Name:        name,
 	}
 	if err := database.DB.Create(fileDetail).Error; err != nil {
 		logrus.Error("[DCreateFileDeatil] err ", err.Error())
@@ -132,11 +132,11 @@ func DCreateTableFile(id, fileId, rowLen, lineLen int64, name string) error {
 
 func DCreateTableCell(tableFileId, row, line int64, content string) error {
 	tableCell := database.TableCell{
-		Id:      util.GenId(),
-		FileTableId:  tableFileId,
-		Content: content,
-		Row:     row,
-		Line:    line,
+		Id:          util.GenId(),
+		FileTableId: tableFileId,
+		Content:     content,
+		Row:         row,
+		Line:        line,
 	}
 	if err := database.DB.Create(tableCell).Error; err != nil {
 		logrus.Error("[DCreateTableCell] err ", err.Error())
@@ -176,7 +176,7 @@ func DGetFileName(file_id int64, ttype int) (string, error) {
 
 }
 
-func DUpdateTableFileByFileId(table *database.FileTable) error{
+func DUpdateTableFileByFileId(table *database.FileTable) error {
 	if err := database.DB.Model(&table).Where("file_id = ?", table.FileId).Updates(table).Error; err != nil {
 		logrus.Error("[UpdateFlowDefination] err msg ", err.Error())
 		return err
@@ -195,7 +195,7 @@ func DDeleteTableCellById(cellId int64) error {
 	return nil
 }
 
-func DGetFileListByUserId(userId int64) ([]*database.FileDetail, error){
+func DGetFileListByUserId(userId int64) ([]*database.FileDetail, error) {
 	fds := make([]*database.FileDetail, 0)
 	if err := database.DB.Model(&fds).Where("creator_id = ? AND status = 0", userId).Find(&fds).Error; err != nil {
 		logrus.Error("[DGetFileListByUserId] err ", err.Error())

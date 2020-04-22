@@ -36,9 +36,9 @@ func UpdateUserMessage(account, userName, userPassword string) error {
 	return nil
 }
 
-func UpdateUserThirdMessage(userId int64, emailAddr, emailPass string) error{
+func UpdateUserThirdMessage(userId int64, emailAddr, emailPass string) error {
 	third := database.Third{
-		Account: emailAddr,
+		Account:  emailAddr,
 		Password: emailPass,
 	}
 	if err := database.DB.Model(&third).Where("user_id = ?", userId).Updates(&third).Error; err != nil {

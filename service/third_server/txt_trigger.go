@@ -17,9 +17,9 @@ const (
 )
 
 const (
-	TxtSelectFile  = "txt_select_file"
-	TxtSelectFileTitle = "选择文件"
-	TxtTriggerFunction = "txt_trigger_function"
+	TxtSelectFile           = "txt_select_file"
+	TxtSelectFileTitle      = "选择文件"
+	TxtTriggerFunction      = "txt_trigger_function"
 	TxtTriggerFunctionTitle = "触发方式"
 )
 
@@ -38,25 +38,25 @@ type TxtFileTrigger struct {
 }
 
 type Option struct {
-	Id string
+	Id    string
 	Value string
 }
 
 type TxtRedisStruct struct {
-	FileId int64
-	Change int
+	FileId           int64
+	Change           int
 	FlowDefinationId int64
 }
 
-func(b *TxtFileTrigger) GetTriggerName() string {
+func (b *TxtFileTrigger) GetTriggerName() string {
 	return "TxtFileTrigger"
 }
 
-func(b *TxtFileTrigger) PreInitAction()  {
+func (b *TxtFileTrigger) PreInitAction() {
 	return
 }
 
-func(b *TxtFileTrigger) GetFrontStruct(userId int64) []*mod_base.FormData {
+func (b *TxtFileTrigger) GetFrontStruct(userId int64) []*mod_base.FormData {
 	return []*mod_base.FormData{
 		{
 			Title:    TxtSelectFileTitle,
@@ -66,16 +66,16 @@ func(b *TxtFileTrigger) GetFrontStruct(userId int64) []*mod_base.FormData {
 			Options:  GenFlieList(userId),
 		},
 		{
-			Title:TxtTriggerFunctionTitle,
-			Key: constant.ItemSingle,
-			Value:"",
-			Position:"1",
-			Options:[]string{TOContentChange, TOPropertyChange},
+			Title:    TxtTriggerFunctionTitle,
+			Key:      constant.ItemSingle,
+			Value:    "",
+			Position: "1",
+			Options:  []string{TOContentChange, TOPropertyChange},
 		},
 	}
 }
 
-func(b *TxtFileTrigger) SetRedisTrigger(fId int64, fd []*mod_base.FormData) error {
+func (b *TxtFileTrigger) SetRedisTrigger(fId int64, fd []*mod_base.FormData) error {
 	var fileId int64
 	var change int
 	var err error
@@ -85,17 +85,17 @@ func(b *TxtFileTrigger) SetRedisTrigger(fId int64, fd []*mod_base.FormData) erro
 			if err != nil {
 				logrus.Error("[SetRedisTrigger] file id cannt find, fId", fId)
 			}
-		}else {
+		} else {
 			if v.Value == TOContentChange {
 				change = 1
-			}else {
+			} else {
 				change = 2
 			}
 		}
 	}
 	err = gredis.LPush(TxtRedisKey, TxtRedisStruct{
-		FileId: fileId,
-		Change: change,
+		FileId:           fileId,
+		Change:           change,
 		FlowDefinationId: fId,
 	})
 	return err
@@ -122,7 +122,7 @@ func TxtTriggerExec(userId int64, parma map[string]interface{}) {
 		return
 	}
 	fileId := parma[mod_base.FileId].(int64)
-	fileText, err :=stage.DGetTextFileByFileId(fileId)
+	fileText, err := stage.DGetTextFileByFileId(fileId)
 	if err != nil {
 		return
 	}

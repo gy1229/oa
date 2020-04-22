@@ -8,7 +8,7 @@ type UserBase struct {
 type RegisterUserRequest struct {
 	UserBase *UserBase `json:"user_base"`
 	UserName string    `json:"user_name"  binding:"required"`
-	ImageId string `json:"image_id"`
+	ImageId  string    `json:"image_id"`
 }
 
 type RegisterUserResponse struct {
@@ -20,15 +20,15 @@ type LoginUserRequest struct {
 }
 
 type LoginUserResponse struct {
-	UserId string        `json:"user_id"`
-	ImageId string `json:"image_id"`
-	Base   *BaseResponse `json:"base"`
+	UserId  string        `json:"user_id"`
+	ImageId string        `json:"image_id"`
+	Base    *BaseResponse `json:"base"`
 }
 
 type UpdateUserRequest struct {
-	Account  string `json:"account"`
-	UserName string `json:"user_name"`
-	Password string `json:"password"`
+	Account   string `json:"account"`
+	UserName  string `json:"user_name"`
+	Password  string `json:"password"`
 	EmailAddr string `json:"email_addr"`
 	EmailPass string `json:"email_pass"`
 }
@@ -44,7 +44,7 @@ type LoadUserMessageRequest struct {
 type LoadUserMessageResponse struct {
 	Account  string        `json:"account" binding`
 	UserName string        `json:"user_name"  binding:"required"`
-	ImageId string `json:"image_id"`
+	ImageId  string        `json:"image_id"`
 	Base     *BaseResponse `json:"base"`
 }
 
@@ -59,10 +59,10 @@ type CertainAccountResponse struct {
 type UploadAvatarRequest struct {
 	FileContent []byte `json:"file_content"`
 	Name        string `json:"name"`
-	FileType string `json:"file_type"`
+	FileType    string `json:"file_type"`
 }
 type UploadAvatarResponse struct {
-	ImageId string         `json:"image_id"`
+	ImageId string        `json:"image_id"`
 	Base    *BaseResponse `json:"base"`
 }
 
@@ -71,6 +71,6 @@ type GetAvatarRequest struct {
 }
 
 type GetAvatarResponse struct {
-	ImageFile []byte `json:"image_file"`
-	Base    *BaseResponse `json:"base"`
+	ImageFile []byte        `json:"image_file"`
+	Base      *BaseResponse `json:"base"`
 }

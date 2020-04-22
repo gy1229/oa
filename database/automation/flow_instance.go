@@ -53,7 +53,7 @@ func CreateFlowInstanceByDetail(id, fdId int64) error {
 
 func UpdateFlowInstanceStatus(id int64, status int) error {
 	fi := &database.FlowInstance{
-		RunStatus:        status,
+		RunStatus: status,
 	}
 	if err := database.DB.Model(&fi).Where("id = ?", id).Updates(fi).Error; err != nil {
 		logrus.Error("[UpdateFlowDefination] err msg ", err.Error())

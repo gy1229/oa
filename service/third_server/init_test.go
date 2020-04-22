@@ -15,23 +15,23 @@ func TestInitAction(t *testing.T) {
 	test.InitTestConfig2()
 	ActionInit()
 	TriggerInit()
-	aId := int64(3)
+	aId := int64(4)
 	InitAction(aId)
 }
 
 func InitAction(actionId int64) {
 	da := &database.Action{
-		Id: actionId,
+		Id:         actionId,
 		CreateTime: time.Now(),
 		UpdateTime: time.Now(),
-		Status: 0,
+		Status:     0,
 	}
-	if actionId % 2 == 0 {
+	if actionId%2 == 0 {
 		action := mod_base.ActionGroup[actionId]
 		da.Name = action.GetActionName()
 		da.ActionType = action.GetActionType()
 		da.ImageId = action.GetActionImageId()
-	}else {
+	} else {
 		action := mod_base.TriggerGroup[actionId]
 		da.Name = action.GetTriggerName()
 		da.ActionType = action.GetTriggerType()

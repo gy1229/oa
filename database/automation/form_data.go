@@ -48,7 +48,7 @@ func FindFormDataByADefId(aDefId int64) ([]*database.FormData, error) {
 
 func DeleteFormDataById(id int64) error {
 	f := database.FormData{
-		Status:             1,
+		Status: 1,
 	}
 	if err := database.DB.Model(&f).Where("id = ?", id).Updates(f).Error; err != nil {
 		logrus.Error("[UpdateFlowInstance] err ", err.Error())

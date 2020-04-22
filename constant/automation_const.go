@@ -10,25 +10,25 @@ const (
 
 const (
 	Trigger = 0
-	Action = 1
+	Action  = 1
 )
 
 const (
-	TriggerEmail = 1
-	TriggerTable = 3
-	TriggerFile = 5
+	TriggerEmail      = 1
+	TriggerTable      = 3
+	TriggerFile       = 5
 	TriggerRepository = 7
 )
 
 const (
-	ActionEmail = 2
-	ActionTable = 3
-	ActionFile = 6
+	ActionEmail      = 2
+	ActionTable      = 3
+	ActionFile       = 6
 	ActionRepository = 8
 )
 
 const (
-	FlowInstanceStart = 1
+	FlowInstanceStart   = 1
 	FlowInstanceSuccess = 2
-	FlowInstanceFail = 3
+	FlowInstanceFail    = 3
 )

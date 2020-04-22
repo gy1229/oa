@@ -10,32 +10,32 @@ type Action interface {
 	GetActionType() string
 }
 
-type BaseAction struct {}
+type BaseAction struct{}
 
-func(b *BaseAction) GetActionType() string {
+func (b *BaseAction) GetActionType() string {
 	return "2"
 }
 
-func(b *BaseAction) GetActionName() string {
+func (b *BaseAction) GetActionName() string {
 	return ""
 }
 
-func(b *BaseAction) GetFrontStruct(int64) []*FormData {
+func (b *BaseAction) GetFrontStruct(int64) []*FormData {
 	return nil
 }
 
-func(b *BaseAction) ExecAction() error {
+func (b *BaseAction) ExecAction() error {
 	return nil
 }
 
-func(b *BaseAction) GetActionId() int64 {
+func (b *BaseAction) GetActionId() int64 {
 	return 0
 }
 
-func(b *BaseAction) GetActionImageId() int64 {
+func (b *BaseAction) GetActionImageId() int64 {
 	return 123
 }
 
-func(b *BaseAction) PreExecAction(int64, map[string]interface{}) {
+func (b *BaseAction) PreExecAction(int64, map[string]interface{}) {
 	return
 }

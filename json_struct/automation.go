@@ -1,76 +1,76 @@
 package json_struct
 
 type ActionDetail struct {
-	ActionId string `json:"action_id"`
-	ActionName string `json:"action_name"`
-	ActionIcon string `json:"action_icon"`
-	ActionPosition string `json:"action_position"`
-	ActionType string `json:"action_type"`
+	ActionId             string      `json:"action_id"`
+	ActionName           string      `json:"action_name"`
+	ActionIcon           string      `json:"action_icon"`
+	ActionPosition       string      `json:"action_position"`
+	ActionType           string      `json:"action_type"`
 	BehaviorInstanceList []*FormData `json:"behavior_instance_list"`
 }
 
 type FormData struct {
-	Id string `json:"id"`
-	Title string `json:"title"`
-	Key string `json:"key"`
-	Value string `json:"value"`
-	Position string `json:"position"`
-	Options interface{} `json:"options"`
+	Id       string      `json:"id"`
+	Title    string      `json:"title"`
+	Key      string      `json:"key"`
+	Value    string      `json:"value"`
+	Position string      `json:"position"`
+	Options  interface{} `json:"options"`
 }
 
 type GetActionListRequest struct {
-	UserId string `json:"user_id"`
+	UserId     string `json:"user_id"`
 	ActionType string `json:"action_type"`
 }
 
 type Action struct {
-	ActionId string
+	ActionId   string
 	ActionName string
 	ActionIcon string
-	Item string
+	Item       string
 }
 
 type GetActionListResponse struct {
-	ActionList []*Action `json:"action_list"`
-	Base *BaseResponse `json:"base"`
+	ActionList []*Action     `json:"action_list"`
+	Base       *BaseResponse `json:"base"`
 }
 
 type GetActionDefinationRequest struct {
-	UserId string `json:"user_id"`
+	UserId   string `json:"user_id"`
 	ActionId string `json:"action_id"`
 }
 
 type GetActionDefinationResponse struct {
-	BehaviorDefinationList []*FormData `json:"behavior_defination_list"`
-	Base *BaseResponse `json:"base"`
+	BehaviorDefinationList []*FormData   `json:"behavior_defination_list"`
+	Base                   *BaseResponse `json:"base"`
 }
 
 type GetFlowDefinationDetailRequest struct {
 	FlowDefinationId string `json:"flow_defination_id"`
-	UserId string `json:"user_id"`
+	UserId           string `json:"user_id"`
 }
 
 type GetFlowDefinationDetailResponse struct {
 	ActionList []*ActionDetail `json:"action_list"`
-	Base *BaseResponse `json:"base"`
+	Base       *BaseResponse   `json:"base"`
 }
 
 type CreateFlowDefinationRequest struct {
-	UserId string `json:"user_id"`
-	FlowDefinationName string `json:"flow_defination_name"`
-	ActionList []*ActionDetail `json:"action_list"`
+	UserId             string          `json:"user_id"`
+	FlowDefinationName string          `json:"flow_defination_name"`
+	ActionList         []*ActionDetail `json:"action_list"`
 }
 
 type CreateFlowDefinationResponse struct {
-	FlowDefinationId string `json:"flow_defination_id"`
-	Base *BaseResponse `json:"base"`
+	FlowDefinationId string        `json:"flow_defination_id"`
+	Base             *BaseResponse `json:"base"`
 }
 
 type UpdateFlowDefinationRequest struct {
-	UserId string `json:"user_id"`
-	FlowDefinationId string `json:"flow_defination_id"`
-	FlowDefinationName string `json:"flow_defination_name"`
-	ActionList []*ActionDetail `json:"action_list"`
+	UserId             string          `json:"user_id"`
+	FlowDefinationId   string          `json:"flow_defination_id"`
+	FlowDefinationName string          `json:"flow_defination_name"`
+	ActionList         []*ActionDetail `json:"action_list"`
 }
 
 type UpdateFlowDefinationResponse struct {
@@ -82,17 +82,17 @@ type GetFlowDefinationListRequest struct {
 }
 
 type FlowDefination struct {
-	FlowDefinationId string `json:"flow_defination_id"`
+	FlowDefinationId   string `json:"flow_defination_id"`
 	FlowDefinationName string `json:"flow_defination_name"`
 }
 
 type GetFlowDefinationListResponse struct {
 	FlowDefinationList []*FlowDefination `json:"flow_defination_list"`
-	Base *BaseResponse `json:"base"`
+	Base               *BaseResponse     `json:"base"`
 }
 
 type DeleteFlowDeinationRequest struct {
-	UserId string `json:"user_id"`
+	UserId           string `json:"user_id"`
 	FlowDefinationId string `json:"flow_defination_id"`
 }
 

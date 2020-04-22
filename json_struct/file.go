@@ -44,7 +44,7 @@ type TableContent struct {
 type GetFileContentResponse struct {
 	Name         string        `json:"name"`
 	Type         string        `json:"type"`
-	Content      *string        `json:"content",omitempty`
+	Content      *string       `json:"content",omitempty`
 	TableContent *TableContent `json:"table_content", omitempty`
 	Base         *BaseResponse `json:"base"`
 }
@@ -64,8 +64,8 @@ type UpdateTableContentRequest struct {
 	FileId     string       `json:"file_id"`
 	UserId     string       `json:"user_id"`
 	Name       string       `json:"name"`
-	RowLen     string `json:"row_len"`
-	LineLen string `json:"line_len"`
+	RowLen     string       `json:"row_len"`
+	LineLen    string       `json:"line_len"`
 	TableCells []*TableCell `json:"table_cells"`
 }
 
@@ -95,8 +95,7 @@ type DelFileResponse struct {
 	Base *BaseResponse `json:"base"`
 }
 
-
 type UploadFileRequest struct {
-	RepositoryId string        `json:"repository_id"`
-	File string `json:"file"`
+	RepositoryId string `json:"repository_id"`
+	File         string `json:"file"`
 }

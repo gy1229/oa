@@ -43,7 +43,7 @@ func CreateFlowDefinationByArgs(id, creatorId int64, name string) error {
 		Id:         id,
 		Name:       name,
 		CreatorId:  creatorId,
-		Status: 0,
+		Status:     0,
 		CreateTime: time.Now(),
 		UpdateTime: time.Now(),
 	}
@@ -67,7 +67,7 @@ func GetFlowDefinationById(id int64) (*database.FlowDefination, error) {
 
 func DelFlowDefinationById(id int64) error {
 	fd := &database.FlowDefination{
-		Status:     1,
+		Status: 1,
 	}
 	if err := database.DB.Model(&fd).Where("id = ?", id).Updates(fd).Error; err != nil {
 		logrus.Error("[DelFlowDefinationById] err msg ", err.Error())
@@ -78,7 +78,7 @@ func DelFlowDefinationById(id int64) error {
 
 func UpdateFlowDefinationNameById(id int64, name string) error {
 	fd := &database.FlowDefination{
-		Name:       name,
+		Name: name,
 	}
 	if err := database.DB.Model(&fd).Where("id = ?", id).Updates(fd).Error; err != nil {
 		logrus.Error("[UpdateFlowDefinationNameById] err msg ", err.Error())

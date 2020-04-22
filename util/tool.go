@@ -19,7 +19,6 @@ func BytesCombine(pBytes ...[]byte) []byte {
 	return bytes.Join(pBytes, []byte(""))
 }
 
-
 func TranHttpStruct2Database(a interface{}, b interface{}) {
 	aByte, err := json.Marshal(a)
 	if err != nil {
@@ -36,6 +35,6 @@ func Byte2String(bs []int8) string {
 	ba := []byte{}
 	for _, b := range bs {
 		ba = append(ba, byte(b))
-		}
+	}
 	return string(ba)
 }

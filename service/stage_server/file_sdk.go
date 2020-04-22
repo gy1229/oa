@@ -79,8 +79,8 @@ func Read2StageTableFile(fHeader *multipart.FileHeader, fileId int64) error {
 	}
 	llen := len(rows[0])
 	tableCells := make([]*json_struct.TableCell, rlen*llen)
-	for r, row := range rows{
-		for l, cell := range row{
+	for r, row := range rows {
+		for l, cell := range row {
 			tableCells[llen*r+l] = &json_struct.TableCell{
 				Content: cell,
 				Row:     strconv.Itoa(r),

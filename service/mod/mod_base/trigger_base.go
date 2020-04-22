@@ -1,6 +1,5 @@
 package mod_base
 
-
 type Trigger interface {
 	GetTriggerName() string
 	PreInitAction()
@@ -12,35 +11,35 @@ type Trigger interface {
 	SetRedisTrigger(int64, []*FormData) error
 }
 
-type BaseTrigger struct {}
+type BaseTrigger struct{}
 
-func(b *BaseTrigger)  GetTriggerType() string {
+func (b *BaseTrigger) GetTriggerType() string {
 	return "1"
 }
 
-func(b *BaseTrigger) GetTriggerName() string {
+func (b *BaseTrigger) GetTriggerName() string {
 	return ""
 }
 
-func(b *BaseTrigger) PreInitAction()  {
+func (b *BaseTrigger) PreInitAction() {
 	return
 }
 
-func(b *BaseTrigger) GetFrontStruct(int64) []*FormData {
+func (b *BaseTrigger) GetFrontStruct(int64) []*FormData {
 	return nil
 }
 
-func(b *BaseTrigger) StartTrigger() error {
+func (b *BaseTrigger) StartTrigger() error {
 	return nil
 }
 
-func(b *BaseTrigger) GetTriggerId() int64 {
+func (b *BaseTrigger) GetTriggerId() int64 {
 	return 1
 }
-func(b *BaseTrigger) GetTriggerImageId() int64 {
+func (b *BaseTrigger) GetTriggerImageId() int64 {
 	return 13
 }
 
-func(b *BaseTrigger) SetRedisTrigger(int64, []*FormData) error {
+func (b *BaseTrigger) SetRedisTrigger(int64, []*FormData) error {
 	return nil
 }

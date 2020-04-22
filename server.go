@@ -57,7 +57,6 @@ func main() {
 
 	r.GET("/getFileDetail/:userId/:fileId", GGetFileContent)
 
-
 	// automation
 	r.POST("/getActionList", GetActionList)
 	r.POST("/getActionDefination", GetActionDefination)

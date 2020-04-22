@@ -27,13 +27,12 @@ func TestInsertUserMessage(t *testing.T) {
 			Account:  "12223",
 			Password: "guyu1998",
 		},
-		UserName:"Helloa",
+		UserName: "Helloa",
 	})
 }
 func TestHello(t *testing.T) {
 	test.InitTestConfig2()
-	f :=&database.FileDetail{
-	}
+	f := &database.FileDetail{}
 	dsd(f)
 	fmt.Println(f)
 }

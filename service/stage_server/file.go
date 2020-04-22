@@ -160,13 +160,13 @@ func UpdateTableContent(req *json_struct.UpdateTableContentRequest) (*json_struc
 	}
 
 	fileTable := &database.FileTable{
-		FileId:fileId,
-		RowLen:rowLen,
-		LineLen:lineLen,
-		Name:req.Name,
+		FileId:  fileId,
+		RowLen:  rowLen,
+		LineLen: lineLen,
+		Name:    req.Name,
 	}
 	if err = stage.DUpdateTableFileByFileId(fileTable); err != nil {
-			return nil, err
+		return nil, err
 	}
 	for _, v := range req.TableCells {
 		cellId, err := strconv.ParseInt(v.Id, 10, 64)
@@ -174,7 +174,7 @@ func UpdateTableContent(req *json_struct.UpdateTableContentRequest) (*json_struc
 			logrus.Error("[UpdateTableContent] cellId ParseInt")
 			return nil, err
 		}
-		if cellId == -1{
+		if cellId == -1 {
 			row, _ := strconv.ParseInt(v.Row, 10, 64)
 			line, _ := strconv.ParseInt(v.Line, 10, 64)
 			if err := stage.DCreateTableCell(fileId, row, line, req.Name); err != nil {

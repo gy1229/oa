@@ -25,7 +25,7 @@ func ConsumerInit() {
 
 }
 
-func ConsumerStart(topic string) (string){
+func ConsumerStart(topic string) string {
 	//根据消费者获取指定的主题分区的消费者,Offset这里指定为获取最新的消息.
 	partitionConsumer, err := KConsumerClient.ConsumePartition(topic, 0, sarama.OffsetNewest)
 	if err != nil {

@@ -32,12 +32,12 @@ func GetActionList(req *json_struct.GetActionListRequest) (*json_struct.GetActio
 			ActionId:   strconv.FormatInt(v.Id, 10),
 			ActionIcon: strconv.FormatInt(v.ImageId, 10),
 			ActionName: v.Name,
-			Item: strconv.Itoa(k),
+			Item:       strconv.Itoa(k),
 		})
 	}
 	return &json_struct.GetActionListResponse{
 		ActionList: actionArr,
-		Base:     &json_struct.BaseResponse{Body: constant.SUCCESS},
+		Base:       &json_struct.BaseResponse{Body: constant.SUCCESS},
 	}, nil
 }
 
@@ -55,7 +55,7 @@ func GetActionDefination(req *json_struct.GetActionDefinationRequest) (*json_str
 	}
 	logrus.Info("[GetActionDefination] actionId : ", actionId)
 	formData := make([]*mod_base.FormData, 0)
-	switch actionId%2 {
+	switch actionId % 2 {
 	case 1:
 		trigger := mod_base.TriggerGroup[actionId]
 		formData = trigger.GetFrontStruct(userId)
@@ -63,11 +63,11 @@ func GetActionDefination(req *json_struct.GetActionDefinationRequest) (*json_str
 		action := mod_base.ActionGroup[actionId]
 		formData = action.GetFrontStruct(userId)
 	}
-	rFormData := make([]*json_struct.FormData, 0 )
+	rFormData := make([]*json_struct.FormData, 0)
 	util.TranHttpStruct2Database(formData, &rFormData)
 	return &json_struct.GetActionDefinationResponse{
 		BehaviorDefinationList: rFormData,
-		Base:     &json_struct.BaseResponse{Body: constant.SUCCESS},
+		Base:                   &json_struct.BaseResponse{Body: constant.SUCCESS},
 	}, nil
 
 }
@@ -92,7 +92,7 @@ func GetFlowDefinationDetail(req *json_struct.GetFlowDefinationDetailRequest) (*
 	}
 	return &json_struct.GetFlowDefinationDetailResponse{
 		ActionList: actionDetail,
-		Base:     &json_struct.BaseResponse{Body: constant.SUCCESS},
+		Base:       &json_struct.BaseResponse{Body: constant.SUCCESS},
 	}, nil
 }
 
@@ -115,7 +115,7 @@ func CreateFlowDefination(req *json_struct.CreateFlowDefinationRequest) (*json_s
 	}
 	return &json_struct.CreateFlowDefinationResponse{
 		FlowDefinationId: strconv.FormatInt(flowdefId, 10),
-		Base:     &json_struct.BaseResponse{Body: constant.SUCCESS},
+		Base:             &json_struct.BaseResponse{Body: constant.SUCCESS},
 	}, nil
 }
 
@@ -153,7 +153,7 @@ func UpdateFlowDefination(req *json_struct.UpdateFlowDefinationRequest) (*json_s
 		return nil, err
 	}
 	return &json_struct.UpdateFlowDefinationResponse{
-		Base:     &json_struct.BaseResponse{Body: constant.SUCCESS},
+		Base: &json_struct.BaseResponse{Body: constant.SUCCESS},
 	}, nil
 }
 
@@ -178,7 +178,7 @@ func GetFlowDefinationList(req *json_struct.GetFlowDefinationListRequest) (*json
 	}
 	return &json_struct.GetFlowDefinationListResponse{
 		FlowDefinationList: fdDetails,
-		Base:     &json_struct.BaseResponse{Body: constant.SUCCESS},
+		Base:               &json_struct.BaseResponse{Body: constant.SUCCESS},
 	}, nil
 }
 
@@ -210,12 +210,12 @@ func DeleteFlowDeination(req *json_struct.DeleteFlowDeinationRequest) (*json_str
 		return nil, err
 	}
 	return &json_struct.DeleteFlowDeinationResponse{
-		Base:     &json_struct.BaseResponse{Body: constant.SUCCESS},
+		Base: &json_struct.BaseResponse{Body: constant.SUCCESS},
 	}, nil
 }
 
 func GetActionDetailsByFlowDefid(flowdefId int64) ([]*json_struct.ActionDetail, error) {
-	actionList, err :=automation.FindActionDefinationByFDefId(flowdefId)
+	actionList, err := automation.FindActionDefinationByFDefId(flowdefId)
 	if err != nil {
 		logrus.Error("[GetActionDetailsByFlowDefid] FindActionDefinationByFDefId  err:", err.Error())
 		return nil, err
@@ -230,10 +230,10 @@ func GetActionDetailsByFlowDefid(flowdefId int64) ([]*json_struct.ActionDetail, 
 		jf := make([]*json_struct.FormData, 0)
 		for _, f := range fdatas {
 			jf = append(jf, &json_struct.FormData{
-				Id: strconv.FormatInt(f.Id, 10),
+				Id:       strconv.FormatInt(f.Id, 10),
 				Key:      f.Key,
 				Value:    f.Value,
-				Title:   f.Title,
+				Title:    f.Title,
 				Position: strconv.Itoa(f.Position),
 			})
 		}
@@ -276,16 +276,16 @@ func CreateActionDetail(ActionList []*json_struct.ActionDetail, flowDefId int64)
 		actionId, err := strconv.ParseInt(action.ActionId, 10, 64)
 		if err != nil {
 			logrus.Error("[CreateActionDetail] Parse ActionId err", err.Error())
-			return  err
+			return err
 		}
 		ad := database.ActionDefination{
-			ActionId:      actionId,
+			ActionId:         actionId,
 			Id:               Id,
 			FlowDefinationId: flowDefId,
 			Position:         position,
 			ActionType:       action.ActionType,
-			CreateTime: time.Now(),
-			UpdateTime: time.Now(),
+			CreateTime:       time.Now(),
+			UpdateTime:       time.Now(),
 		}
 		if err := automation.CreateActionDefination(&ad); err != nil {
 			logrus.Error("[CreateFlowDefination] CreateActionDefination err", err.Error())
@@ -303,7 +303,7 @@ func CreateActionDetail(ActionList []*json_struct.ActionDetail, flowDefId int64)
 				Key:                bh.Key,
 				Value:              bh.Value,
 				Position:           bPosition,
-				Title: 				bh.Title,
+				Title:              bh.Title,
 			}
 			if err := automation.CreateFormData(&fd); err != nil {
 				logrus.Error("[CreateFlowDefination] CreateFormData err", err.Error())

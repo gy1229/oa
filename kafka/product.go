@@ -1,12 +1,13 @@
 package kafka
+
 import (
+	"fmt"
 	"github.com/Shopify/sarama"
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
-	"time"
 	"log"
-	"fmt"
 	"os"
+	"time"
 )
 
 var KSProductClient sarama.SyncProducer
@@ -28,25 +29,25 @@ func ProductInit() {
 
 }
 
-func ProductStart(topic, value string)  {
+func ProductStart(topic, value string) {
 	syncProducer(topic, value)
 	//asyncProducer1(Address)
 }
 
 //同步消息模式
-func syncProducer(topic, value string)  {
-	for i:=0; i<10; i++ {
+func syncProducer(topic, value string) {
+	for i := 0; i < 10; i++ {
 		value := fmt.Sprintf(value, i)
 		msg := &sarama.ProducerMessage{
-			Topic:topic,
-			Value:sarama.ByteEncoder(value),
+			Topic: topic,
+			Value: sarama.ByteEncoder(value),
 		}
 		part, offset, err := KSProductClient.SendMessage(msg)
 		if err != nil {
 			log.Printf("send message(%s) err=%s \n", value, err)
-		}else {
-			fmt.Fprintf(os.Stdout, value + "发送成功，partition=%d, offset=%d \n", part, offset)
+		} else {
+			fmt.Fprintf(os.Stdout, value+"发送成功，partition=%d, offset=%d \n", part, offset)
 		}
-		time.Sleep(2*time.Second)
+		time.Sleep(2 * time.Second)
 	}
 }

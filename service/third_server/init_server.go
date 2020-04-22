@@ -17,17 +17,17 @@ func TriggerInit() {
 
 func GetActionName(actionId int64) string {
 	logrus.Info("[GetActionName] actionId : ", actionId)
-	if actionId % 2 == 0 {
+	if actionId%2 == 0 {
 		return mod_base.ActionGroup[actionId].GetActionName()
-	}else {
+	} else {
 		return mod_base.TriggerGroup[actionId].GetTriggerName()
 	}
 }
 
 func GetActionIcon(actionId int64) int64 {
-	if actionId % 2 == 0 {
+	if actionId%2 == 0 {
 		return mod_base.ActionGroup[actionId].GetActionImageId()
-	}else {
+	} else {
 		return mod_base.TriggerGroup[actionId].GetTriggerImageId()
 	}
 }

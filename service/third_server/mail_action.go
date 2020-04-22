@@ -13,14 +13,14 @@ import (
 )
 
 const (
-	SelectAccount = "select_account"
+	SelectAccount      = "select_account"
 	SelectAccountTitle = "选择账号"
-	EmailRecevier = "email_recevier"
-	EmailRecevierTitle  = "收件人"
-	EmailSubject = "email_subject"
-	EmailSubjectTitle = "主题"
-	EmailContent = "email_content"
-	EmailContentTitle = "邮件内容"
+	EmailRecevier      = "email_recevier"
+	EmailRecevierTitle = "收件人"
+	EmailSubject       = "email_subject"
+	EmailSubjectTitle  = "主题"
+	EmailContent       = "email_content"
+	EmailContentTitle  = "邮件内容"
 )
 
 type MailAction struct {
@@ -52,9 +52,9 @@ func (b *MailAction) GetFrontStruct(userId int64) []*mod_base.FormData {
 			Key:      constant.ItemSingle,
 			Value:    "",
 			Position: "0",
-			Options:  []Option{
+			Options: []Option{
 				{
-					Id: strconv.FormatInt(third.Id, 10),
+					Id:    strconv.FormatInt(third.Id, 10),
 					Value: third.Account,
 				},
 			},
@@ -105,7 +105,7 @@ func (b *MailAction) ExecAction() error {
 	return SendEmail(third.Account, third.Password, subject, body, receviers)
 }
 
-func SendEmail(sender, pass, subject, body string, mailTo []string, ) error {
+func SendEmail(sender, pass, subject, body string, mailTo []string) error {
 	mailConn := map[string]string{
 		"user": sender,
 		"pass": pass,
@@ -114,7 +114,7 @@ func SendEmail(sender, pass, subject, body string, mailTo []string, ) error {
 	}
 	port := 25
 	m := gomail.NewMessage()
-	m.SetHeader("From",  m.FormatAddress(mailConn["user"], "Automation Flow"))
+	m.SetHeader("From", m.FormatAddress(mailConn["user"], "Automation Flow"))
 	m.SetHeader("To", mailTo...)
 	m.SetHeader("Subject", subject)
 	m.SetBody("text/html", body)
