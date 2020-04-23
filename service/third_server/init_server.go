@@ -6,6 +6,7 @@ import (
 )
 
 func ActionInit() {
+	ScheduleTaskStart()
 	mod_base.ActionGroup[2] = &DemoAction{}
 	mod_base.ActionGroup[4] = &MailAction{}
 	mod_base.ActionGroup[6] = &TxtAction{}
@@ -14,6 +15,7 @@ func ActionInit() {
 func TriggerInit() {
 	mod_base.TriggerGroup[1] = &DemoTrigger{}
 	mod_base.TriggerGroup[3] = &TxtFileTrigger{}
+	mod_base.TriggerGroup[5] = &ScheduleTrigger{}
 }
 
 func GetActionName(actionId int64) string {

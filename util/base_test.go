@@ -28,3 +28,7 @@ func TestGenId(t *testing.T) {
 	InitID()
 	fmt.Println(GenId())
 }
+
+func TestTranUnixString2TimeStamp(t *testing.T) {
+	fmt.Println(TranUnixString2TimeStamp("2019-01-02 12:01:00") - TranUnixString2TimeStamp("2019-01-02 12:00:00"))
+}

@@ -70,7 +70,16 @@ func (b *TxtFileTrigger) GetFrontStruct(userId int64) []*mod_base.FormData {
 			Key:      constant.ItemSingle,
 			Value:    "",
 			Position: "1",
-			Options:  []string{TOContentChange, TOPropertyChange},
+			Options: []Option{
+				{
+					Id:"0",
+					Value:TOContentChange,
+				},
+				{
+						Id:"1",
+						Value:TOPropertyChange,
+				},
+			},
 		},
 	}
 }
@@ -116,12 +125,12 @@ func GenFlieList(userId int64) []Option {
 	return op
 }
 
-func TxtTriggerExec(userId int64, parma map[string]interface{}) {
+func TxtTriggerExec(userId int64, param map[string]interface{}) {
 	rs, err := gredis.LRange(TxtRedisKey)
 	if err != nil {
 		return
 	}
-	fileId := parma[mod_base.FileId].(int64)
+	fileId := param[mod_base.FileId].(int64)
 	fileText, err := stage.DGetTextFileByFileId(fileId)
 	if err != nil {
 		return
@@ -133,8 +142,8 @@ func TxtTriggerExec(userId int64, parma map[string]interface{}) {
 			return
 		}
 		if trs.FileId == fileId {
-			if fileText.Content != parma[NewTxtContent].(string) {
-				TOContentChangeExec(fileText.Content, parma[NewTxtContent].(string), fileText.Name, trs.FlowDefinationId, userId)
+			if fileText.Content != param[NewTxtContent].(string) {
+				TOContentChangeExec(fileText.Content, param[NewTxtContent].(string), fileText.Name, trs.FlowDefinationId, userId)
 			}
 		}
 	}
@@ -157,6 +166,7 @@ func TOContentChangeExec(old, new, name string, flowId, userId int64) {
 
 	// ---------- action 属性 --------
 	action.PreExecAction(actionDef.ActionId, param)
+
 	action.ExecAction()
 }
 

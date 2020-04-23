@@ -6,6 +6,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/sirupsen/logrus"
 	"net/http"
+	"time"
 )
 
 func GenHandlerRequest(c *gin.Context, req interface{}) {
@@ -37,4 +38,11 @@ func Byte2String(bs []int8) string {
 		ba = append(ba, byte(b))
 	}
 	return string(ba)
+}
+
+func TranUnixString2TimeStamp(str string) int64 {
+	timeLayout := "2006-01-02 15:04:05"
+	loc, _ := time.LoadLocation("Local")
+	theTime, _ := time.ParseInLocation(timeLayout, str, loc)
+	return theTime.Unix()
 }
