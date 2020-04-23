@@ -57,10 +57,10 @@ func (b *ScheduleTrigger) GetFrontStruct(userId int64) []*mod_base.FormData {
 	return []*mod_base.FormData{
 		{
 			Title:    ScheduleTimeSelectTitle,
-			Key:      constant.ItemSingle,
+			Key:      constant.ItemDateTime,
 			Value:    "",
 			Position: "0",
-			Options:  GenFlieList(userId),
+			//Options:  GenFlieList(userId),
 		},
 		{
 			Title:    ScheduleExecFunctionTitle,
