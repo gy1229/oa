@@ -2,14 +2,17 @@ package main
 
 import (
 	"github.com/gin-gonic/gin"
+	"github.com/gy1229/oa/constant"
 	"github.com/gy1229/oa/json_struct"
 	"github.com/gy1229/oa/service/automation/flow_action"
 	"github.com/gy1229/oa/service/file_server"
 	"github.com/gy1229/oa/service/stage_server"
+	"github.com/gy1229/oa/service/third_server"
 	"github.com/gy1229/oa/service/user_server"
 	"github.com/gy1229/oa/util"
 	"io/ioutil"
 	"net/http"
+	"strconv"
 )
 
 func TestHanlder(c *gin.Context) {
@@ -336,6 +339,20 @@ func DeleteFlowDeination(c *gin.Context) {
 	if err != nil {
 		c.JSON(http.StatusOK, util.GenDefaultFailResp(err.Error()))
 		return
+	}
+	c.JSON(http.StatusOK, util.TranformStruct2GinH(resp))
+}
+
+func WebHook(c *gin.Context) {
+	rowkeyStr := c.Param("rowkey")
+	rowkey, _ := strconv.ParseInt(rowkeyStr, 10, 64)
+	param := make(map[string]interface{})
+	param[third_server.WebhookRowkey] = rowkey
+	data, _ := ioutil.ReadAll(c.Request.Body)
+	param[third_server.WebhookBody] = string(data)
+	third_server.WebhookTriggerExec(0, param)
+	resp := &json_struct.WebHookResponse{
+		Base: &json_struct.BaseResponse{Body: constant.SUCCESS},
 	}
 	c.JSON(http.StatusOK, util.TranformStruct2GinH(resp))
 }

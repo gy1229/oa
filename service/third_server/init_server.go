@@ -16,6 +16,7 @@ func TriggerInit() {
 	mod_base.TriggerGroup[1] = &DemoTrigger{}
 	mod_base.TriggerGroup[3] = &TxtFileTrigger{}
 	mod_base.TriggerGroup[5] = &ScheduleTrigger{}
+	mod_base.TriggerGroup[7] = &WebhookTrigger{}
 }
 
 func GetActionName(actionId int64) string {

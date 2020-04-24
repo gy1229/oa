@@ -99,3 +99,7 @@ type DeleteFlowDeinationRequest struct {
 type DeleteFlowDeinationResponse struct {
 	Base *BaseResponse `json:"base"`
 }
+
+type WebHookResponse struct {
+	Base *BaseResponse `json:"base"`
+}

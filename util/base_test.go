@@ -30,5 +30,6 @@ func TestGenId(t *testing.T) {
 }
 
 func TestTranUnixString2TimeStamp(t *testing.T) {
-	fmt.Println(TranUnixString2TimeStamp("2019-01-02 12:01:00") - TranUnixString2TimeStamp("2019-01-02 12:00:00"))
+	str := "http://49.235.180.218:19999/webhook/123"
+	fmt.Println(str[36:])
 }

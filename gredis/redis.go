@@ -115,7 +115,7 @@ func LRange(key string) ([]string, error) {
 	conn := RedisClient.Get()
 	defer conn.Close()
 	rStr := make([]string, 0)
-	reply, err := redis.Values(conn.Do("lrange", "key", 0, 10))
+	reply, err := redis.Values(conn.Do("lrange", key, 0, 10))
 	if err != nil {
 		return nil, err
 	}
