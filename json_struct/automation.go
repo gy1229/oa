@@ -1,5 +1,7 @@
 package json_struct
 
+import "github.com/gy1229/oa/service/mod/mod_base"
+
 type ActionDetail struct {
 	ActionId             string      `json:"action_id"`
 	ActionName           string      `json:"action_name"`
@@ -15,7 +17,7 @@ type FormData struct {
 	Key      string      `json:"key"`
 	Value    string      `json:"value"`
 	Position string      `json:"position"`
-	Options  interface{} `json:"options"`
+	Options  []*mod_base.Option `json:"options"`
 }
 
 type GetActionListRequest struct {

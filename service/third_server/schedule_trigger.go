@@ -67,7 +67,7 @@ func (b *ScheduleTrigger) GetFrontStruct(userId int64) []*mod_base.FormData {
 			Key:      constant.ItemSingle,
 			Value:    "",
 			Position: "1",
-			Options: []Option{
+			Options: []*mod_base.Option{
 				{
 					Id:    "0",
 					Value: PerHour,

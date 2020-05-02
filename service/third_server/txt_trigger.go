@@ -37,10 +37,6 @@ type TxtFileTrigger struct {
 	Param map[string]string
 }
 
-type Option struct {
-	Id    string `json:"id"`
-	Value string `json:"value"`
-}
 
 type TxtRedisStruct struct {
 	FileId           int64 `json:"file_id"`
@@ -70,7 +66,7 @@ func (b *TxtFileTrigger) GetFrontStruct(userId int64) []*mod_base.FormData {
 			Key:      constant.ItemSingle,
 			Value:    "",
 			Position: "1",
-			Options: []Option{
+			Options: []*mod_base.Option{
 				{
 					Id:"0",
 					Value:TOContentChange,
@@ -95,10 +91,10 @@ func (b *TxtFileTrigger) SetRedisTrigger(fId int64, fd []*mod_base.FormData) err
 				logrus.Error("[SetRedisTrigger] file id cannt find, fId", fId)
 			}
 		} else {
-			if v.Value == TOContentChange {
-				change = 1
+			if v.Value == "0" {
+				change = 0
 			} else {
-				change = 2
+				change = 1
 			}
 		}
 	}
@@ -110,14 +106,14 @@ func (b *TxtFileTrigger) SetRedisTrigger(fId int64, fd []*mod_base.FormData) err
 	return err
 }
 
-func GenFlieList(userId int64) []Option {
+func GenFlieList(userId int64) []*mod_base.Option {
 	files, err := stage.DGetFileListByUserId(userId)
 	if err != nil {
 		return nil
 	}
-	op := make([]Option, 0)
+	op := make([]*mod_base.Option, 0)
 	for _, v := range files {
-		op = append(op, Option{
+		op = append(op, &mod_base.Option{
 			Id:    strconv.FormatInt(v.Id, 10),
 			Value: v.Name,
 		})

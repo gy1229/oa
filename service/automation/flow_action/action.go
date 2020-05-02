@@ -85,7 +85,7 @@ func GetFlowDefinationDetail(req *json_struct.GetFlowDefinationDetailRequest) (*
 		return nil, err
 	}
 	logrus.Info("[GetFlowDefinationDetail] userid : ", flowDefinationId)
-	actionDetail, err := GetActionDetailsByFlowDefid(flowDefinationId)
+	actionDetail, err := GetActionDetailsByFlowDefid(userId, flowDefinationId)
 	if err != nil {
 		logrus.Error("[GetFlowDefinationDetail] GetActionDetailsByFlowDefid ParseInt")
 		return nil, err
@@ -137,7 +137,7 @@ func UpdateFlowDefination(req *json_struct.UpdateFlowDefinationRequest) (*json_s
 		logrus.Error("[UpdateFlowDefination] UpdateFlowDefinationNameById err", err.Error())
 		return nil, err
 	}
-	actionDetial, err := GetActionDetailsByFlowDefid(flowdefId)
+	actionDetial, err := GetActionDetailsByFlowDefid(userId, flowdefId)
 	if err != nil {
 		logrus.Error("[UpdateFlowDefination] GetActionDetailsByFlowDefid err", err.Error())
 		return nil, err
@@ -199,7 +199,7 @@ func DeleteFlowDeination(req *json_struct.DeleteFlowDeinationRequest) (*json_str
 		logrus.Error("[DeleteFlowDeination] DelFlowDefinationById err", err.Error())
 		return nil, err
 	}
-	actionDetial, err := GetActionDetailsByFlowDefid(flowdefId)
+	actionDetial, err := GetActionDetailsByFlowDefid(userId, flowdefId)
 	if err != nil {
 		logrus.Error("[DeleteFlowDeination] GetActionDetailsByFlowDefid err", err.Error())
 		return nil, err
@@ -214,7 +214,7 @@ func DeleteFlowDeination(req *json_struct.DeleteFlowDeinationRequest) (*json_str
 	}, nil
 }
 
-func GetActionDetailsByFlowDefid(flowdefId int64) ([]*json_struct.ActionDetail, error) {
+func GetActionDetailsByFlowDefid(userId, flowdefId int64) ([]*json_struct.ActionDetail, error) {
 	actionList, err := automation.FindActionDefinationByFDefId(flowdefId)
 	if err != nil {
 		logrus.Error("[GetActionDetailsByFlowDefid] FindActionDefinationByFDefId  err:", err.Error())
@@ -229,12 +229,15 @@ func GetActionDetailsByFlowDefid(flowdefId int64) ([]*json_struct.ActionDetail, 
 		}
 		jf := make([]*json_struct.FormData, 0)
 		for _, f := range fdatas {
+			option := GetOptionsByKey(userId, v.ActionId, f.Key)
+
 			jf = append(jf, &json_struct.FormData{
 				Id:       strconv.FormatInt(f.Id, 10),
 				Key:      f.Key,
 				Value:    f.Value,
 				Title:    f.Title,
 				Position: strconv.Itoa(f.Position),
+				Options: option,
 			})
 		}
 		actionDetail = append(actionDetail, &json_struct.ActionDetail{
@@ -311,6 +314,23 @@ func CreateActionDetail(ActionList []*json_struct.ActionDetail, flowDefId int64)
 			}
 		}
 	}
-	go SetOfficeFlow(flowDefId, ActionList)
+	SetOfficeFlow(flowDefId, ActionList)
 	return nil
+}
+
+func GetOptionsByKey(userId, actionId int64, key string) []*mod_base.Option {
+	fd := make([]*mod_base.FormData, 0)
+	if actionId % 2 == 1 {
+		trigger := mod_base.TriggerGroup[actionId]
+		fd = trigger.GetFrontStruct(userId)
+	}else {
+		action := mod_base.ActionGroup[actionId]
+		fd = action.GetFrontStruct(userId)
+	}
+	for _, v := range fd {
+		if v.Key == key {
+			return v.Options
+		}
+	}
+	return make([]*mod_base.Option, 0)
 }

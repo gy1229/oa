@@ -34,9 +34,10 @@ func GetFileList(req *json_struct.GetFileListRequest) (*json_struct.GetFileListR
 			Id:         strconv.FormatInt(v.Id, 10),
 			CreateTime: v.CreateTime,
 			UpdateTime: v.UpdateTime,
+			Name: v.Name,
 		})
 		files[k].CreatorName, _ = data_user.GetUserNameById(v.CreatorId)
-		files[k].Name, _ = stage.DGetFileName(v.Id, v.Type)
+		//files[k].Name, _ = stage.DGetFileName(v.Id, v.Type)
 	}
 	return &json_struct.GetFileListResponse{
 		FileList: files,

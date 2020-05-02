@@ -53,7 +53,7 @@ func (b *MailAction) GetFrontStruct(userId int64) []*mod_base.FormData {
 			Key:      constant.ItemSingle,
 			Value:    "",
 			Position: "0",
-			Options: []Option{
+			Options: []*mod_base.Option{
 				{
 					Id:    strconv.FormatInt(third.Id, 10),
 					Value: third.Account,

@@ -20,7 +20,7 @@ func (b *DemoAction) GetFrontStruct(int64) []*mod_base.FormData {
 			Key:      constant.ItemSingle,
 			Value:    "",
 			Position: "0",
-			Options: []Option{{
+			Options: []*mod_base.Option{{
 				Id:    "1",
 				Value: "First",
 			}, {
@@ -36,7 +36,7 @@ func (b *DemoAction) GetFrontStruct(int64) []*mod_base.FormData {
 			Key:      constant.ItemCheckbox,
 			Value:    "",
 			Position: "1",
-			Options: []Option{{
+			Options: []*mod_base.Option{{
 				Id:    "1",
 				Value: "First",
 			}, {

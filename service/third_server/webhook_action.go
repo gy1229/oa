@@ -60,7 +60,7 @@ func (b *WebhookAction) GetFrontStruct(userId int64) []*mod_base.FormData {
 			Key:      constant.ItemMutiText,
 			Value:    "",
 			Position: "1",
-			Options: []Option{
+			Options: []*mod_base.Option{
 				{
 					Id:"0",
 					Value: WebhookContentTypeJson,

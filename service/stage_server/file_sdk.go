@@ -30,18 +30,21 @@ func UploadFile2Stage(fileHeader *multipart.FileHeader, userIdS, repIdS string) 
 		return nil
 	}
 	fileId := util.GenId()
-	err = stage.DCreateFileDeatil(fileHeader.Filename, userId, repId, fileId, constant.TableFile)
+	fileType := 2
+
+	fNameLast := path.Ext(fileHeader.Filename)
+	if fNameLast == ".txt" {
+		Read2StageTextFile(fileHeader, fileId)
+		fileType = constant.TextFile
+	} else if fNameLast == ".xlsx" {
+		Read2StageTableFile(fileHeader, fileId)
+		fileType = constant.TableFile
+	} else {
+		return errors.New("cant find type")
+	}
+	err = stage.DCreateFileDeatil(fileHeader.Filename, userId, repId, fileId, fileType)
 	if err != nil {
 		return err
-	}
-	fNameLast := path.Ext(fileHeader.Filename)
-	switch fNameLast {
-	case ".txt":
-		Read2StageTextFile(fileHeader, fileId)
-	case ".xlsx":
-		Read2StageTableFile(fileHeader, fileId)
-	default:
-		return errors.New("cant find file type")
 	}
 	return nil
 }
@@ -57,12 +60,13 @@ func Read2StageTextFile(fileHeader *multipart.FileHeader, fileId int64) error {
 		textByte = util.BytesCombine(textByte, buf[:n])
 		if err != nil { //遇到任何错误立即返回，并忽略 EOF 错误信息
 			if err == io.EOF {
-				return nil
+				break
 			}
 			return err
 		}
 	}
-	return stage.DCreateTextFile(fileHeader.Filename, string(textByte), fileId)
+	err := stage.DCreateTextFile(fileHeader.Filename, string(textByte), fileId)
+	return err
 }
 
 func Read2StageTableFile(fHeader *multipart.FileHeader, fileId int64) error {
