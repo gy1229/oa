@@ -151,7 +151,7 @@ func scheduleExec(timeStamp, userId, flowId int64) {
 	param := make(map[string]interface{})
 	param[mod_base.UserId] = userId
 	param[NowTimeStamp] = timeStamp
-	action.PreExecAction(actionDef.ActionId, param)
+	action.PreExecAction(actionDef.Id, param)
 	action.ExecAction()
 }
 

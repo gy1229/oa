@@ -36,7 +36,7 @@ func (b *WebhookAction) PreExecAction(actionId int64, param map[string]interface
 		return
 	}
 	for _, v := range formDatas {
-		b.Param[v.Key] = v.Value
+		b.Param[v.Title] = v.Value
 	}
 
 }
@@ -82,13 +82,13 @@ func (b *WebhookAction) GetFrontStruct(userId int64) []*mod_base.FormData {
 
 func (b *WebhookAction) ExecAction() error {
 
-	aidUrl, ok := b.Param[WebhookActionAidUrl].(string)
-	if ok {
+	aidUrl, ok := b.Param[WebhookActionAidUrlTitle].(string)
+	if !ok {
 		logrus.Error("[WebhookActionAidUrl] cant get WebhookActionAidUrl")
 		return errors.New("cant get sender")
 	}
-	body, ok := b.Param[WebhookActionBody].(string)
-	if ok {
+	body, ok := b.Param[WebhookActionBodyTitle].(string)
+	if !ok {
 		logrus.Error("[WebhookActionBody] cant get EmailContent")
 		return errors.New("cant get EmailContent")
 	}

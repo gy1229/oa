@@ -28,7 +28,7 @@ func (b *TxtAction) PreExecAction(actionId int64, param map[string]interface{}) 
 		return
 	}
 	for _, v := range formDatas {
-		b.Param[v.Key] = v.Value
+		b.Param[v.Title] = v.Value
 	}
 
 }
@@ -58,16 +58,16 @@ func (b *TxtAction) GetFrontStruct(userId int64) []*mod_base.FormData {
 
 func (b *TxtAction) ExecAction() error {
 	//userId, ok := b.Param[mod_base.UserId].(int64)
-	//if ok {
+	//if !ok {
 	//	return errors.New("cant get UserId")
 	//}
-	fileId, ok := b.Param[TxtActionSelectFile].(int64)
-	if ok {
+	fileId, ok := b.Param[TxtActionSelectFileTitle].(int64)
+	if !ok {
 		logrus.Error("[TxtAction] cant get TxtActionSelectFile")
 		return errors.New("cant get TxtActionSelectFile")
 	}
-	body, ok := b.Param[TxtActionAddContent].(string)
-	if ok {
+	body, ok := b.Param[TxtActionAddContentTitle].(string)
+	if !ok {
 		logrus.Error("[TxtAction] cant get TxtActionAddContent")
 		return errors.New("[TxtAction] cant get TxtActionAddContent")
 	}

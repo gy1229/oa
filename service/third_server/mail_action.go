@@ -36,7 +36,7 @@ func (b *MailAction) PreExecAction(actionId int64, param map[string]interface{})
 		return
 	}
 	for _, v := range formDatas {
-		b.Param[v.Key] = v.Value
+		b.Param[v.Title] = v.Value
 	}
 
 }
@@ -83,7 +83,7 @@ func (b *MailAction) GetFrontStruct(userId int64) []*mod_base.FormData {
 
 func (b *MailAction) ExecAction() error {
 	userId, ok := b.Param[mod_base.UserId].(int64)
-	if ok {
+	if !ok {
 		logrus.Error("[MailAction] cant get user_id")
 		return errors.New("cant get user_id")
 	}
@@ -91,19 +91,19 @@ func (b *MailAction) ExecAction() error {
 	if err != nil {
 		return err
 	}
-	recevier, ok := b.Param[EmailRecevier].(string)
-	if ok {
+	recevier, ok := b.Param[EmailRecevierTitle].(string)
+	if !ok {
 		logrus.Error("[MailAction] cant get sender")
 		return errors.New("cant get sender")
 	}
-	body, ok := b.Param[EmailContent].(string)
-	if ok {
+	body, ok := b.Param[EmailContentTitle].(string)
+	if !ok {
 		logrus.Error("[MailAction] cant get EmailContent")
 		return errors.New("cant get EmailContent")
 	}
 	body = util.TranVarToContent(body, b.Param)
-	subject, ok := b.Param[EmailSubject].(string)
-	if ok {
+	subject, ok := b.Param[EmailSubjectTitle].(string)
+	if !ok {
 		logrus.Error("[MailAction] cant get EmailSubject")
 		return errors.New("cant get EmailSubject")
 	}

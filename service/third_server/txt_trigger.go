@@ -161,7 +161,7 @@ func TOContentChangeExec(old, new, name string, flowId, userId int64) {
 	param[TxtTriggerFunction] = TOContentChange
 
 	// ---------- action 属性 --------
-	action.PreExecAction(actionDef.ActionId, param)
+	action.PreExecAction(actionDef.Id, param)
 
 	action.ExecAction()
 }

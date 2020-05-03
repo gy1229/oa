@@ -1,6 +1,7 @@
 package automation
 
 import (
+	"errors"
 	"github.com/gy1229/oa/database"
 	"github.com/sirupsen/logrus"
 )
@@ -62,6 +63,9 @@ func FindActionDefinationByFDefId2(fdefId int64) (*database.ActionDefination, er
 	if err := database.DB.Where("flow_defination_id = ? && status = 0 && action_type = 2", fdefId).Find(&aDef).Error; err != nil {
 		logrus.Error("[FindActionDefinationByFDefId] err ", err.Error())
 		return nil, err
+	}
+	if len(aDef) == 0 {
+		return nil, errors.New("cant find adef")
 	}
 	return aDef[0], nil
 }

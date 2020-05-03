@@ -62,7 +62,7 @@ func TestLPush(t *testing.T) {
 	//	Value string
 	//}{"ds","qw"}
 	//value, _ := json.Marshal(m)
-	reply, _ := redis.Values(conn.Do("lrange", "key", 0, 10))
+	reply, _ := redis.Values(conn.Do("lrange", "txt_redis", 0, 10))
 	for _, v := range reply {
 		fmt.Printf("value: \n%v\n", string(v.([]byte)))
 	}

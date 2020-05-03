@@ -109,6 +109,6 @@ func webhookExec(userId, flowId, rowkey int64, body string) {
 	param[mod_base.UserId] = userId
 	param[WebhookRowkey] = strconv.FormatInt(rowkey, 10)
 	param[WebhookBody] = body
-	action.PreExecAction(actionDef.ActionId, param)
+	action.PreExecAction(actionDef.Id, param)
 	action.ExecAction()
 }
